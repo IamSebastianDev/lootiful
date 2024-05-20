@@ -1,5 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import React from "react";
+import { Scene } from "../components/scene";
 
-export const Route = createFileRoute('/game')({
-  component: () => <div>Hello /game!</div>
-})
+const GameRoute: React.FC = () => {
+    return (
+        <Scene background="">
+            <div></div>
+        </Scene>
+    );
+};
+
+export const Route = createFileRoute("/game")({
+    component: GameRoute,
+});

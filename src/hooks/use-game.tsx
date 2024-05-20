@@ -1,14 +1,14 @@
 import React, { ReactNode, createContext, useContext } from "react";
 
 export type GameState = {
-    money: number;
+    coins: number;
 };
 
 const GameStateContext = createContext<GameState | undefined>(undefined);
 
 export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const gameState: GameState = {
-        money: 0,
+        coins: 0,
     };
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;

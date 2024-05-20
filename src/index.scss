@@ -25,6 +25,7 @@
     --lf-md: 1rem;
     --lf-lg: 1.15rem;
     --lf-xl: 1.5rem;
+    --lf-2xl: 2rem;
 
     /* Border */
     --lb-sm: 0.25rem;
@@ -150,6 +151,36 @@ body {
     &.right {
         text-align: right;
     }
+
+    &.dark {
+        color: var(--lc-dark-charcoal);
+    }
+
+    &.light {
+        color: var(--lc-ivory);
+    }
+
+    &.contrast {
+        color: var(--lc-light-blue);
+    }
+
+    &.legible {
+        color: var(--lc-ivory);
+        text-shadow: 1px 1px var(--lc-dark-charcoal);
+    }
+
+    &.highlight {
+        font-size: var(--lf-2xl);
+        color: var(--lc-gold);
+        text-shadow: 1px 1px var(--lc-dark-charcoal);
+    }
+}
+
+.menu-text {
+    background: var(--lc-dark-charcoal);
+    opacity: 0.75;
+    align-self: end;
+    padding: var(--ll-sm);
 }
 
 .list-container {

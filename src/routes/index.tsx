@@ -15,7 +15,7 @@ const IndexRoute: React.FC = () => {
         <Scene background={background}>
             <div className="container stack vertical tight between full-h">
                 <div></div>
-                <h1 className="text center large">Lootiful</h1>
+                <h1 className="text center large highlight">Lootiful</h1>
                 <div className="list-container">
                     <ul>
                         {links.map((link, idx) => (
@@ -25,7 +25,7 @@ const IndexRoute: React.FC = () => {
                         ))}
                     </ul>
                 </div>
-                <div className="text right tiny">
+                <div className="text right tiny menu-text">
                     Made by{" "}
                     <a href="https://github.com/iamsebastiandev" target="_blank" rel="noreferrer nofollow noopener">
                         Sebastian Heinz
