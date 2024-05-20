@@ -99,6 +99,14 @@ body {
     height: var(--ll-xl);
 }
 
+.claim-right {
+    margin-right: auto;
+}
+
+.claim-left {
+    margin-left: auto;
+}
+
 .stack {
     display: flex;
     position: relative;
@@ -140,6 +148,14 @@ body {
 
         &.center {
             align-items: center;
+        }
+
+        &.start {
+            align-items: start;
+        }
+
+        &.end {
+            align-items: end;
         }
     }
 
@@ -207,6 +223,10 @@ body {
         font-size: var(--lf-2xl);
         color: var(--lc-gold);
         text-shadow: 1px 1px var(--lc-dark-charcoal);
+    }
+
+    &.offset-sm {
+        padding-top: var(--ll-xs);
     }
 }
 
@@ -278,8 +298,7 @@ body {
 }
 
 .hero-stats {
-    display: flex;
-    justify-content: center;
+    padding: 0 var(--ll-sm);
 }
 
 .hero-panel {
