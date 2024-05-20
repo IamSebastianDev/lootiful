@@ -41,8 +41,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const maxHealth = getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
     const maxStamina = getMaxStamina(attributes.Constitution.value, attributes.Dexterity.value);
     const damage = attributes.Strength.value * 2 + attributes.Dexterity.value;
-    const stamina = maxStamina - usedStamina;
-    const health = maxHealth - takenDamage;
+    const stamina = Math.max(maxStamina - usedStamina, 0);
+    const health = Math.max(maxHealth - takenDamage, 0);
 
     const reset = () => {
         spendCoins(current);

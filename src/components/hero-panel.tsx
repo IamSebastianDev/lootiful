@@ -25,6 +25,7 @@ export const HeroPanel: React.FC = () => {
                 onChange={(event) => handleNameChange(event)}
             />
             <HeroAttributes />
+            <hr />
             <button onClick={() => coins.addCoins(2500)}>Add Coins</button>
             <button onClick={() => hero.damageHero(10)}>Hurt Hero</button>
         </aside>

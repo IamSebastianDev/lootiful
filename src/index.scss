@@ -40,6 +40,8 @@
     --comp-ui-button-text: white;
     --comp-ui-button-border: var(--lc-burnt-rose);
     --comp-ui-button-border-hover: var(--lc-dull-gold);
+
+    --comp-hero-panel-bg: var(--lc-plum-purple);
 }
 
 body {
@@ -228,6 +230,10 @@ body {
     &.offset-sm {
         padding-top: var(--ll-xs);
     }
+
+    &.inline {
+        white-space: nowrap;
+    }
 }
 
 .menu-text {
@@ -304,5 +310,5 @@ body {
 .hero-panel {
     min-width: 300px;
     max-width: 30svw;
-    background: red;
+    background: var(--comp-hero-panel-bg);
 }

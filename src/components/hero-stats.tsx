@@ -9,20 +9,20 @@ export const HeroStats = () => {
     return (
         <div className="hero-stats stack horizontal center loose">
             <div className="stack horizontal center">
-                <span className="text small offset-sm">
+                <span className="text small offset-sm inline">
                     {hero.health} / {hero.maxHealth}
                 </span>
                 <img className="w-xl h-xl" src={health}></img>
             </div>
             <div className="stack horizontal center">
-                <span className="text small offset-sm">
+                <span className="text small offset-sm inline">
                     {hero.stamina} / {hero.maxStamina}
                 </span>
                 <img className="w-xl h-xl" src={stamina}></img>
             </div>
             <div className="claim-right"></div>
             <div className="stack horizontal center">
-                <span className="text small offset-sm">{coins.current}</span>
+                <span className="text small offset-sm inline">{coins.current}</span>
                 <img className="w-xl h-xl" src={coin}></img>
             </div>
         </div>
