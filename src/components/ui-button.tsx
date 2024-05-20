@@ -10,9 +10,7 @@ export type UiButtonProps = PropsWithChildren & {
 
 export const UiButton: React.FC<UiButtonProps> = ({ children, onClick, href, icon = null, layout = "center" }) => {
     const handleOnClick = () => {
-        if (onClick) {
-            onClick();
-        }
+        if (onClick) onClick();
     };
 
     return (

@@ -5,7 +5,6 @@ export type SceneProps = PropsWithChildren & {
 };
 
 export const Scene: React.FC<SceneProps> = ({ background, children }) => {
-    console.log({ background });
     return (
         <div className="scene" style={{ backgroundImage: `url(${background})` }}>
             {children}
