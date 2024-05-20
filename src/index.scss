@@ -1,0 +1,212 @@
+:root {
+    /* Colors */
+    --lc-dark-charcoal: rgba(0, 0, 0, 1);
+    --lc-deep-maroon: rgba(30, 22, 22, 1);
+    --lc-plum-purple: rgba(54, 32, 48, 1);
+    --lc-burnt-rose: rgba(82, 59, 64, 1);
+    --lc-gold: rgba(255, 213, 105, 1);
+    --lc-light-blue: rgba(98, 171, 212, 1);
+    --lc-dull-gold: rgba(209, 133, 30, 1);
+    --lc-muted-blue: rgba(167, 209, 230, 1);
+    --lc-ivory: rgba(255, 241, 204, 1);
+    --lc-ash-grey: rgba(144, 145, 158, 1);
+    --lc-warm-brown: rgba(107, 54, 19, 1);
+    --lc-coral-pink: rgba(207, 104, 109, 1);
+
+    /* Spacing */
+    --ll-xs: 0.25rem;
+    --ll-sm: 0.5rem;
+    --ll-md: 1rem;
+    --ll-lg: 1.5rem;
+
+    /* Font */
+    --lf-xs: 0.6rem;
+    --lf-sm: 0.85rem;
+    --lf-md: 1rem;
+    --lf-lg: 1.15rem;
+    --lf-xl: 1.5rem;
+
+    /* Border */
+    --lb-sm: 0.25rem;
+    --lb-md: 0.5rem;
+
+    /* Components */
+    --comp-scene-bg: var(--lc-deep-maroon);
+    --comp-scene-border: var(--lc-dark-charcoal);
+
+    --comp-ui-button-bg: var(--lc-plum-purple);
+    --comp-ui-button-text: white;
+    --comp-ui-button-border: var(--lc-burnt-rose);
+    --comp-ui-button-border-hover: var(--lc-dull-gold);
+}
+
+body {
+    overscroll-behavior: none;
+    background: var(--lc-dark-charcoal);
+    overflow: hidden;
+    font-family: "Press Start 2P", system-ui;
+    color: var(--lc-ivory);
+    line-height: 1.5;
+}
+
+#root {
+    height: 100svh;
+    width: 100svw;
+
+    display: grid;
+    place-items: center;
+
+    overflow: hidden;
+}
+
+#game {
+    width: 100vw;
+    aspect-ratio: 16 / 9;
+    max-height: 100vh;
+}
+
+.full-w {
+    width: 100%;
+}
+
+.full-h {
+    height: 100%;
+}
+
+.stack {
+    display: flex;
+
+    &.vertical {
+        flex-direction: column;
+
+        &.even {
+            justify-content: space-evenly;
+        }
+
+        &.between {
+            justify-content: space-between;
+        }
+
+        &.around {
+            justify-content: space-around;
+        }
+    }
+
+    &.horizontal {
+        flex-direction: row;
+
+        &.even {
+            align-items: space-evenly;
+        }
+
+        &.between {
+            align-items: space-between;
+        }
+
+        &.around {
+            align-items: space-around;
+        }
+    }
+
+    &.tight {
+        gap: var(--ll-sm);
+    }
+
+    &.relaxed {
+        gap: var(--ll-md);
+    }
+
+    &.loose {
+        gap: var(--ll-lg);
+    }
+}
+
+.container {
+    padding-inline: var(--ll-md);
+    padding-block: var(--ll-sm);
+}
+
+.text {
+    &.tiny {
+        font-size: var(--lf-xs);
+    }
+
+    &.small {
+        font-size: var(--lf-sm);
+    }
+
+    &.normal {
+        font-size: var(--lf-md);
+    }
+
+    &.large {
+        font-size: var(--lf-xl);
+    }
+
+    &.center {
+        text-align: center;
+    }
+
+    &.right {
+        text-align: right;
+    }
+}
+
+.list-container {
+    display: grid;
+    place-items: center;
+
+    & ul {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        list-style-type: none;
+
+        gap: var(--ll-md);
+
+        & li {
+            display: flex;
+            width: 100%;
+            justify-content: stretch;
+        }
+    }
+}
+
+/* Scene */
+.scene {
+    width: 100%;
+    height: 100%;
+    border: var(--lb-md) double var(--comp-scene-border);
+    background: var(--comp-scene-bg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* UiButton */
+.ui-button {
+    padding: var(--ll-sm) var(--ll-md);
+    background: var(--comp-ui-button-bg);
+    border: var(--lb-sm) solid var(--comp-ui-button-border);
+    color: var(--comp-ui-button-text);
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+
+    & span {
+        flex-grow: 1;
+    }
+
+    &:hover,
+    &:focus {
+        border-color: var(--comp-ui-button-border-hover);
+        transform: translate(4px, 2px);
+    }
+
+    &:active {
+    }
+}
