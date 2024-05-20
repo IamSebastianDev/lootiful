@@ -126,15 +126,15 @@ body {
         flex-direction: row;
 
         &.even {
-            align-items: space-evenly;
+            justify-content: space-evenly;
         }
 
         &.between {
-            align-items: space-between;
+            justify-content: space-between;
         }
 
         &.around {
-            align-items: space-around;
+            justify-content: space-around;
         }
 
         &.center {
@@ -283,4 +283,10 @@ body {
     top: 0;
     right: 0;
     margin: var(--ll-xs);
+}
+
+.hero-panel {
+    min-width: 300px;
+    max-width: 30svw;
+    background: red;
 }

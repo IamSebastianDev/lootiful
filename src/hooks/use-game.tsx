@@ -1,11 +1,12 @@
-import React, { ReactNode, createContext, useContext } from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
 import { useAttributes } from "./use-attributes";
 import { useCoins } from "./use-coins";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
-    setAttributeByType: ReturnType<typeof useAttributes>[1];
+    bumpAttributeByType: ReturnType<typeof useAttributes>[1];
     name: string | null;
+    changeName: (name: string) => void;
 };
 
 export type GameState = {
@@ -16,14 +17,16 @@ export type GameState = {
 const GameStateContext = createContext<GameState | undefined>(undefined);
 
 export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [attributes, setAttributeByType] = useAttributes();
+    const [name, setName] = useState<string | null>(null);
+    const [attributes, bumpAttributeByType] = useAttributes();
 
     const gameState: GameState = {
         coins: useCoins(),
         hero: {
-            name: null,
+            name,
             attributes,
-            setAttributeByType,
+            bumpAttributeByType,
+            changeName: (name: string) => setName(name),
         },
     };
 

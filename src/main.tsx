@@ -8,6 +8,7 @@ import "@fontsource/press-start-2p";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { GameStateProvider } from "./hooks/use-game";
+import { KeyMap } from "./components/keymap";
 export const router = createRouter({ routeTree });
 
 declare module "@tanstack/react-router" {
@@ -19,7 +20,9 @@ declare module "@tanstack/react-router" {
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <GameStateProvider>
-            <RouterProvider router={router} />
+            <KeyMap>
+                <RouterProvider router={router} />
+            </KeyMap>
         </GameStateProvider>
     </React.StrictMode>
 );

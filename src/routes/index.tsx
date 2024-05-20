@@ -28,7 +28,7 @@ const IndexRoute: React.FC = () => {
                 <div className="text right tiny menu-text">
                     Made by{" "}
                     <a href="https://github.com/iamsebastiandev" target="_blank" rel="noreferrer nofollow noopener">
-                        Sebastian Heinz
+                        Sebastian
                     </a>{" "}
                     for{" "}
                     <a href="https://reactjam.com/" target="_blank" rel="noreferrer nofollow noopener">
