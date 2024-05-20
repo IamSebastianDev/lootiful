@@ -16,15 +16,17 @@ export const HeroPanel: React.FC = () => {
     console.log({ hero });
 
     return (
-        <aside className="hero-panel stack vertical loose container full-h">
+        <aside className="hero-panel stack vertical relaxed container full-h">
             <input
                 type="text"
+                className="text small"
                 value={hero.name ?? ""}
                 placeholder="Give your Hero a name!"
                 onChange={(event) => handleNameChange(event)}
             />
             <HeroAttributes />
             <button onClick={() => coins.addCoins(2500)}>Add Coins</button>
+            <button onClick={() => hero.damageHero(10)}>Hurt Hero</button>
         </aside>
     );
 };

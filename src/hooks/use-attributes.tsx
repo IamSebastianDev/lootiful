@@ -1,22 +1,11 @@
 import { useState } from "react";
 
-const attributeNames = ["Strength", "Constitution", "Dexterity", "Intelligence", "Charisma"] as const;
+export const attributeNames = ["Strength", "Constitution", "Dexterity", "Intelligence", "Charisma"] as const;
 const attributeShort = ["Str", "Con", "Dex", "Int", "Cha"] as const;
 export type Attribute = (typeof attributeNames)[number];
 
-const initialAttributeValues = () => {
-    return Object.fromEntries(attributeNames.map((name) => [name, 8])) as Record<Attribute, number>;
-};
-
-export const getAttributeCost = (level: number) => {
-    const base = 1000;
-    const factor = 100 ** (1 / 19);
-
-    return Math.floor(base * factor ** level);
-};
-
-export const useAttributes = () => {
-    const [attributeValues, setAttributeValues] = useState<Record<Attribute, number>>(initialAttributeValues());
+export const useAttributes = (initialAttributeValues: Record<Attribute, number>) => {
+    const [attributeValues, setAttributeValues] = useState<Record<Attribute, number>>(initialAttributeValues);
 
     const bumpAttributeByType = (attribute: Attribute) => {
         setAttributeValues((values) => ({ ...values, [attribute]: values[attribute] + 1 }));
@@ -31,5 +20,5 @@ export const useAttributes = () => {
         [K in keyof typeof attributeValues]: { value: number; name: K; short: string };
     };
 
-    return [derivedValues, bumpAttributeByType] as const;
+    return [derivedValues, bumpAttributeByType, setAttributeValues] as const;
 };

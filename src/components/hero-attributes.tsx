@@ -1,6 +1,7 @@
 import React from "react";
 import { useGame } from "../hooks/use-game";
-import { Attribute, getAttributeCost } from "../hooks/use-attributes";
+import { Attribute } from "../hooks/use-attributes";
+import { getAttributeCost } from "../functions/get-attribute-cost";
 
 export const HeroAttributes: React.FC = () => {
     const { hero, coins } = useGame();

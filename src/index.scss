@@ -101,6 +101,7 @@ body {
 
 .stack {
     display: flex;
+    position: relative;
 
     &.vertical {
         flex-direction: column;
@@ -276,13 +277,9 @@ body {
     }
 }
 
-.top-bar {
+.hero-stats {
     display: flex;
     justify-content: center;
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: var(--ll-xs);
 }
 
 .hero-panel {
