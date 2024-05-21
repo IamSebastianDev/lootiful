@@ -50,7 +50,7 @@ body {
     overscroll-behavior: none;
     background: var(--lc-dark-charcoal);
     overflow: hidden;
-    font-family: 'Press Start 2P', system-ui;
+    font-family: "Press Start 2P", system-ui;
     color: var(--lc-ivory);
     line-height: 1.5;
 }
@@ -290,7 +290,9 @@ body {
     width: 100%;
     display: flex;
     text-decoration: none;
-    box-shadow: 0px 4px var(--comp-ui-button-border);
+    box-shadow:
+        0px 4px var(--comp-ui-button-border),
+        inset 2px 2px 2px var(--lc-dark-charcoal);
 
     & span {
         flex-grow: 1;
