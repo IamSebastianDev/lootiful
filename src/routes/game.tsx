@@ -4,7 +4,7 @@ import { Scene } from "../components/scene";
 
 import { HeroPanel } from "../components/hero-panel";
 import { HeroStats } from "../components/hero-stats";
-import { Board } from "../components/board";
+import { Board } from "../components/board/board";
 
 const GameRoute: React.FC = () => {
     return (
