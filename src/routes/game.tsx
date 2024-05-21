@@ -4,6 +4,7 @@ import { Scene } from "../components/scene";
 
 import { HeroPanel } from "../components/hero-panel";
 import { HeroStats } from "../components/hero-stats";
+import { Board } from "../components/board";
 
 const GameRoute: React.FC = () => {
     return (
@@ -12,6 +13,7 @@ const GameRoute: React.FC = () => {
                 <HeroPanel />
                 <div className="stack vertical full-h full-w">
                     <HeroStats />
+                    <Board />
                 </div>
             </div>
         </Scene>

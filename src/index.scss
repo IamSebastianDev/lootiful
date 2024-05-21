@@ -318,3 +318,8 @@ body {
     max-width: 30svw;
     background: var(--comp-hero-panel-bg);
 }
+
+.game-board {
+    position: absolute;
+    inset: 0;
+}
