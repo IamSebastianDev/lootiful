@@ -12,7 +12,6 @@ const IndexRoute: React.FC = () => {
     const { reset } = useGame();
     const { trigger } = useSFX('menu_click');
 
-
     const links: UiButtonProps[] = [
         { children: 'New Game', href: '/game', onClick: () => reset() },
         { children: 'Continue Game', href: '/game?restore' },
