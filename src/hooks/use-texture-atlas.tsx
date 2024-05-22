@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Texture } from "three";
 
 type TextureAtlasOptions = {
@@ -26,11 +26,12 @@ const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: n
     return texture;
 };
 
+const atlas = new Map<string, Texture>();
+
 export const useTextureAtlas = ({ rows, tile, columns, src }: TextureAtlasOptions) => {
     const image = new Image(columns * tile, rows * tile);
 
     const [loaded, setLoaded] = useState(false);
-    const [atlas, setAtlas] = useState(new Map<string, Texture>());
 
     useEffect(() => {
         if (loaded) {
@@ -39,17 +40,14 @@ export const useTextureAtlas = ({ rows, tile, columns, src }: TextureAtlasOption
 
         const handler = () => {
             setLoaded(true);
-            const textures: [string, Texture][] = [];
 
             for (let x = 0; x < rows; x++) {
                 for (let y = 0; y < columns; y++) {
                     const key = `${x}:${y}`;
                     const texture = createNewTexture(tile, image, x, y);
-                    textures.push([key, texture]);
+                    atlas.set(key, texture);
                 }
             }
-
-            setAtlas(new Map(textures));
         };
 
         image.addEventListener("load", handler);
@@ -68,8 +66,6 @@ export const useTextureAtlas = ({ rows, tile, columns, src }: TextureAtlasOption
 
         return atlas.get(key) as Texture;
     };
-
-    console.log({ atlas });
 
     return { get, atlas, loaded };
 };
