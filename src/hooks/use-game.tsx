@@ -1,9 +1,10 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
 import { Attribute, useAttributes, attributeNames } from "./use-attributes";
 import { useCoins } from "./use-coins";
-import { getRandomName } from "../functions/get-random-name";
 import { getMaxHealth } from "../functions/get-max-health";
 import { getMaxStamina } from "../functions/get-max-stamina";
+import { getRandomEntry } from "../functions/get-random-entry";
+import { names } from "../data/names";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -31,7 +32,7 @@ export const initialAttributeValues = () => {
 const GameStateContext = createContext<GameState | undefined>(undefined);
 
 export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [name, setName] = useState<string | null>(getRandomName());
+    const [name, setName] = useState<string | null>(getRandomEntry(names));
     const [attributes, bumpAttributeByType, setAttributeValues] = useAttributes(initialAttributeValues());
     const { current, spendCoins, addCoins } = useCoins();
     const [takenDamage, setTakenDamage] = useState(0);
@@ -47,7 +48,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const reset = () => {
         spendCoins(current);
         setAttributeValues(initialAttributeValues());
-        setName(getRandomName());
+        setName(getRandomEntry(names));
         setTakenDamage(0);
         setUsedStamina(0);
     };

@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import { Texture } from "three";
-
-type TextureAtlasOptions = {
-    rows: number;
-    tile: number;
-    columns: number;
-    src: string;
-};
+import { TileAtlas } from "../data/tile-atlas";
 
 const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: number) => {
     // Create canvas to store new tile image
@@ -15,7 +9,7 @@ const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: n
     canvas.height = size;
     // Draw the tile to the canvas
     const ctx = canvas.getContext("2d");
-    ctx?.drawImage(image, x * size, y * size, size, size, 0, 0, size, size);
+    ctx?.drawImage(image, y * size, x * size, size, size, 0, 0, size, size);
 
     // Create the texture from the created Canvas
     const tile = new Image();
@@ -28,38 +22,41 @@ const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: n
 
 const atlas = new Map<string, Texture>();
 
-export const useTextureAtlas = ({ rows, tile, columns, src }: TextureAtlasOptions) => {
-    const image = new Image(columns * tile, rows * tile);
+export const useTextureAtlas = <T extends TileAtlas>({ rows, size, columns, src, id, tileMap }: T) => {
+    const image = new Image(columns * size, rows * size);
+    image.src = src;
 
     const [loaded, setLoaded] = useState(false);
+
+    const load = () => {
+        setLoaded(true);
+
+        for (let x = 0; x < columns; x++) {
+            for (let y = 0; y < rows; y++) {
+                const key = `${id}@${x}:${y}`;
+
+                if (!atlas.has(key)) {
+                    const texture = createNewTexture(size, image, x, y);
+                    atlas.set(key, texture);
+                }
+            }
+        }
+    };
 
     useEffect(() => {
         if (loaded) {
             return;
         }
 
-        const handler = () => {
-            setLoaded(true);
-
-            for (let x = 0; x < rows; x++) {
-                for (let y = 0; y < columns; y++) {
-                    const key = `${x}:${y}`;
-                    const texture = createNewTexture(tile, image, x, y);
-                    atlas.set(key, texture);
-                }
-            }
-        };
-
-        image.addEventListener("load", handler);
-        image.src = src;
+        image.addEventListener("load", load);
 
         return () => {
-            image.removeEventListener("load", handler);
+            image.removeEventListener("load", load);
         };
     }, []);
 
     const get = (x: number, y: number) => {
-        const key = `${x}:${y}`;
+        const key = `${id}@${x}:${y}`;
         if (!atlas.has(key)) {
             return null;
         }
@@ -67,5 +64,11 @@ export const useTextureAtlas = ({ rows, tile, columns, src }: TextureAtlasOption
         return atlas.get(key) as Texture;
     };
 
-    return { get, atlas, loaded };
+    const getByKey = (key: keyof T["tileMap"]) => {
+        const tile = tileMap[key as string];
+        if (!tile) return null;
+        return get(...tile);
+    };
+
+    return { get, getByKey, atlas, loaded };
 };

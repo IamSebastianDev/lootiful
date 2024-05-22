@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import React from "react";
 import { Scene } from "../components/scene";
-
 import { HeroPanel } from "../components/hero-panel";
 import { HeroStats } from "../components/hero-stats";
-import { Board } from "../components/board/board";
+import { Display } from "../components/board/display";
 
 const GameRoute: React.FC = () => {
     return (
@@ -13,7 +12,7 @@ const GameRoute: React.FC = () => {
                 <HeroPanel />
                 <div className="stack vertical full-h full-w">
                     <HeroStats />
-                    <Board />
+                    <Display />
                 </div>
             </div>
         </Scene>

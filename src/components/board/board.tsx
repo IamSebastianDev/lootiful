@@ -1,27 +1,41 @@
 /** @format */
 
-import React from 'react';
-import { Canvas } from '@react-three/fiber';
-import { CameraControls, OrbitControls, Preload } from '@react-three/drei';
-import { Tile } from './tile';
+import React from "react";
+import { useTextureAtlas } from "../../hooks/use-texture-atlas";
+import { Tile, TileProps } from "./tile";
+import { useDungeonMap } from "../../hooks/use-dungeon-map";
+import { dungeon } from "../../data/tile-atlas";
 
 export const Board: React.FC = () => {
     // const state = useGame();
+    const map = useDungeonMap();
+    const atlas = useTextureAtlas(dungeon);
+
+    const tileMap: TileProps[] = [];
+    for (let x = 0; x < map.width; x++) {
+        for (let y = 0; y < map.height; y++) {
+            tileMap.push({
+                onClick: () => {
+                    console.log({ x, y });
+                },
+                texture: atlas.getByKey(map.tiles[y * map.width + x]),
+                position: [x, y * -1, 0],
+            });
+        }
+    }
 
     return (
-        <div className="game-board">
-            <Canvas>
-                <Preload all />
-                <ambientLight intensity={1} />
-                <orthographicCamera position={[0, 0, -5]}>
-                    <Tile textureKey={[0, 0]} position={[0, 0, 0]} />
-                    <Tile textureKey={[1, 0]} position={[1, 0, 0]} />
-                    <Tile textureKey={[1, 0]} position={[2, 0, 0]} />
-                    <Tile textureKey={[0, 0]} position={[0, -1, 0]} />
-                    <Tile textureKey={[1, 1]} position={[1, -1, 0]} />
-                    <Tile textureKey={[1, 1]} position={[2, -1, 0]} />
-                </orthographicCamera>
-            </Canvas>
-        </div>
+        <group>
+            {tileMap.map((props, idx) => (
+                <Tile key={idx} {...props} />
+            ))}
+            <Tile
+                position={[2, 2 * -1, 0.1]}
+                onClick={() => {
+                    console.log("Got Chest");
+                }}
+                texture={atlas.get(8, 0)}
+            />
+        </group>
     );
 };
