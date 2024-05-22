@@ -1,12 +1,12 @@
 import { TileAtlas, dungeon } from "./tile-atlas";
-export type Map<T extends TileAtlas> = {
+export type MapDef<T extends TileAtlas> = {
     name: string;
     width: number;
     height: number;
     tiles: (keyof T["tileMap"])[];
 };
 
-export const dungeonMap: Map<typeof dungeon> = {
+export const dungeonMap: MapDef<typeof dungeon> = {
     name: "dungeon",
     width: 6,
     height: 5,

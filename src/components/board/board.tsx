@@ -3,12 +3,11 @@
 import React from "react";
 import { useTextureAtlas } from "../../hooks/use-texture-atlas";
 import { Tile, TileProps } from "./tile";
-import { useDungeonMap } from "../../hooks/use-dungeon-map";
 import { dungeon } from "../../data/tile-atlas";
+import { useGame } from "../../hooks/use-game";
 
 export const Board: React.FC = () => {
-    // const state = useGame();
-    const map = useDungeonMap();
+    const { map } = useGame();
     const atlas = useTextureAtlas(dungeon);
 
     const tileMap: TileProps[] = [];
