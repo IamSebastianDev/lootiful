@@ -7,7 +7,7 @@ import { HeroAttributes } from "./hero-attributes";
 // Loot list
 
 export const HeroPanel: React.FC = () => {
-    const { hero, coins } = useGame();
+    const { hero } = useGame();
     const handleNameChange = (event: ChangeEvent) => {
         const name = (event.target as HTMLInputElement).value;
         hero.changeName(name);
@@ -26,7 +26,6 @@ export const HeroPanel: React.FC = () => {
             />
             <HeroAttributes />
             <hr />
-            <button onClick={() => coins.addCoins(2500)}>Add Coins</button>
             <button onClick={() => hero.damageHero(10)}>Hurt Hero</button>
         </aside>
     );

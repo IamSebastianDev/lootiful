@@ -8,9 +8,7 @@ export const Display: React.FC = () => {
         <div className="game-board">
             <Canvas>
                 <Preload all />
-                <ambientLight intensity={1} />
-                <pointLight position={[0, 0, -10]} intensity={10} color={"red"} />
-                <orthographicCamera position={[0, 0, -7.5]}>
+                <orthographicCamera position={[0, 0, -5]}>
                     <Board />
                 </orthographicCamera>
             </Canvas>

@@ -8,7 +8,7 @@ export type TileAtlas = {
 };
 
 import dungeonTiles from "../assets/images/tileset.png";
-export const dungeon = {
+export const dungeonTileSet = {
     id: "dungeon",
     src: dungeonTiles,
     size: 16,

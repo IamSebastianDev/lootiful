@@ -6,7 +6,7 @@ import { getMaxStamina } from "../functions/get-max-stamina";
 import { getRandomEntry } from "../functions/get-random-entry";
 import { names } from "../data/names";
 import { useDungeonMap } from "./use-dungeon-map";
-import { MapDef, dungeonMap } from "../data/maps";
+import { dungeonMap } from "../data/maps";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -35,7 +35,7 @@ export const initialAttributeValues = () => {
 const GameStateContext = createContext<GameState | undefined>(undefined);
 
 export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [map, setMap] = useDungeonMap([dungeonMap]);
+    const [map] = useDungeonMap([dungeonMap]);
     const [name, setName] = useState<string | null>(getRandomEntry(names));
     const [attributes, bumpAttributeByType, setAttributeValues] = useAttributes(initialAttributeValues());
     const { current, spendCoins, addCoins } = useCoins();
