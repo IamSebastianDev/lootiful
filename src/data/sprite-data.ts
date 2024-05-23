@@ -1,6 +1,7 @@
 /** @format */
 import dungeonSpriteSheet from '../assets/images/sprites/dungeon.png';
 import skeletonSpriteSheet from '../assets/images/sprites/skeleton.png';
+import wizardSpriteSheet from '../assets/images/sprites/wizard.png';
 
 export type SpriteSheet = {
     size: number;
@@ -19,34 +20,48 @@ export const dungeonSprites = {
     columns: 10,
     tileMap: {
         wall_left_1: [0, 0],
-        wall_left_2: [1, 0],
-        wall_right_1: [0, 5],
-        wall_right_2: [1, 5],
-        wall_top_1: [0, 1],
-        wall_top_2: [0, 2],
-        wall_top_3: [0, 3],
-        wall_bottom_1: [4, 1],
-        wall_bottom_2: [4, 2],
-        wall_corner_l: [4, 0],
-        wall_corner_r: [4, 5],
+        wall_left_2: [0, 1],
+        wall_right_1: [5, 0],
+        wall_right_2: [5, 0],
+        wall_top_1: [1, 0],
+        wall_top_2: [2, 0],
+        wall_top_3: [3, 0],
+        wall_bottom_1: [1, 4],
+        wall_bottom_2: [2, 4],
+        wall_corner_l: [0, 4],
+        wall_corner_r: [5, 4],
         floor_1: [1, 1],
-        floor_2: [1, 2],
-        floor_3: [2, 1],
+        floor_2: [2, 1],
+        floor_3: [1, 2],
         floor_4: [2, 2],
-        flag: [7, 4],
+        flag: [4, 7],
     },
 } satisfies SpriteSheet;
 
 export const skeletonSprites = {
-    id: 'hero',
+    id: 'skeleton',
     src: skeletonSpriteSheet,
     size: 16,
-    rows: 10,
-    columns: 10,
+    rows: 1,
+    columns: 4,
     tileMap: {
         frame1: [0, 0],
-        frame2: [0, 1],
-        frame3: [0, 2],
-        frame4: [0, 3],
+        frame2: [1, 0],
+        frame3: [2, 0],
+        frame4: [3, 0],
+    },
+} satisfies SpriteSheet;
+
+export const heroSprites = {
+    id: 'hero',
+    src: wizardSpriteSheet,
+    size: 16,
+    rows: 1,
+    columns: 4,
+    tileMap: {
+        frame1: [0, 0],
+        frame2: [1, 0],
+        frame3: [2, 0],
+        frame4: [3, 0],
     },
 } satisfies SpriteSheet;

@@ -11,7 +11,7 @@ const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: n
     canvas.height = size;
     // Draw the tile to the canvas
     const ctx = canvas.getContext('2d');
-    ctx?.drawImage(image, y * size, x * size, size, size, 0, 0, size, size);
+    ctx?.drawImage(image, x * size, y * size, size, size, 0, 0, size, size);
 
     // Create the texture from the created Canvas
     const tile = new Image();
