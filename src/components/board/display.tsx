@@ -1,6 +1,6 @@
 /** @format */
 
-import { Preload } from '@react-three/drei';
+import { Preload, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import React from 'react';
 import { Board } from './board';
@@ -13,6 +13,7 @@ export const Display: React.FC = () => {
                 <orthographicCamera position={[-7, 7, -5]}>
                     <Board />
                 </orthographicCamera>
+                {import.meta.env.DEV && <Stats />}
             </Canvas>
         </div>
     );
