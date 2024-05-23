@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { MapDef } from "../data/maps";
-import { TileAtlas } from "../data/tile-atlas";
+/** @format */
 
-export const useDungeonMap = <T extends TileAtlas>(maps: MapDef<T>[]) => {
+import { useState } from 'react';
+import { MapDef } from '../data/maps';
+import { SpriteSheet } from '../data/sprite-data';
+
+export const useDungeonMap = <T extends SpriteSheet>(maps: MapDef<T>[]) => {
     const [currentMap, setCurrentMap] = useState(maps[0]);
 
     const setMap = (key: string) => {

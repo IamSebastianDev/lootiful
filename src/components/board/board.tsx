@@ -3,12 +3,14 @@
 import React from 'react';
 import { useSpriteSheet } from '../../hooks/use-sprite-sheet';
 import { Tile, TileProps } from './tile';
-import { dungeonTileSet } from '../../data/tile-atlas';
+import { dungeonSprites, skeletonSprites } from '../../data/sprite-data';
 import { useGame } from '../../hooks/use-game';
+import { useAnimatedSprite } from '../../hooks/use-animated-sprite';
 
 export const Board: React.FC = () => {
     const { map, coins } = useGame();
-    const sprites = useSpriteSheet(dungeonTileSet);
+    const sprites = useSpriteSheet(dungeonSprites);
+    const skeleton = useAnimatedSprite(skeletonSprites, { interval: 0.25 });
 
     const tileMap: TileProps[] = [];
     for (let x = 0; x < map.width; x++) {
@@ -27,6 +29,7 @@ export const Board: React.FC = () => {
                 <Tile key={idx} {...props} />
             ))}
             <Tile position={[2, 2 * -1, 0.1]} onClick={() => coins.addCoins(5000)} texture={sprites.get(8, 0)} />
+            <Tile position={[10, -2, 0.1]} onClick={() => coins.addCoins(5000)} texture={skeleton} />
         </group>
     );
 };

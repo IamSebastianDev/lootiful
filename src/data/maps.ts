@@ -1,14 +1,14 @@
 /** @format */
 
-import { TileAtlas, dungeonTileSet } from './tile-atlas';
-export type MapDef<T extends TileAtlas> = {
+import { SpriteSheet, dungeonSprites } from './sprite-data';
+export type MapDef<T extends SpriteSheet> = {
     name: string;
     width: number;
     height: number;
     tiles: (keyof T['tileMap'])[];
 };
 
-export const dungeonMap: MapDef<typeof dungeonTileSet> = {
+export const dungeonMap: MapDef<typeof dungeonSprites> = {
     name: 'dungeon',
     width: 15,
     height: 15,

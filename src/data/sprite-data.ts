@@ -1,4 +1,8 @@
-export type TileAtlas = {
+/** @format */
+import dungeonSpriteSheet from '../assets/images/sprites/dungeon.png';
+import skeletonSpriteSheet from '../assets/images/sprites/skeleton.png';
+
+export type SpriteSheet = {
     size: number;
     rows: number;
     columns: number;
@@ -7,10 +11,9 @@ export type TileAtlas = {
     tileMap: { [key: string]: [number, number] };
 };
 
-import dungeonTiles from "../assets/images/tileset.png";
-export const dungeonTileSet = {
-    id: "dungeon",
-    src: dungeonTiles,
+export const dungeonSprites = {
+    id: 'dungeon',
+    src: dungeonSpriteSheet,
     size: 16,
     rows: 10,
     columns: 10,
@@ -30,5 +33,20 @@ export const dungeonTileSet = {
         floor_2: [1, 2],
         floor_3: [2, 1],
         floor_4: [2, 2],
+        flag: [7, 4],
     },
-} satisfies TileAtlas;
+} satisfies SpriteSheet;
+
+export const skeletonSprites = {
+    id: 'hero',
+    src: skeletonSpriteSheet,
+    size: 16,
+    rows: 10,
+    columns: 10,
+    tileMap: {
+        frame1: [0, 0],
+        frame2: [0, 1],
+        frame3: [0, 2],
+        frame4: [0, 3],
+    },
+} satisfies SpriteSheet;

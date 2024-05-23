@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Texture } from 'three';
-import { TileAtlas } from '../data/tile-atlas';
+import { SpriteSheet } from '../data/sprite-data';
 
 const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: number) => {
     // Create canvas to store new tile image
@@ -24,7 +24,7 @@ const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: n
 
 const atlas = new Map<string, Texture>();
 
-export const useSpriteSheet = <T extends TileAtlas>({ rows, size, columns, src, id, tileMap }: T) => {
+export const useSpriteSheet = <T extends SpriteSheet>({ rows, size, columns, src, id, tileMap }: T) => {
     const image = new Image(columns * size, rows * size);
     image.src = src;
 
