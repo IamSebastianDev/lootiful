@@ -15,6 +15,8 @@
     --lc-warm-brown: rgba(107, 54, 19, 1);
     --lc-coral-pink: rgba(207, 104, 109, 1);
 
+    --lc-canvas: rgba(15, 5, 5, 1);
+
     /* Spacing */
     --ll-xs: 0.25rem;
     --ll-sm: 0.5rem;
@@ -50,7 +52,7 @@ body {
     overscroll-behavior: none;
     background: var(--lc-dark-charcoal);
     overflow: hidden;
-    font-family: "Press Start 2P", system-ui;
+    font-family: 'Press Start 2P', system-ui;
     color: var(--lc-ivory);
     line-height: 1.5;
 }
@@ -311,15 +313,21 @@ body {
 
 .hero-stats {
     padding: 0 var(--ll-sm);
+    z-index: 1000;
 }
 
 .hero-panel {
-    min-width: 300px;
-    max-width: 30svw;
+    flex-grow: 1;
     background: var(--comp-hero-panel-bg);
+    max-width: 33svw;
+    min-width: 400px;
 }
 
 .game-board {
     position: absolute;
     inset: 0;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1 / 1;
+    margin: auto;
 }
