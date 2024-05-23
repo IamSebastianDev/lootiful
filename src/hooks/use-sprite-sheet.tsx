@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { Texture } from "three";
-import { TileAtlas } from "../data/tile-atlas";
+/** @format */
+
+import { useEffect, useState } from 'react';
+import { Texture } from 'three';
+import { TileAtlas } from '../data/tile-atlas';
 
 const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: number) => {
     // Create canvas to store new tile image
-    const canvas = document.createElement("canvas");
+    const canvas = document.createElement('canvas');
     canvas.width = size;
     canvas.height = size;
     // Draw the tile to the canvas
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     ctx?.drawImage(image, y * size, x * size, size, size, 0, 0, size, size);
 
     // Create the texture from the created Canvas
@@ -22,7 +24,7 @@ const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: n
 
 const atlas = new Map<string, Texture>();
 
-export const useTextureAtlas = <T extends TileAtlas>({ rows, size, columns, src, id, tileMap }: T) => {
+export const useSpriteSheet = <T extends TileAtlas>({ rows, size, columns, src, id, tileMap }: T) => {
     const image = new Image(columns * size, rows * size);
     image.src = src;
 
@@ -48,10 +50,10 @@ export const useTextureAtlas = <T extends TileAtlas>({ rows, size, columns, src,
             return;
         }
 
-        image.addEventListener("load", load);
+        image.addEventListener('load', load);
 
         return () => {
-            image.removeEventListener("load", load);
+            image.removeEventListener('load', load);
         };
     }, []);
 
@@ -64,7 +66,7 @@ export const useTextureAtlas = <T extends TileAtlas>({ rows, size, columns, src,
         return atlas.get(key) as Texture;
     };
 
-    const getByKey = (key: keyof T["tileMap"]) => {
+    const getByKey = (key: keyof T['tileMap']) => {
         const tile = tileMap[key as string];
         if (!tile) return null;
         return get(...tile);
