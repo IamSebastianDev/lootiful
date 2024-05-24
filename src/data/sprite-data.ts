@@ -19,6 +19,7 @@ export const dungeonSprites = {
     rows: 10,
     columns: 10,
     tileMap: {
+        void: [8, 7],
         wall_left_1: [0, 0],
         wall_left_2: [0, 1],
         wall_right_1: [5, 0],
@@ -30,6 +31,8 @@ export const dungeonSprites = {
         wall_bottom_2: [2, 4],
         wall_corner_l: [0, 4],
         wall_corner_r: [5, 4],
+        wall_corner_inner_r: [0, 5],
+        wall_corner_inner_l: [3, 5],
         floor_1: [1, 1],
         floor_2: [2, 1],
         floor_3: [1, 2],
