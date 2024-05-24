@@ -1,12 +1,9 @@
 /** @format */
 
 import React, { useState } from 'react';
-import { useSpriteSheet } from '../../hooks/use-sprite-sheet';
-import { Tile, TileProps } from './tile';
+import { Tile } from './tile';
 import { dungeonSprites, heroSprites, skeletonSprites } from '../../data/sprite-data';
 import { useGame } from '../../hooks/use-game';
-import { useAnimatedSprite } from '../../hooks/use-animated-sprite';
-import { Vector3 } from 'three';
 import { Sprite } from './sprite';
 import { AnimatedSprite } from './animated-sprite';
 import { TileRenderer } from './tile-renderer';
