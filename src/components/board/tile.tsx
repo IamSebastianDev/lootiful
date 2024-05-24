@@ -1,33 +1,33 @@
 /** @format */
 
-import React, { useEffect, useRef } from "react";
-import { Texture } from "three";
-import { Vector3 } from "@react-three/fiber";
+import { MeshProps, useFrame } from '@react-three/fiber';
+import { SpriteSheet } from '../../data/sprite-data';
+import { useSpriteSheet } from '../../hooks/use-sprite-sheet';
+import { useRef } from 'react';
 
-export type TileProps = {
-    texture: Texture | null;
-    position: Vector3;
-    onClick: () => void;
-};
+export type TileProps<T extends SpriteSheet> = {
+    size?: [width: number, height: number];
+    sheet: T;
+    sprite: keyof T['tileMap'];
+} & MeshProps;
 
-export const Tile: React.FC<TileProps> = ({ texture, position, onClick }) => {
-    const textureRef = useRef<any>();
+export const Tile = <T extends SpriteSheet>({ size, sheet, sprite, ...props }: TileProps<T>) => {
+    const spriteRef = useRef<any>();
+    const [width, height] = size ?? [1, 1];
+    const spriteSheet = useSpriteSheet(sheet);
+    const texture = spriteSheet.getByKey(sprite);
 
-    useEffect(() => {
-        if (texture) {
-            textureRef.current.map = texture;
-            textureRef.current.needsUpdate = true;
+    useFrame(() => {
+        if (spriteRef.current) {
+            spriteRef.current.texture = texture;
+            spriteRef.current.needsUpdate = true;
         }
-    }, [texture]);
-
-    if (!texture) {
-        return null;
-    }
+    });
 
     return (
-        <mesh position={position} onClick={() => onClick()} receiveShadow castShadow>
-            <planeGeometry attach="geometry" args={[1, 1]} />
-            <meshBasicMaterial transparent ref={textureRef} attach="material" map={texture} />
+        <mesh {...props}>
+            <planeGeometry attach="geometry" args={[width, height]} />
+            <meshBasicMaterial ref={spriteRef} transparent attach="material" map={texture} />
         </mesh>
     );
 };

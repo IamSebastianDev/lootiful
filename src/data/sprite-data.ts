@@ -35,6 +35,7 @@ export const dungeonSprites = {
         floor_3: [1, 2],
         floor_4: [2, 2],
         flag: [4, 7],
+        chest: [0, 8],
     },
 } satisfies SpriteSheet;
 

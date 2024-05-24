@@ -315,6 +315,7 @@ body {
     padding: 0 var(--ll-sm);
     z-index: 1000;
     letter-spacing: 3px;
+    user-select: none;
 }
 
 .hero-panel {

@@ -5,6 +5,7 @@ export type MapDef<T extends SpriteSheet> = {
     name: string;
     width: number;
     height: number;
+    spriteSheet: T;
     tiles: (keyof T['tileMap'])[];
 };
 
@@ -12,6 +13,7 @@ export const dungeonMap: MapDef<typeof dungeonSprites> = {
     name: 'dungeon',
     width: 15,
     height: 15,
+    spriteSheet: dungeonSprites,
     // prettier-ignore
     tiles: [
         "wall_left_1",      "wall_top_2",       "wall_top_1",       "wall_top_3",       "wall_top_2",       "wall_top_3","wall_top_1",       "wall_top_3",       "wall_top_2","wall_top_1",       "wall_top_1",       "wall_top_3",
