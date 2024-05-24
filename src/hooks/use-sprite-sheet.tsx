@@ -22,27 +22,45 @@ const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: n
     return texture;
 };
 
-const atlas = new Map<string, Texture>();
+const createSprites = ({ rows, size, id, columns }: SpriteSheet, image: HTMLImageElement, onComplete: () => void) => {
+    for (let x = 0; x < columns; x++) {
+        for (let y = 0; y < rows; y++) {
+            const key = `${id}@${x}:${y}`;
 
-export const useSpriteSheet = <T extends SpriteSheet>({ rows, size, columns, src, id, tileMap }: T) => {
-    const image = new Image(columns * size, rows * size);
-    image.src = src;
-
-    const [loaded, setLoaded] = useState(false);
-
-    const load = () => {
-        setLoaded(true);
-
-        for (let x = 0; x < columns; x++) {
-            for (let y = 0; y < rows; y++) {
-                const key = `${id}@${x}:${y}`;
-
-                if (!atlas.has(key)) {
-                    const texture = createNewTexture(size, image, x, y);
-                    atlas.set(key, texture);
-                }
+            if (!atlas.has(key)) {
+                const texture = createNewTexture(size, image, x, y);
+                atlas.set(key, texture);
             }
         }
+    }
+
+    onComplete();
+};
+
+const cache = new Map<string, HTMLImageElement>();
+const atlas = new Map<string, Texture>();
+
+export const useSpriteSheet = <T extends SpriteSheet>(spriteSheet: T) => {
+    const { rows, size, columns, src, id, tileMap } = spriteSheet;
+    let image: HTMLImageElement | undefined;
+    if (!cache.has(src)) {
+        image = new Image(columns * size, rows * size);
+        image.src = src;
+        cache.set(src, image);
+    }
+
+    image = cache.get(src);
+
+    if (!image) {
+        throw new Error(`Cache miss for spriteSheet: ${src}`);
+    }
+
+    const [loaded, setLoaded] = useState(image.complete);
+
+    const processSpriteSheet = () => {
+        createSprites(spriteSheet, image, () => {
+            setLoaded(true);
+        });
     };
 
     useEffect(() => {
@@ -50,10 +68,10 @@ export const useSpriteSheet = <T extends SpriteSheet>({ rows, size, columns, src
             return;
         }
 
-        image.addEventListener('load', load);
+        image.addEventListener('load', processSpriteSheet);
 
         return () => {
-            image.removeEventListener('load', load);
+            image.removeEventListener('load', processSpriteSheet);
         };
     }, []);
 
@@ -73,4 +91,16 @@ export const useSpriteSheet = <T extends SpriteSheet>({ rows, size, columns, src
     };
 
     return { get, getByKey, atlas, loaded };
+};
+
+export const preloadSpriteSheet = (spriteSheet: SpriteSheet) => {
+    const { src } = spriteSheet;
+    const image = new Image();
+    image.src = src;
+    image.addEventListener('load', () => {
+        createSprites(spriteSheet, image, () => {
+            console.log(`Preloaded SpriteSheet: ${spriteSheet.id}`);
+        });
+        cache.set(src, image);
+    });
 };

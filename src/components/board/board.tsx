@@ -28,8 +28,6 @@ export const Board: React.FC = () => {
         }
     }
 
-    console.log({ heroPos });
-
     return (
         <group>
             {tileMap.map((props, idx) => (
