@@ -1,12 +1,18 @@
 /** @format */
 
 import { SpriteSheet, dungeonSprites } from './sprite-data';
+
+export type TileData<T extends SpriteSheet> = {
+    id: string;
+    position: [x: number, y: number];
+    textureKey: keyof T['tileMap'];
+};
 export type MapDef<T extends SpriteSheet> = {
     name: string;
     width: number;
     height: number;
     spriteSheet: T;
-    tiles: (keyof T['tileMap'])[];
+    tiles: TileData<T>[];
 };
 
 export const dungeonMap: MapDef<typeof dungeonSprites> = {
@@ -16,37 +22,80 @@ export const dungeonMap: MapDef<typeof dungeonSprites> = {
     spriteSheet: dungeonSprites,
     // prettier-ignore
     tiles: [
-        "wall_left_1",      "wall_top_2",       "wall_top_1",       "wall_top_3",       "wall_top_2",       "wall_top_3","wall_top_1",       "wall_top_3",       "wall_top_2","wall_top_1",       "wall_top_1",       "wall_top_3",
-        "wall_top_1",       "wall_top_2",       "wall_right_1",
-        
-        "wall_left_1",      "floor_2",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_3",          "floor_3", "floor_3",          "floor_3",          "floor_3", "floor_2",          "floor_3",          "wall_right_1",
-
-        "wall_left_1",      "floor_2",          "floor_2",          "floor_2",          "floor_3",          "floor_1", "floor_1",          "floor_2",          "floor_2", "floor_3",          "floor_3",          "floor_2", "floor_2",          "floor_1",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-        
-        "wall_left_1",      "floor_1",          "floor_2",          "floor_2",          "floor_2",          "floor_1", "floor_1",          "floor_1",          "floor_1", "floor_1",          "floor_1",          "floor_2", "floor_2",          "floor_2",          "wall_right_1",
-        
-        "wall_corner_l",    "wall_bottom_1",    "wall_bottom_1",          "wall_bottom_1",    "wall_bottom_1",    "wall_bottom_1", "wall_bottom_1",    "wall_bottom_1",    "wall_bottom_1", "wall_bottom_1",    "wall_bottom_1",    "wall_bottom_1", "wall_bottom_1",    "wall_bottom_1",    "wall_corner_r",
-        
-       
+        {
+            id: crypto.randomUUID(),
+            position: [0, 0], 
+            textureKey: 'wall_left_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [1, 0], 
+            textureKey: 'wall_top_2'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [2, 0], 
+            textureKey: 'wall_top_2'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [3, 0], 
+            textureKey: 'wall_top_3'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [4, 0], 
+            textureKey: 'wall_top_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [5, 0], 
+            textureKey: 'wall_top_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [6, 0], 
+            textureKey: 'wall_top_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [7, 0], 
+            textureKey: 'wall_top_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [8, 0], 
+            textureKey: 'wall_top_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [9, 0], 
+            textureKey: 'wall_top_2'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [10, 0], 
+            textureKey: 'wall_top_2'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [11, 0], 
+            textureKey: 'wall_top_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [12, 0], 
+            textureKey: 'wall_top_1'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [13, 0], 
+            textureKey: 'wall_top_2'
+        },
+        {
+            id: crypto.randomUUID(),
+            position: [14, 0], 
+            textureKey: 'wall_right_2'
+        },
     ],
 };

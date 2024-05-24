@@ -14,12 +14,7 @@ export const Board: React.FC = () => {
 
     return (
         <group>
-            <TileRenderer
-                map={map}
-                renderer={({ key, ...props }) => (
-                    <Tile {...props} key={key} onClick={() => setHeroPos(props.position)} />
-                )}
-            />
+            <TileRenderer map={map} renderer={({ id, ...props }) => <Tile {...props} key={id} />} />
             <Sprite position={[10, 0, 0.1]} sheet={dungeonSprites} sprite={'flag'} />
             <AnimatedSprite
                 position={[10, -2, 0.1]}
