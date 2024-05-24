@@ -1,7 +1,8 @@
 /** @format */
-import dungeonSpriteSheet from '../assets/images/sprites/dungeon.png';
-import skeletonSpriteSheet from '../assets/images/sprites/skeleton.png';
-import wizardSpriteSheet from '../assets/images/sprites/wizard.png';
+import dungeonSpriteSheet from "../assets/images/sprites/dungeon.png";
+import skeletonSpriteSheet from "../assets/images/sprites/skeleton.png";
+import wizardSpriteSheet from "../assets/images/sprites/wizard.png";
+import coinSpriteSheet from "../assets/images/sprites/coin.png";
 
 export type SpriteSheet = {
     size: number;
@@ -13,7 +14,7 @@ export type SpriteSheet = {
 };
 
 export const dungeonSprites = {
-    id: 'dungeon',
+    id: "dungeon",
     src: dungeonSpriteSheet,
     size: 16,
     rows: 10,
@@ -43,7 +44,7 @@ export const dungeonSprites = {
 } satisfies SpriteSheet;
 
 export const skeletonSprites = {
-    id: 'skeleton',
+    id: "skeleton",
     src: skeletonSpriteSheet,
     size: 16,
     rows: 1,
@@ -57,11 +58,25 @@ export const skeletonSprites = {
 } satisfies SpriteSheet;
 
 export const heroSprites = {
-    id: 'hero',
+    id: "hero",
     src: wizardSpriteSheet,
     size: 16,
     rows: 1,
     columns: 4,
+    tileMap: {
+        frame1: [0, 0],
+        frame2: [1, 0],
+        frame3: [2, 0],
+        frame4: [3, 0],
+    },
+} satisfies SpriteSheet;
+
+export const coinSprites = {
+    id: "coin",
+    src: coinSpriteSheet,
+    size: 16,
+    rows: 1,
+    columns: 5,
     tileMap: {
         frame1: [0, 0],
         frame2: [1, 0],

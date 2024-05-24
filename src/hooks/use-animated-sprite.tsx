@@ -1,14 +1,11 @@
 /** @format */
 
-import { useEffect, useRef, useState } from 'react';
-import { SpriteSheet } from '../data/sprite-data';
-import { useFrame } from '@react-three/fiber';
-import { Texture } from 'three';
-import { useSpriteSheet } from './use-sprite-sheet';
-import { useSpriteClock } from './use-sprite-clock';
+import { SpriteSheet } from "../data/sprite-data";
+import { useSpriteSheet } from "./use-sprite-sheet";
+import { useSpriteClock } from "./use-sprite-clock";
 
 export type AnimatedSpriteConfig<T extends SpriteSheet> = {
-    frames?: (keyof T['tileMap'])[];
+    frames?: (keyof T["tileMap"])[];
     interval: number;
 };
 
