@@ -30,6 +30,8 @@ export const useEntityCollection = (map: typeof dungeonMap) => {
         [entities]
     );
 
+    const clear = () => setEntities([]);
+
     useEffect(() => {
         // Might implement entity caching later
         setEntities([]);
@@ -41,5 +43,6 @@ export const useEntityCollection = (map: typeof dungeonMap) => {
         entities,
         getAvailableTile,
         getEntityById,
+        clear,
     };
 };

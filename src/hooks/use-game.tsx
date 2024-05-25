@@ -50,12 +50,11 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const [takenDamage, setTakenDamage] = useState(0);
     const [usedStamina, setUsedStamina] = useState(0);
     const entityStore = useEntityCollection(map);
-    const { entities, ...entityMethods } = entityStore;
     const cursor = useCursor();
     const tick = useClock(0.1);
 
     // Update the entities
-    useEffect(() => entities.forEach((entity) => entity.update(entityStore)), [tick]);
+    useEffect(() => entityStore.entities.forEach((entity) => entity.update(entityStore)), [tick]);
 
     // Derived attributes
     const maxHealth = getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
@@ -64,6 +63,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const stamina = Math.max(maxStamina - usedStamina, 0);
     const health = Math.max(maxHealth - takenDamage, 0);
 
+    // Function to add Loot
+    // todo: spread around target
     const createLoot = (position: Position) => {
         const entry = lootTable.getRandom();
         if (position && entry) {
@@ -83,8 +84,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         }
     };
 
-    // create x random enemys
-    const createEnemiesForLevel = (amount: number) => {
+    // Create the enemies for the Level
+    const setupEnemySpawnForLevel = (amount: number) => {
         Array(amount)
             .fill(null)
             .forEach(() => {
@@ -95,17 +96,14 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             });
     };
 
-    useEffect(() => {
-        createEnemiesForLevel(5);
-    }, []);
-
     const reset = () => {
         coins.spendCoins(coins.current);
         setAttributeValues(initialAttributeValues());
         setName(getRandomEntry(names));
         setTakenDamage(0);
         setUsedStamina(0);
-        createEnemiesForLevel(5);
+        entityStore.clear();
+        setupEnemySpawnForLevel(attributes.Strength.value * attributes.Constitution.value);
     };
 
     const damageHero = (damage: number) => {
