@@ -2,7 +2,7 @@ import { AnimatedSprite } from "../../components/board/animated-sprite";
 import { EntityProps, createEntity } from "../../data/entity";
 import { Position } from "../../functions/position";
 import { Store } from "../../functions/simple-store";
-import { useEntityCollection } from "../../hooks/use-entity-collection";
+import { GameState } from "../../hooks/use-game";
 import skeletonSprites from "../sprites/skeleton.sprites";
 
 export type LootCtor = {
@@ -33,16 +33,16 @@ export const Skeleton = (ctor: LootCtor) => {
         );
     };
 
-    const onDestroy = (id: string, props: Store<SkeletonProps>, entities: ReturnType<typeof useEntityCollection>) => {
+    const onDestroy = (id: string, props: Store<SkeletonProps>, { entities }: GameState) => {
         const position = props.get("position");
         createLoot(position);
         entities.removeEntity(id);
     };
 
-    const onUpdate = (id: string, props: Store<SkeletonProps>, entities: ReturnType<typeof useEntityCollection>) => {
+    const onUpdate = (id: string, props: Store<SkeletonProps>, state: GameState) => {
         const health = props.get("health");
         if (health < 1) {
-            entities.getEntityById(id)?.destroy(entities);
+            state.entities.getEntityById(id)?.destroy(state);
         }
     };
 

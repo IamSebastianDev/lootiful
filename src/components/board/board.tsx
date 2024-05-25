@@ -8,7 +8,8 @@ import { TileRenderer } from "./tile-renderer";
 import { Cursor } from "./cursor";
 
 export const Board: React.FC = () => {
-    const { map, entities, cursor } = useGame();
+    const state = useGame();
+    const { map, entities, cursor, hero } = state;
 
     return (
         <group>
@@ -17,6 +18,11 @@ export const Board: React.FC = () => {
                 map={map}
                 renderer={({ id, ...props }) => (
                     <Tile
+                        onClick={() => {
+                            if (props.tile.isMoveTarget) {
+                                hero.setDestination(props.tile.position);
+                            }
+                        }}
                         onPointerEnter={() => {
                             cursor.setPosition(props.tile.position);
                             cursor.setState(props.tile.isMoveTarget ? "OK" : "ERROR");
@@ -26,7 +32,7 @@ export const Board: React.FC = () => {
                     />
                 )}
             />
-            {entities.entities.map((entity) => entity.render())}
+            {entities.entities.map((entity) => entity.render(state))}
         </group>
     );
 };

@@ -72,6 +72,13 @@ export default createMap({
         },
         {
             id: crypto.randomUUID(),
+            position: position(8, 0),
+            textureKey: "ladder",
+            isMoveTarget: false,
+            isSpawnTile: false,
+        },
+        {
+            id: crypto.randomUUID(),
             position: position(9, 0),
             textureKey: "wall_top_2",
             isMoveTarget: false,

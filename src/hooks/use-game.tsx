@@ -10,9 +10,10 @@ import dungeonMap from "../assets/maps/dungeon.map";
 import { useEntityCollection } from "./use-entity-collection";
 import { useCursor } from "./use-cursor";
 import { useClock } from "./use-clock";
-import { Position } from "../functions/position";
-import { Loot, lootTable } from "../assets/entities/loot";
-import { Skeleton } from "../assets/entities/skeleton";
+import { Position, position } from "../functions/position";
+import { Loot, lootTable } from "../assets/entities/loot.entity";
+import { Skeleton } from "../assets/entities/skeleton.entity";
+import { Player } from "../assets/entities/player.entity";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -25,6 +26,8 @@ export type Hero = {
     stamina: number;
     damage: number;
     damageHero: (amount: number) => void;
+    destination: Position;
+    setDestination: (position: Position) => void;
 };
 
 export type GameState = {
@@ -52,9 +55,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const entityStore = useEntityCollection(map);
     const cursor = useCursor();
     const tick = useClock(0.1);
-
-    // Update the entities
-    useEffect(() => entityStore.entities.forEach((entity) => entity.update(entityStore)), [tick]);
+    const [destination, setDestination] = useState(position(8, 0));
 
     // Derived attributes
     const maxHealth = getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
@@ -62,6 +63,10 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const damage = attributes.Strength.value * 2 + attributes.Dexterity.value;
     const stamina = Math.max(maxStamina - usedStamina, 0);
     const health = Math.max(maxHealth - takenDamage, 0);
+
+    const setupPlayerForLevel = () => {
+        entityStore.addEntity(Player({ position: destination }));
+    };
 
     // Function to add Loot
     // todo: spread around target
@@ -104,11 +109,17 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         setUsedStamina(0);
         entityStore.clear();
         setupEnemySpawnForLevel(attributes.Strength.value * attributes.Constitution.value);
+        setupPlayerForLevel();
+        setDestination(position(8, 0));
     };
 
     const damageHero = (damage: number) => {
         setTakenDamage((current) => current + damage);
     };
+
+    useEffect(() => {
+        reset();
+    }, []);
 
     const gameState: GameState = {
         entities: entityStore,
@@ -126,9 +137,14 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             maxStamina,
             stamina,
             damageHero,
+            destination,
+            setDestination,
         },
         map,
     };
+
+    // Update the entities
+    useEffect(() => entityStore.entities.forEach((entity) => entity.update(gameState)), [tick]);
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
 };

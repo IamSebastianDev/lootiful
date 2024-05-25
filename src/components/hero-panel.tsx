@@ -1,9 +1,6 @@
-import React, { ChangeEvent, useCallback } from "react";
+import React, { ChangeEvent } from "react";
 import { useGame } from "../hooks/use-game";
 import { HeroAttributes } from "./hero-attributes";
-import { Loot, lootTable } from "../assets/entities/loot";
-import { Skeleton } from "../assets/entities/skeleton";
-import { Position } from "../functions/position";
 
 // Name
 // Attributes (clickable when enough money exists)

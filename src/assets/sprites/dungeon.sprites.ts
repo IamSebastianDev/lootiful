@@ -28,5 +28,6 @@ export default {
         floor_4: [2, 2],
         flag: [4, 7],
         chest: [0, 8],
+        ladder: [9, 3],
     },
 } satisfies SpriteSheet;
