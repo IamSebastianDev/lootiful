@@ -10,47 +10,11 @@ import { Position } from "../functions/position";
 // Loot list
 
 export const HeroPanel: React.FC = () => {
-    const { hero, entities, coins, cursor } = useGame();
+    const { hero } = useGame();
     const handleNameChange = (event: ChangeEvent) => {
         const name = (event.target as HTMLInputElement).value;
         hero.changeName(name);
     };
-
-    const addLoot = useCallback(
-        (pos?: Position) => {
-            const entry = lootTable.getRandom();
-            const position = pos ?? entities.getAvailableTile()?.position;
-            if (position && entry) {
-                entities.addEntity(
-                    Loot({
-                        position,
-                        type: entry.key,
-                        onPickUp: ({ id }) => {
-                            entities.removeEntity(id);
-                            coins.addCoins(entry.value);
-                            cursor.setTooltip(null);
-                        },
-                        onPointerIn: ({ type, loot }) => cursor.setTooltip(`${type}: ${loot.value}`),
-                        onPointerOut: () => cursor.setTooltip(null),
-                    })
-                );
-            }
-        },
-        [entities.entities]
-    );
-
-    const addEnemy = useCallback(() => {
-        const position = entities.getAvailableTile()?.position;
-
-        if (position) {
-            entities.addEntity(
-                Skeleton({
-                    position,
-                    createLoot: (position: Position) => addLoot(position),
-                })
-            );
-        }
-    }, [entities]);
 
     return (
         <aside className="hero-panel stack vertical relaxed container full-h">
@@ -64,7 +28,6 @@ export const HeroPanel: React.FC = () => {
             <HeroAttributes />
             <hr />
             <button onClick={() => hero.damageHero(10)}>Hurt Hero</button>
-            <button onClick={() => addEnemy()}>Add Skeleton</button>
         </aside>
     );
 };

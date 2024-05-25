@@ -10,6 +10,9 @@ import dungeonMap from "../assets/maps/dungeon.map";
 import { useEntityCollection } from "./use-entity-collection";
 import { useCursor } from "./use-cursor";
 import { useClock } from "./use-clock";
+import { Position } from "../functions/position";
+import { Loot, lootTable } from "../assets/entities/loot";
+import { Skeleton } from "../assets/entities/skeleton";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -43,11 +46,12 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const [map] = useDungeonMap([dungeonMap]);
     const [name, setName] = useState<string | null>(getRandomEntry(names));
     const [attributes, bumpAttributeByType, setAttributeValues] = useAttributes(initialAttributeValues());
-    const { current, spendCoins, addCoins } = useCoins();
+    const coins = useCoins();
     const [takenDamage, setTakenDamage] = useState(0);
     const [usedStamina, setUsedStamina] = useState(0);
     const entityStore = useEntityCollection(map);
     const { entities, ...entityMethods } = entityStore;
+    const cursor = useCursor();
     const tick = useClock(0.1);
 
     // Update the entities
@@ -60,12 +64,48 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const stamina = Math.max(maxStamina - usedStamina, 0);
     const health = Math.max(maxHealth - takenDamage, 0);
 
+    const createLoot = (position: Position) => {
+        const entry = lootTable.getRandom();
+        if (position && entry) {
+            entityStore.addEntity(
+                Loot({
+                    position,
+                    type: entry.key,
+                    onPickUp: ({ id }) => {
+                        entityStore.removeEntity(id);
+                        coins.addCoins(entry.value);
+                        cursor.setTooltip(null);
+                    },
+                    onPointerIn: ({ type, loot }) => cursor.setTooltip(`${type}: ${loot.value}`),
+                    onPointerOut: () => cursor.setTooltip(null),
+                })
+            );
+        }
+    };
+
+    // create x random enemys
+    const createEnemiesForLevel = (amount: number) => {
+        Array(amount)
+            .fill(null)
+            .forEach(() => {
+                const tile = entityStore.getAvailableTile();
+                if (tile) {
+                    entityStore.addEntity(Skeleton({ position: tile.position, createLoot }));
+                }
+            });
+    };
+
+    useEffect(() => {
+        createEnemiesForLevel(5);
+    }, []);
+
     const reset = () => {
-        spendCoins(current);
+        coins.spendCoins(coins.current);
         setAttributeValues(initialAttributeValues());
         setName(getRandomEntry(names));
         setTakenDamage(0);
         setUsedStamina(0);
+        createEnemiesForLevel(5);
     };
 
     const damageHero = (damage: number) => {
@@ -73,12 +113,10 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     const gameState: GameState = {
-        cursor: useCursor(),
-        coins: {
-            current,
-            spendCoins,
-            addCoins,
-        },
+        entities: entityStore,
+        reset,
+        cursor,
+        coins,
         hero: {
             name,
             attributes,
@@ -92,11 +130,6 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             damageHero,
         },
         map,
-        reset,
-        entities: {
-            entities,
-            ...entityMethods,
-        },
     };
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
