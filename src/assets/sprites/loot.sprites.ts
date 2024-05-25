@@ -15,7 +15,7 @@ export default {
         skulls: [0, 1],
         unicornHorn: [3, 0],
         tentacle: [0, 6],
-        slime: [0, 9],
+        slime: [9, 0],
         skullJar: [0, 10],
         ring1: [1, 2],
         ring2: [2, 2],
