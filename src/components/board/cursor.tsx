@@ -4,8 +4,6 @@ import { useAnimatedSprite } from "../../hooks/use-animated-sprite";
 import cursorSprite from "../../assets/sprites/cursor.sprite";
 import { Text } from "@react-three/drei";
 
-export type CursorProps = {};
-
 export const Cursor: React.FC = () => {
     const { cursor } = useGame();
     const { state, tooltip, position } = cursor;
@@ -18,7 +16,6 @@ export const Cursor: React.FC = () => {
     }
 
     const [x, y] = position;
-    console.log({ tooltip });
 
     return (
         <group position={[x, y, 0.2]}>
@@ -26,9 +23,13 @@ export const Cursor: React.FC = () => {
                 <planeGeometry attach={"geometry"} />
                 <meshStandardMaterial transparent map={texture} depthWrite={true} attach="material" />
             </mesh>
-            <mesh>
-                <Text>{tooltip}</Text>
-            </mesh>
+            {tooltip && (
+                <mesh position={[0.75, 0, 0.2]}>
+                    <Text font={"/fonts/press2play.ttf"} anchorX={"left"} fontSize={0.3}>
+                        {tooltip}
+                    </Text>
+                </mesh>
+            )}
         </group>
     );
 };
