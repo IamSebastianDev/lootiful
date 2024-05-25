@@ -7,6 +7,8 @@ export type TileData<T extends SpriteSheet> = {
     id: string;
     position: [x: number, y: number];
     textureKey: keyof T["tileMap"];
+    enableMoveTo: boolean;
+    enableSpawn: boolean;
 };
 
 export type MapData<T extends SpriteSheet> = {
