@@ -8,7 +8,7 @@ import { Loot, lootTable } from "../assets/entities/loot";
 // Loot list
 
 export const HeroPanel: React.FC = () => {
-    const { hero, entities, coins } = useGame();
+    const { hero, entities, coins, cursor } = useGame();
     const handleNameChange = (event: ChangeEvent) => {
         const name = (event.target as HTMLInputElement).value;
         hero.changeName(name);
@@ -27,7 +27,10 @@ export const HeroPanel: React.FC = () => {
                     onPickUp: ({ id }) => {
                         entities.removeEntity(id);
                         coins.addCoins(entry.value);
+                        cursor.setTooltip(null);
                     },
+                    onPointerIn: ({ type, loot }) => cursor.setTooltip(`${type}: ${loot.value}`),
+                    onPointerOut: () => cursor.setTooltip(null),
                 })
             );
         }

@@ -1,8 +1,8 @@
 /** @format */
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-export const useSpriteClock = (interval: number) => {
+export const useClock = (interval: number) => {
     const [frame, setFrame] = useState<number>(0);
     const itv = useRef<number>();
 

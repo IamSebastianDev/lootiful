@@ -26,7 +26,7 @@ export const Tile = <T extends SpriteSheet>({ sheet, tile, onPlayerInteraction, 
     return (
         <mesh {...props} position={[x, y, 0]} onClick={(event) => handlePlayerInteract(event)}>
             <planeGeometry attach="geometry" args={[width, height]} />
-            <meshBasicMaterial ref={spriteRef} transparent attach="material" map={texture} />
+            <meshStandardMaterial ref={spriteRef} transparent attach="material" map={texture} />
         </mesh>
     );
 };

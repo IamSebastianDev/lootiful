@@ -8,6 +8,7 @@ import { names } from "../data/names";
 import { useDungeonMap } from "./use-dungeon-map";
 import dungeonMap from "../assets/maps/dungeon.map";
 import { useEntityCollection } from "./use-entity-collection";
+import { useCursor } from "./use-cursor";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -28,6 +29,7 @@ export type GameState = {
     reset: () => void;
     map: typeof dungeonMap;
     entities: ReturnType<typeof useEntityCollection>;
+    cursor: ReturnType<typeof useCursor>;
 };
 
 export const initialAttributeValues = () => {
@@ -65,6 +67,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     const gameState: GameState = {
+        cursor: useCursor(),
         coins: {
             current,
             spendCoins,

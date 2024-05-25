@@ -66,16 +66,21 @@ export type LootCtor = {
     position: Position;
     type: LootKey;
     onPickUp: (data: { id: string; position: Position; type: LootKey }) => void;
+    onPointerIn?: (data: { id: string; loot: LootData<any>; type: LootKey }) => void;
+    onPointerOut?: (data: { id: string; loot: LootData<any>; type: LootKey }) => void;
 };
 
 export const Loot = (ctor: LootCtor) => {
-    const { position, type, onPickUp } = ctor;
+    const { position, type, onPickUp, onPointerIn, onPointerOut } = ctor;
     const { sheet, key } = lootTable.loot[type];
 
     const onRender = (id: string, position: Position) => {
+        const loot = lootTable.loot[type];
         const [x, y] = position;
         return (
             <Sprite
+                onPointerEnter={() => onPointerIn?.({ id, loot, type })}
+                onPointerLeave={() => onPointerOut?.({ id, loot, type })}
                 onClick={() => onPickUp({ id, type, position })}
                 key={id}
                 position={[x, y, 0.1]}

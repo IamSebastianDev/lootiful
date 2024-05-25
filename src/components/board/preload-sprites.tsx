@@ -7,12 +7,14 @@ import wizardSprites from "../../assets/sprites/wizard.sprites";
 import dungeonSprites from "../../assets/sprites/dungeon.sprites";
 import skeletonSprites from "../../assets/sprites/skeleton.sprites";
 import lootSprites from "../../assets/sprites/loot.sprites";
+import cursorSprite from "../../assets/sprites/cursor.sprite";
 export const PreloadSprites: React.FC<PropsWithChildren> = ({ children }) => {
     preloadSpriteSheet(dungeonSprites);
     preloadSpriteSheet(wizardSprites);
     preloadSpriteSheet(skeletonSprites);
     preloadSpriteSheet(coinSprites);
     preloadSpriteSheet(lootSprites);
+    preloadSpriteSheet(cursorSprite);
 
     return children;
 };

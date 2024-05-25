@@ -1,10 +1,10 @@
 /** @format */
 
 import { SpriteSheet, useSpriteSheet } from "./use-sprite-sheet";
-import { useSpriteClock } from "./use-sprite-clock";
+import { useClock } from "./use-clock";
 
 export type AnimatedSpriteConfig<T extends SpriteSheet> = {
-    frames?: (keyof T["tileMap"])[];
+    frames?: readonly (keyof T["tileMap"])[];
     interval: number;
 };
 
@@ -12,7 +12,7 @@ export const useAnimatedSprite = <T extends SpriteSheet>(sheet: T, { frames, int
     const { getByKey } = useSpriteSheet(sheet);
     const frameList = (frames ?? Object.keys(sheet.tileMap)).map((key) => getByKey(key));
 
-    const frame = useSpriteClock(interval);
+    const frame = useClock(interval);
     const sprite = frameList[frame % frameList.length];
 
     return sprite;
