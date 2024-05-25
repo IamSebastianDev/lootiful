@@ -1,8 +1,8 @@
 /** @format */
 
-import { MeshProps } from '@react-three/fiber';
-import { SpriteSheet } from '../../data/sprite-data';
-import { AnimatedSpriteConfig, useAnimatedSprite } from '../../hooks/use-animated-sprite';
+import { MeshProps } from "@react-three/fiber";
+import { AnimatedSpriteConfig, useAnimatedSprite } from "../../hooks/use-animated-sprite";
+import { SpriteSheet } from "../../hooks/use-sprite-sheet";
 
 export type AnimatedSpriteProps<T extends SpriteSheet> = {
     size?: [number, number];

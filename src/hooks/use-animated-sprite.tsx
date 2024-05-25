@@ -1,7 +1,6 @@
 /** @format */
 
-import { SpriteSheet } from "../data/sprite-data";
-import { useSpriteSheet } from "./use-sprite-sheet";
+import { SpriteSheet, useSpriteSheet } from "./use-sprite-sheet";
 import { useSpriteClock } from "./use-sprite-clock";
 
 export type AnimatedSpriteConfig<T extends SpriteSheet> = {

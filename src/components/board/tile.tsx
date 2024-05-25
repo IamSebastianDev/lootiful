@@ -1,10 +1,9 @@
 /** @format */
 
-import { MeshProps, useFrame } from '@react-three/fiber';
-import { SpriteSheet } from '../../data/sprite-data';
-import { useSpriteSheet } from '../../hooks/use-sprite-sheet';
-import { useRef } from 'react';
-import { TileData } from '../../data/maps';
+import { MeshProps } from "@react-three/fiber";
+import { SpriteSheet, useSpriteSheet } from "../../hooks/use-sprite-sheet";
+import { useRef } from "react";
+import { TileData } from "../../hooks/use-dungeon-map";
 
 export type TileProps<T extends SpriteSheet> = {
     tile: TileData<T>;

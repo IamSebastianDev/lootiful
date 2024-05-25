@@ -6,7 +6,7 @@ import { getMaxStamina } from "../functions/get-max-stamina";
 import { getRandomEntry } from "../functions/get-random-entry";
 import { names } from "../data/names";
 import { useDungeonMap } from "./use-dungeon-map";
-import { dungeonMap } from "../data/maps";
+import dungeonMap from "../assets/maps/dungeon.map";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -29,7 +29,7 @@ export type GameState = {
 };
 
 export const initialAttributeValues = () => {
-    return Object.fromEntries(attributeNames.map((name) => [name, 8])) as Record<Attribute, number>;
+    return Object.fromEntries(attributeNames.map((name) => [name, 1])) as Record<Attribute, number>;
 };
 
 const GameStateContext = createContext<GameState | undefined>(undefined);

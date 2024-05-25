@@ -1,16 +1,24 @@
 /** @format */
 
-import { useEffect, useState } from 'react';
-import { Texture } from 'three';
-import { SpriteSheet } from '../data/sprite-data';
+import { useEffect, useState } from "react";
+import { Texture } from "three";
+
+export type SpriteSheet = {
+    size: number;
+    rows: number;
+    columns: number;
+    id: string;
+    src: string;
+    tileMap: { [key: string]: [number, number] };
+};
 
 const createNewTexture = (size: number, image: HTMLImageElement, x: number, y: number) => {
     // Create canvas to store new tile image
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.width = size;
     canvas.height = size;
     // Draw the tile to the canvas
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     ctx?.drawImage(image, x * size, y * size, size, size, 0, 0, size, size);
 
     // Create the texture from the created Canvas
@@ -68,10 +76,10 @@ export const useSpriteSheet = <T extends SpriteSheet>(spriteSheet: T) => {
             return;
         }
 
-        image.addEventListener('load', processSpriteSheet);
+        image.addEventListener("load", processSpriteSheet);
 
         return () => {
-            image.removeEventListener('load', processSpriteSheet);
+            image.removeEventListener("load", processSpriteSheet);
         };
     }, []);
 
@@ -84,7 +92,7 @@ export const useSpriteSheet = <T extends SpriteSheet>(spriteSheet: T) => {
         return atlas.get(key) as Texture;
     };
 
-    const getByKey = (key: keyof T['tileMap']) => {
+    const getByKey = (key: keyof T["tileMap"]) => {
         const tile = tileMap[key as string];
         if (!tile) return null;
         return get(...tile);
@@ -97,7 +105,7 @@ export const preloadSpriteSheet = (spriteSheet: SpriteSheet) => {
     const { src } = spriteSheet;
     const image = new Image();
     image.src = src;
-    image.addEventListener('load', () => {
+    image.addEventListener("load", () => {
         createSprites(spriteSheet, image, () => {
             console.log(`Preloaded SpriteSheet: ${spriteSheet.id}`);
         });
