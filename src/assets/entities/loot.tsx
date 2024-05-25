@@ -1,6 +1,7 @@
 import { Sprite } from "../../components/board/sprite";
-import { createEntity } from "../../data/entity";
+import { EntityProps, createEntity } from "../../data/entity";
 import { Position } from "../../functions/position";
+import { Store } from "../../functions/simple-store";
 import { SpriteSheet } from "../../hooks/use-sprite-sheet";
 import lootSprites from "../sprites/loot.sprites";
 
@@ -70,13 +71,19 @@ export type LootCtor = {
     onPointerOut?: (data: { id: string; loot: LootData<any>; type: LootKey }) => void;
 };
 
+export type LootProps = EntityProps & { position: Position };
+
 export const Loot = (ctor: LootCtor) => {
     const { position, type, onPickUp, onPointerIn, onPointerOut } = ctor;
     const { sheet, key } = lootTable.loot[type];
 
-    const onRender = (id: string, position: Position) => {
+    const onInit = (id: string, props: Store<LootProps>) => {
+        props.set("position", position);
+    };
+
+    const onRender = (id: string, props: Store<LootProps>) => {
         const loot = lootTable.loot[type];
-        const [x, y] = position;
+        const [x, y] = props.get("position");
         return (
             <Sprite
                 onPointerEnter={() => onPointerIn?.({ id, loot, type })}
@@ -90,5 +97,5 @@ export const Loot = (ctor: LootCtor) => {
         );
     };
 
-    return createEntity({ position, onRender });
+    return createEntity<LootProps>({ onRender, onInit });
 };

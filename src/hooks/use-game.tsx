@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import React, { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { Attribute, useAttributes, attributeNames } from "./use-attributes";
 import { useCoins } from "./use-coins";
 import { getMaxHealth } from "../functions/get-max-health";
@@ -9,6 +9,7 @@ import { useDungeonMap } from "./use-dungeon-map";
 import dungeonMap from "../assets/maps/dungeon.map";
 import { useEntityCollection } from "./use-entity-collection";
 import { useCursor } from "./use-cursor";
+import { useClock } from "./use-clock";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -45,7 +46,12 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const { current, spendCoins, addCoins } = useCoins();
     const [takenDamage, setTakenDamage] = useState(0);
     const [usedStamina, setUsedStamina] = useState(0);
-    const { addEntity, removeEntity, entities, getAvailableTile } = useEntityCollection(map);
+    const entityStore = useEntityCollection(map);
+    const { entities, ...entityMethods } = entityStore;
+    const tick = useClock(0.1);
+
+    // Update the entities
+    useEffect(() => entities.forEach((entity) => entity.update(entityStore)), [tick]);
 
     // Derived attributes
     const maxHealth = getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
@@ -88,10 +94,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         map,
         reset,
         entities: {
-            addEntity,
-            removeEntity,
             entities,
-            getAvailableTile,
+            ...entityMethods,
         },
     };
 

@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { Entity } from "../data/entity";
+import { useCallback, useEffect, useState } from "react";
+import { Entity, EntityProps } from "../data/entity";
 
 import dungeonMap from "../assets/maps/dungeon.map";
 import { getRandomEntry } from "../functions/get-random-entry";
 
 export const useEntityCollection = (map: typeof dungeonMap) => {
-    const [entities, setEntities] = useState<Entity[]>([]);
+    const [entities, setEntities] = useState<Entity<EntityProps>[]>([]);
 
-    const addEntity = (entity: Entity) => {
+    const addEntity = (entity: Entity<EntityProps>) => {
         setEntities((e) => [...e, entity]);
     };
 
@@ -15,13 +15,20 @@ export const useEntityCollection = (map: typeof dungeonMap) => {
         setEntities((e) => [...e.filter(({ id }) => id !== entityId)]);
     };
 
-    const getAvailableTile = () => {
-        const entityPositions = entities.map(({ position }) => position());
+    const getAvailableTile = useCallback(() => {
+        const entityPositions = entities.map(({ props }) => props.get("position"));
 
         return getRandomEntry(
             map.getSpawnTiles().filter((tile) => !entityPositions.find((position) => tile.position.match(position)))
         );
-    };
+    }, [entities]);
+
+    const getEntityById = useCallback(
+        (entityId: string) => {
+            return entities.find(({ id }) => id === entityId) ?? null;
+        },
+        [entities]
+    );
 
     useEffect(() => {
         // Might implement entity caching later
@@ -33,5 +40,6 @@ export const useEntityCollection = (map: typeof dungeonMap) => {
         removeEntity,
         entities,
         getAvailableTile,
+        getEntityById,
     };
 };

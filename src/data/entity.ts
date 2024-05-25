@@ -1,46 +1,40 @@
 import React from "react";
+import { Store, makeStore } from "../functions/simple-store";
 import { Position } from "../functions/position";
+import { useEntityCollection } from "../hooks/use-entity-collection";
 
-export type Entity = {
+export type EntityProps = Record<PropertyKey, unknown> & { position: Position };
+export type Entity<T extends EntityProps> = {
     id: string;
-    position: () => Position;
-    update: () => void;
-    destroy: () => void;
+    update: (entities: ReturnType<typeof useEntityCollection>) => void;
+    destroy: (entities: ReturnType<typeof useEntityCollection>) => void;
     render: () => React.ReactElement;
+    props: Store<T>;
 };
 
-export type EntityInit = {
-    position: Position;
-    onRender: (id: string, position: Position) => JSX.Element;
-    onUpdate?: (setPosition: (current: Position) => Position) => void;
-    onDestroy?: (position: Position) => void;
+export type EntityInit<T extends EntityProps> = {
+    onInit: (id: string, props: Store<T>) => void;
+    onRender: (id: string, props: Store<T>) => JSX.Element;
+    onUpdate?: (id: string, props: Store<T>, entities: ReturnType<typeof useEntityCollection>) => void;
+    onDestroy?: (id: string, props: Store<T>, entities: ReturnType<typeof useEntityCollection>) => void;
 };
 
-export const createEntity = (ctor: EntityInit) => {
-    const { position: initialPosition, onUpdate, onDestroy, onRender } = ctor;
+export const createEntity = <Props extends EntityProps>(ctor: EntityInit<Props>) => {
+    const { onUpdate, onDestroy, onRender, onInit } = ctor;
     const id = crypto.randomUUID();
-    let currentPosition: Position = initialPosition;
+    let props = makeStore<Props>();
 
-    const getPosition = () => currentPosition;
-    const setPosition = (position: Position) => (currentPosition = position);
+    onInit(id, props);
 
-    const render = () => {
-        return onRender(id, getPosition());
-    };
-
-    const update = () => {
-        onUpdate?.(setPosition);
-    };
-
-    const destroy = () => {
-        onDestroy?.(getPosition());
-    };
+    const render = () => onRender(id, props);
+    const update = (entities: ReturnType<typeof useEntityCollection>) => onUpdate?.(id, props, entities);
+    const destroy = (entities: ReturnType<typeof useEntityCollection>) => onDestroy?.(id, props, entities);
 
     return {
         id,
+        props,
         update,
         destroy,
         render,
-        position: getPosition,
     };
 };
