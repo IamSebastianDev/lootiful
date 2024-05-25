@@ -22,9 +22,10 @@ export const Board: React.FC = () => {
                     <Tile
                         {...props}
                         key={id}
-                        onClick={() => {
-                            props.tile.textureKey.includes("floor") &&
-                                setHeroPos([props.tile.position[0], props.tile.position[1] * -1, 0.2]);
+                        onPlayerInteraction={(tile) => {
+                            if (tile.enableMoveTo) {
+                                setHeroPos([...tile.position, 0.1]);
+                            }
                         }}
                     />
                 )}
