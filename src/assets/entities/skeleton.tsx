@@ -7,17 +7,15 @@ import skeletonSprites from "../sprites/skeleton.sprites";
 
 export type LootCtor = {
     position: Position;
-    onDestroy: (id: string, props: Store<SkeletonProps>, entities: ReturnType<typeof useEntityCollection>) => void;
-    onUpdate: (id: string, props: Store<SkeletonProps>, entities: ReturnType<typeof useEntityCollection>) => void;
-    onHit: (id: string, props: Store<SkeletonProps>) => void;
+    createLoot: (position: Position) => void;
 };
 
 export type SkeletonProps = EntityProps & { position: Position; health: number };
 
 export const Skeleton = (ctor: LootCtor) => {
-    const { position, onDestroy, onUpdate, onHit } = ctor;
+    const { position, createLoot } = ctor;
 
-    const onInit = (id: string, props: Store<SkeletonProps>) => {
+    const onInit = (_: string, props: Store<SkeletonProps>) => {
         props.set("position", position);
         props.set("health", 3);
     };
@@ -33,6 +31,24 @@ export const Skeleton = (ctor: LootCtor) => {
                 config={{ interval: 0.5 }}
             />
         );
+    };
+
+    const onDestroy = (id: string, props: Store<SkeletonProps>, entities: ReturnType<typeof useEntityCollection>) => {
+        const position = props.get("position");
+        createLoot(position);
+        entities.removeEntity(id);
+    };
+
+    const onUpdate = (id: string, props: Store<SkeletonProps>, entities: ReturnType<typeof useEntityCollection>) => {
+        const health = props.get("health");
+        if (health < 1) {
+            entities.getEntityById(id)?.destroy(entities);
+        }
+    };
+
+    const onHit = (_: string, props: Store<SkeletonProps>) => {
+        const health = props.get("health");
+        props.set("health", Math.max(0, health - 1));
     };
 
     return createEntity<SkeletonProps>({

@@ -46,21 +46,7 @@ export const HeroPanel: React.FC = () => {
             entities.addEntity(
                 Skeleton({
                     position,
-                    onDestroy: (id, props, entities) => {
-                        const position = props.get("position");
-                        entities.removeEntity(id);
-                        addLoot(position);
-                    },
-                    onUpdate: (id, props, entities) => {
-                        const health = props.get("health");
-                        if (health < 1) {
-                            entities.getEntityById(id)?.destroy(entities);
-                        }
-                    },
-                    onHit: (_, props) => {
-                        const health = props.get("health");
-                        props.set("health", Math.max(0, health - 1));
-                    },
+                    createLoot: (position: Position) => addLoot(position),
                 })
             );
         }
@@ -78,7 +64,6 @@ export const HeroPanel: React.FC = () => {
             <HeroAttributes />
             <hr />
             <button onClick={() => hero.damageHero(10)}>Hurt Hero</button>
-            <button onClick={() => addLoot()}>Add Loot</button>
             <button onClick={() => addEnemy()}>Add Skeleton</button>
         </aside>
     );
