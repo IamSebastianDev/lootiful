@@ -7,6 +7,7 @@ import { getRandomEntry } from "../functions/get-random-entry";
 import { names } from "../data/names";
 import { useDungeonMap } from "./use-dungeon-map";
 import dungeonMap from "../assets/maps/dungeon.map";
+import { useEntityCollection } from "./use-entity-collection";
 
 export type Hero = {
     attributes: ReturnType<typeof useAttributes>[0];
@@ -26,6 +27,7 @@ export type GameState = {
     hero: Hero;
     reset: () => void;
     map: typeof dungeonMap;
+    entities: ReturnType<typeof useEntityCollection>;
 };
 
 export const initialAttributeValues = () => {
@@ -41,6 +43,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const { current, spendCoins, addCoins } = useCoins();
     const [takenDamage, setTakenDamage] = useState(0);
     const [usedStamina, setUsedStamina] = useState(0);
+    const { addEntity, removeEntity, entities, getAvailableTile } = useEntityCollection(map);
 
     // Derived attributes
     const maxHealth = getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
@@ -81,6 +84,12 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         },
         map,
         reset,
+        entities: {
+            addEntity,
+            removeEntity,
+            entities,
+            getAvailableTile,
+        },
     };
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;

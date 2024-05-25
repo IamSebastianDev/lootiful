@@ -19,12 +19,12 @@ export const Tile = <T extends SpriteSheet>({ sheet, tile, onPlayerInteraction, 
     const texture = spriteSheet.getByKey(tile.textureKey);
 
     const handlePlayerInteract = (event: ThreeEvent<MouseEvent>) => {
-        onPlayerInteraction?.({ ...tile, position: [x, y * -1] }, event);
+        onPlayerInteraction?.({ ...tile, position: tile.position }, event);
         props.onClick?.(event);
     };
 
     return (
-        <mesh {...props} position={[x, y * -1, 0]} onClick={(event) => handlePlayerInteract(event)}>
+        <mesh {...props} position={[x, y, 0]} onClick={(event) => handlePlayerInteract(event)}>
             <planeGeometry attach="geometry" args={[width, height]} />
             <meshBasicMaterial ref={spriteRef} transparent attach="material" map={texture} />
         </mesh>

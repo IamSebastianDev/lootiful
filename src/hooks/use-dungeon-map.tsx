@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { SpriteSheet } from "./use-sprite-sheet";
+import { Position } from "../functions/position";
 
 export type TileData<T extends SpriteSheet> = {
     id: string;
-    position: [x: number, y: number];
+    position: Position;
     textureKey: keyof T["tileMap"];
-    enableMoveTo: boolean;
-    enableSpawn: boolean;
+    isMoveTarget: boolean;
+    isSpawnTile: boolean;
 };
 
 export type MapData<T extends SpriteSheet> = {
@@ -21,7 +22,10 @@ export type MapData<T extends SpriteSheet> = {
 
 export const createMap = <T extends SpriteSheet>(map: MapData<T>) => {
     const { name, width, height, sheet, tiles } = map;
-    return { name, width, height, sheet, tiles };
+
+    const getSpawnTiles = () => tiles.filter((tile) => tile.isSpawnTile);
+
+    return { name, width, height, sheet, tiles, getSpawnTiles };
 };
 
 export const useDungeonMap = <T extends SpriteSheet>(maps: ReturnType<typeof createMap<T>>[]) => {

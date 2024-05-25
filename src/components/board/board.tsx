@@ -1,37 +1,20 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import { Tile } from "./tile";
 import { useGame } from "../../hooks/use-game";
-import { Sprite } from "./sprite";
-import { AnimatedSprite } from "./animated-sprite";
 import { TileRenderer } from "./tile-renderer";
-import coinSprites from "../../assets/sprites/coin.sprites";
-import wizardSprites from "../../assets/sprites/wizard.sprites";
-import dungeonSprites from "../../assets/sprites/dungeon.sprites";
-import skeletonSprites from "../../assets/sprites/skeleton.sprites";
+
 export const Board: React.FC = () => {
-    const { map, coins } = useGame();
-    const [heroPos, setHeroPos] = useState<[number, number, number]>([4, -5, 0.2]);
+    const { map, entities } = useGame();
+    console.log({ entities: entities.entities });
 
     return (
         <group>
-            <TileRenderer
-                map={map}
-                renderer={({ id, ...props }) => (
-                    <Tile
-                        {...props}
-                        key={id}
-                        onPlayerInteraction={(tile) => {
-                            if (tile.enableMoveTo) {
-                                setHeroPos([...tile.position, 0.1]);
-                            }
-                        }}
-                    />
-                )}
-            />
-            <Sprite position={[10, 0, 0.1]} sheet={dungeonSprites} sprite={"flag"} />
-            <AnimatedSprite
+            <TileRenderer map={map} renderer={({ id, ...props }) => <Tile {...props} key={id} />} />
+            {entities.entities.map((entity) => entity.render())}
+            {/* <Sprite position={[10, 0, 0.1]} sheet={dungeonSprites} sprite={"flag"} /> */}
+            {/* <AnimatedSprite
                 position={[10, -2, 0.1]}
                 onClick={() => {}}
                 sheet={skeletonSprites}
@@ -54,7 +37,7 @@ export const Board: React.FC = () => {
                 onClick={() => coins.addCoins(10)}
                 sheet={coinSprites}
                 config={{ interval: 0.25 }}
-            />
+            /> */}
         </group>
     );
 };
