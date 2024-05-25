@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from "react";
 import { useGame } from "../hooks/use-game";
 import { HeroAttributes } from "./hero-attributes";
-import { Loot } from "../assets/entities/loot";
+import { Loot, lootTable } from "../assets/entities/loot";
 
 // Name
 // Attributes (clickable when enough money exists)
@@ -16,17 +16,21 @@ export const HeroPanel: React.FC = () => {
 
     console.log({ hero });
 
-    const addBone = () => {
-        entities.addEntity(
-            Loot({
-                position: entities.getAvailableTile().position,
-                type: "bone",
-                onPickUp: ({ id }) => {
-                    entities.removeEntity(id);
-                    coins.addCoins(15);
-                },
-            })
-        );
+    const addLoot = () => {
+        const entry = lootTable.getRandom();
+        const position = entities.getAvailableTile()?.position;
+        if (position && entry) {
+            entities.addEntity(
+                Loot({
+                    position,
+                    type: entry.key,
+                    onPickUp: ({ id }) => {
+                        entities.removeEntity(id);
+                        coins.addCoins(entry.value);
+                    },
+                })
+            );
+        }
     };
 
     return (
@@ -41,7 +45,7 @@ export const HeroPanel: React.FC = () => {
             <HeroAttributes />
             <hr />
             <button onClick={() => hero.damageHero(10)}>Hurt Hero</button>
-            <button onClick={() => addBone()}>Add Bone</button>
+            <button onClick={() => addLoot()}>Add Loot</button>
         </aside>
     );
 };
