@@ -13,8 +13,8 @@ type Action =
     | { type: "incrementCoins"; payload: number }
     | { type: "incrementRounds"; payload: number }
     | { type: "addKill"; payload: "vampire" | "skeleton" | "player" }
-    | { type: "treasureCollected"; payload?: undefined }
-    | { type: "reset"; payload?: undefined };
+    | { type: "treasureCollected"; payload: undefined }
+    | { type: "reset"; payload: undefined };
 
 const initialState = { rounds: 0, coins: 0, vampiresKilled: 0, skeletonsKilled: 0, treasuresCollected: 0, died: 0 };
 
@@ -24,6 +24,17 @@ const reducer = (state: Stats, action: Action): Stats => {
             return { ...state, coins: state.coins + action.payload };
         case "incrementRounds":
             return { ...state, rounds: state.rounds + action.payload };
+        case "treasureCollected":
+            return { ...state, treasuresCollected: state.treasuresCollected + 1 };
+        case "addKill":
+            return {
+                ...state,
+                ...(action.payload === "player"
+                    ? { died: state.died + 1 }
+                    : action.payload === "skeleton"
+                      ? { skeletonsKilled: state.skeletonsKilled + 1 }
+                      : { vampiresKilled: state.vampiresKilled + 1 }),
+            };
         case "reset":
             return { ...initialState };
         default:
@@ -38,7 +49,8 @@ export const useStats = () => {
     const trackRound = () => dispatch({ type: "incrementRounds", payload: 1 });
     const trackDeath = () => dispatch({ type: "addKill", payload: "player" });
     const trackKill = (type: "skeleton" | "vampire") => dispatch({ type: "addKill", payload: type });
-    const reset = () => dispatch({ type: "reset" });
+    const trackTreasure = () => dispatch({ type: "treasureCollected", payload: undefined });
+    const reset = () => dispatch({ type: "reset", payload: undefined });
 
-    return { state, trackCoins, trackRound, trackDeath, trackKill, reset };
+    return { state, trackCoins, trackRound, trackDeath, trackKill, trackTreasure, reset };
 };
