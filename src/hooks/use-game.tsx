@@ -45,7 +45,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     // Create the enemies for the Level
     const setupEnemySpawnForLevel = (amount: number) => {
-        Array(parseInt(amount.toFixed(0)))
+        Array(Math.floor(amount))
             .fill(null)
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
@@ -57,7 +57,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     const setupCoinsForLevel = (amount: number) => {
-        Array(clamp(amount, 5, 15))
+        Array(clamp(Math.floor(amount), 2, 10))
             .fill(null)
             .map(() => rnd.entry(Object.keys(stash)))
             .forEach((type) => {
@@ -72,8 +72,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         coins.reset();
         hero.reset();
         entityStore.clear();
-        setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 3);
-        setupCoinsForLevel(hero.attributes.Charisma.value * hero.attributes.Dexterity.value);
+        setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5);
+        setupCoinsForLevel((hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3);
         setupPlayerForLevel();
     };
 
