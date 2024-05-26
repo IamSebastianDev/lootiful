@@ -9,18 +9,18 @@ import { Cursor } from "./cursor";
 
 export const Board: React.FC = () => {
     const state = useGame();
-    const { map, entities, cursor, hero } = state;
+    const { map, entityStore, cursor, hero } = state;
 
     return (
         <group>
             <Cursor />
             <TileRenderer
-                map={map}
+                map={map.currentMap}
                 renderer={({ id, ...props }) => (
                     <Tile
                         onClick={() => {
                             if (props.tile.isMoveTarget) {
-                                hero.setDestination(props.tile.position);
+                                hero.move(props.tile.position);
                             }
                         }}
                         onPointerEnter={() => {
@@ -32,7 +32,7 @@ export const Board: React.FC = () => {
                     />
                 )}
             />
-            {entities.entities.map((entity) => entity.render(state))}
+            {entityStore.entities.map((entity) => entity.render(state))}
         </group>
     );
 };

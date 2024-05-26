@@ -38,5 +38,5 @@ export const useDungeonMap = <T extends SpriteSheet>(maps: ReturnType<typeof cre
         }
     };
 
-    return [currentMap, setMap] as const;
+    return { currentMap, setMap };
 };

@@ -10,7 +10,7 @@ export const HeroPanel: React.FC = () => {
     const { hero } = useGame();
     const handleNameChange = (event: ChangeEvent) => {
         const name = (event.target as HTMLInputElement).value;
-        hero.changeName(name);
+        hero.rename(name);
     };
 
     return (
@@ -24,7 +24,7 @@ export const HeroPanel: React.FC = () => {
             />
             <HeroAttributes />
             <hr />
-            <button onClick={() => hero.damageHero(10)}>Hurt Hero</button>
+            <button onClick={() => hero.hurt(2)}>Hurt Hero</button>
         </aside>
     );
 };

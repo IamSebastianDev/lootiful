@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { Entity, EntityProps } from "../data/entity";
-
+import { Entity } from "../data/entity";
 import dungeonMap from "../assets/maps/dungeon.map";
 import { getRandomEntry } from "../functions/get-random-entry";
+import { Position } from "../functions/position";
 
 export const useEntityCollection = (map: typeof dungeonMap) => {
-    const [entities, setEntities] = useState<Entity<EntityProps>[]>([]);
+    const [entities, setEntities] = useState<Entity<{ position: Position }>[]>([]);
 
-    const addEntity = (entity: Entity<EntityProps>) => {
+    const addEntity = (entity: Entity<{ position: Position }>) => {
         setEntities((e) => [...e, entity]);
     };
 

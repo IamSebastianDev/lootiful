@@ -10,7 +10,7 @@ export type LootCtor = {
     createLoot: (position: Position) => void;
 };
 
-export type SkeletonProps = EntityProps & { position: Position; health: number };
+export type SkeletonProps = { position: Position; health: number };
 
 export const Skeleton = (ctor: LootCtor) => {
     const { position, createLoot } = ctor;
@@ -33,16 +33,16 @@ export const Skeleton = (ctor: LootCtor) => {
         );
     };
 
-    const onDestroy = (id: string, props: Store<SkeletonProps>, { entities }: GameState) => {
+    const onDestroy = (id: string, props: Store<SkeletonProps>, { entityStore }: GameState) => {
         const position = props.get("position");
         createLoot(position);
-        entities.removeEntity(id);
+        entityStore.removeEntity(id);
     };
 
     const onUpdate = (id: string, props: Store<SkeletonProps>, state: GameState) => {
         const health = props.get("health");
         if (health < 1) {
-            state.entities.getEntityById(id)?.destroy(state);
+            state.entityStore.getEntityById(id)?.destroy(state);
         }
     };
 

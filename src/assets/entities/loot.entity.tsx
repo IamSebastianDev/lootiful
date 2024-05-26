@@ -71,13 +71,13 @@ export type LootCtor = {
     onPointerOut?: (data: { id: string; loot: LootData<any>; type: LootKey }) => void;
 };
 
-export type LootProps = EntityProps & { position: Position };
+export type LootProps = { position: Position };
 
 export const Loot = (ctor: LootCtor) => {
     const { position, type, onPickUp, onPointerIn, onPointerOut } = ctor;
     const { sheet, key } = lootTable.loot[type];
 
-    const onInit = (id: string, props: Store<LootProps>) => {
+    const onInit = (_: string, props: Store<LootProps>) => {
         props.set("position", position);
     };
 
