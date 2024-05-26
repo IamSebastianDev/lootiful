@@ -304,5 +304,9 @@ export const useLoot = (map: ReturnType<typeof useDungeonMap<typeof dungeonSprit
 
     const setup = () => {};
 
-    return { getLootByChance, spawnLoot, spawnLootSpread, loot, collect, reset, setup, atPosition, collected };
+    const clear = () => {
+        setLoot([]);
+    };
+
+    return { getLootByChance, spawnLoot, spawnLootSpread, loot, collect, reset, setup, atPosition, collected, clear };
 };

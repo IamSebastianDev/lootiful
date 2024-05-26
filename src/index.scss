@@ -46,13 +46,16 @@
     --comp-ui-button-border-hover: var(--lc-dull-gold);
 
     --comp-hero-panel-bg: var(--lc-plum-purple);
+
+    --comp-display-panel-bg: var(--lc-plum-purple);
+    --comp-display-panel-border: var(--lc-dull-gold);
 }
 
 body {
     overscroll-behavior: none;
     background: var(--lc-dark-charcoal);
     overflow: hidden;
-    font-family: 'Press Start 2P', system-ui;
+    font-family: "Press Start 2P", system-ui;
     color: var(--lc-ivory);
     line-height: 1.5;
 }
@@ -226,7 +229,7 @@ body {
     }
 
     &.highlight {
-        font-size: var(--lf-2xl);
+        // font-size: var(--lf-2xl);
         color: var(--lc-gold);
         text-shadow: 1px 1px var(--lc-dark-charcoal);
     }
@@ -332,4 +335,19 @@ body {
     max-height: 100%;
     aspect-ratio: 1 / 1;
     margin: auto;
+}
+
+.display {
+    position: absolute;
+    inset: 15%;
+
+    display: grid;
+    place-items: center;
+    z-index: 10;
+
+    & .display-panel {
+        background: var(--comp-display-panel-bg);
+        padding: var(--ll-xl);
+        border: 2px solid var(--comp-display-panel-border);
+    }
 }

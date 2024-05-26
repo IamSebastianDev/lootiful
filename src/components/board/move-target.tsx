@@ -25,6 +25,10 @@ export const MoveTarget: React.FC = () => {
         }
     };
 
+    if (hero.stamina === 0 || hero.health === 0) {
+        return null;
+    }
+
     return (
         <>
             {marked.map(({ id, position }) => {

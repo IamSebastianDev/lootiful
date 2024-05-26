@@ -16,14 +16,14 @@ import { rnd } from "../functions/rnd";
 import { clamp } from "../functions/clamp";
 
 export type GameState = {
+    cursor: ReturnType<typeof useCursor>;
     coins: ReturnType<typeof useCoins>;
     hero: ReturnType<typeof useHero>;
     map: ReturnType<typeof useDungeonMap<typeof dungeonSprites>>;
     entityStore: ReturnType<typeof useEntityCollection>;
-    cursor: ReturnType<typeof useCursor>;
     lootStore: ReturnType<typeof useLoot>;
     reset: () => void;
-    setup: () => void;
+    startDungeonDive: () => void;
     tick: number;
     requestTick: () => void;
 };
@@ -78,7 +78,22 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     // Called at start of run
-    const setup = () => {};
+    const startDungeonDive = () => {
+        hero.setup();
+        // Add collected loot to the coin pouch to enable progression
+        const collectedLoot = lootStore.collected.reduce((prev, curr) => prev + curr.value, 0);
+        coins.addCoins(collectedLoot);
+        entityStore.clear();
+        setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5);
+        setupCoinsForLevel((hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3);
+        setupPlayerForLevel();
+    };
+
+    const endDungeonDive = () => {
+        entityStore.clear();
+        lootStore.clear();
+        cursor.setPosition(null);
+    };
 
     useEffect(() => {
         reset();
@@ -92,16 +107,19 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         map,
         lootStore,
         reset,
-        setup,
         tick,
         requestTick,
+        startDungeonDive,
     };
 
     // Update the entities
-    useEffect(
-        () => entityStore.entities.forEach((entity) => entity.update(gameState)),
-        [hero.position, hero.stamina, tick]
-    );
+    useEffect(() => {
+        entityStore.entities.forEach((entity) => entity.update(gameState));
+
+        if (hero.stamina === 0 || hero.health === 0) {
+            endDungeonDive();
+        }
+    }, [hero.position, hero.stamina, tick]);
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
 };
