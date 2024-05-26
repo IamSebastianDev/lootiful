@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Entity } from "../data/entity";
 import dungeonMap from "../assets/maps/dungeon.map";
-import { getRandomEntry } from "../functions/get-random-entry";
 import { Position } from "../functions/position";
+import { rnd } from "../functions/rnd";
 
 export const useEntityCollection = (map: typeof dungeonMap) => {
     const [entities, setEntities] = useState<Entity<{ position: Position }>[]>([]);
@@ -18,7 +18,7 @@ export const useEntityCollection = (map: typeof dungeonMap) => {
     const getAvailableTile = useCallback(() => {
         const entityPositions = entities.map(({ props }) => props.get("position"));
 
-        return getRandomEntry(
+        return rnd.entry(
             map.getSpawnTiles().filter((tile) => !entityPositions.find((position) => tile.position.match(position)))
         );
     }, [entities]);
@@ -29,6 +29,10 @@ export const useEntityCollection = (map: typeof dungeonMap) => {
         },
         [entities]
     );
+
+    const atPosition = (position: Position) => {
+        return entities.find(({ props }) => props.get("position").match(position));
+    };
 
     const clear = () => setEntities([]);
 
@@ -43,6 +47,7 @@ export const useEntityCollection = (map: typeof dungeonMap) => {
         entities,
         getAvailableTile,
         getEntityById,
+        atPosition,
         clear,
     };
 };

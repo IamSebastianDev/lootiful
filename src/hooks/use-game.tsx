@@ -4,13 +4,13 @@ import { useDungeonMap } from "./use-dungeon-map";
 import dungeonMap from "../assets/maps/dungeon.map";
 import { useEntityCollection } from "./use-entity-collection";
 import { useCursor } from "./use-cursor";
-import { Position } from "../functions/position";
-import { Loot, lootTable } from "../assets/entities/loot.entity";
 import { Skeleton } from "../assets/entities/skeleton.entity";
 import { Player } from "../assets/entities/player.entity";
 import { useHero } from "./use-hero";
 import dungeonSprites from "../assets/sprites/dungeon.sprites";
 import { Vampire } from "../assets/entities/vampire.entity";
+import { useLoot } from "./use-loot";
+import { useTick } from "./use-tick";
 
 export type GameState = {
     coins: ReturnType<typeof useCoins>;
@@ -18,8 +18,11 @@ export type GameState = {
     map: ReturnType<typeof useDungeonMap<typeof dungeonSprites>>;
     entityStore: ReturnType<typeof useEntityCollection>;
     cursor: ReturnType<typeof useCursor>;
+    lootStore: ReturnType<typeof useLoot>;
     reset: () => void;
     setup: () => void;
+    tick: number;
+    requestTick: () => void;
 };
 
 const GameStateContext = createContext<GameState | undefined>(undefined);
@@ -30,23 +33,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const coins = useCoins();
     const entityStore = useEntityCollection(map.currentMap);
     const cursor = useCursor();
-
-    // Function to add Loot
-    // todo: spread around target
-    const createLoot = useCallback(
-        (position: Position) => {
-            const entry = lootTable.getRandom();
-            if (position && entry) {
-                entityStore.addEntity(
-                    Loot({
-                        position,
-                        type: entry.key,
-                    })
-                );
-            }
-        },
-        [entityStore, coins, cursor]
-    );
+    const lootStore = useLoot(map);
+    const { tick, requestTick } = useTick();
 
     const setupPlayerForLevel = () => {
         entityStore.addEntity(Player({ position: hero.position }));
@@ -59,15 +47,10 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
                 if (tile) {
-                    entityStore.addEntity(Skeleton({ position: tile.position, createLoot }));
+                    entityStore.addEntity(Skeleton({ position: tile.position }));
                 }
             });
-        entityStore.addEntity(
-            Vampire({
-                position: entityStore.getAvailableTile().position,
-                createLoot,
-            })
-        );
+        entityStore.addEntity(Vampire({ position: entityStore.getAvailableTile().position }));
     };
 
     const reset = () => {
@@ -91,18 +74,20 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         coins,
         hero,
         map,
+        lootStore,
         reset,
         setup,
+        tick,
+        requestTick,
     };
 
     // Update the entities
     useEffect(
         () =>
             entityStore.entities.forEach((entity) => {
-                console.log("updating");
                 entity.update(gameState);
             }),
-        [hero.position]
+        [hero.position, hero.stamina, tick]
     );
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;

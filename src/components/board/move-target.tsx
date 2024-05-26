@@ -2,10 +2,28 @@ import React from "react";
 import { useGame } from "../../hooks/use-game";
 import { AnimatedSprite } from "./animated-sprite";
 import moveTargetSprites from "../../assets/sprites/move-target.sprites";
+import { Position } from "../../functions/position";
 
 export const MoveTarget: React.FC = () => {
-    const { hero, map } = useGame();
+    const { hero, map, entityStore, lootStore, requestTick } = useGame();
     const marked = map.getAdjacentTiles(hero.position);
+
+    const handleClickToMove = (position: Position) => {
+        const entity = entityStore.atPosition(position);
+        const loot = lootStore.atPosition(position);
+
+        requestTick();
+
+        if (!!entity || !!loot) {
+            hero.exhaust(1);
+            return;
+        }
+
+        if (!entity && !loot) {
+            hero.move(position);
+            return;
+        }
+    };
 
     return (
         <>
@@ -17,7 +35,7 @@ export const MoveTarget: React.FC = () => {
                         sheet={moveTargetSprites}
                         config={{ interval: 0.5 }}
                         position={[x, y, 0.05]}
-                        onClick={() => hero.move(position)}
+                        onClick={() => handleClickToMove(position)}
                         opacity={0.65}
                     ></AnimatedSprite>
                 );

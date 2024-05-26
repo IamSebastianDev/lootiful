@@ -24,7 +24,7 @@ export const Tile = <T extends SpriteSheet>({ sheet, tile, onPlayerInteraction, 
     const [width, height] = [1, 1];
 
     const getCursorState = () => {
-        if (map.currentMap.getAdjacentTiles(hero.position).some((tile) => tile.position.match(position))) {
+        if (map.getAdjacentTiles(hero.position).some((tile) => tile.position.match(position))) {
             return "OK";
         }
 

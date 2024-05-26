@@ -51,7 +51,5 @@ export const useDungeonMap = <T extends SpriteSheet>(maps: ReturnType<typeof cre
         });
     };
 
-    const getClosestTile = (target: Position, tiles: TileData<any>[]) => {};
-
     return { currentMap, setMap, getAdjacentTiles };
 };
