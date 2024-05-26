@@ -24,7 +24,6 @@ export const HeroPanel: React.FC = () => {
             />
             <HeroAttributes />
             <hr />
-            <button onClick={() => hero.hurt(2)}>Hurt Hero</button>
         </aside>
     );
 };
