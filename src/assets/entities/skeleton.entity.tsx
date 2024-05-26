@@ -46,8 +46,18 @@ export const Skeleton = (ctor: LootCtor) => {
 
     const onUpdate = (id: string, props: Store<SkeletonProps>, state: GameState) => {
         const health = props.get("health");
+        const position = props.get("position");
+
         if (health < 1) {
             state.entityStore.getEntityById(id)?.destroy(state);
+            return;
+        }
+
+        // calculate movement
+        const adjacent = state.map.currentMap.getAdjacentTiles(position);
+        if (adjacent && adjacent.length > 0) {
+            const { position } = adjacent[Math.floor(Math.random() * adjacent.length)];
+            props.set("position", position);
         }
     };
 

@@ -18,7 +18,7 @@ export const MoveTarget: React.FC = () => {
                         config={{ interval: 0.5 }}
                         position={[x, y, 0.05]}
                         onClick={() => hero.move(position)}
-                        opacity={0.75}
+                        opacity={0.65}
                     ></AnimatedSprite>
                 );
             })}
