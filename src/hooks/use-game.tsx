@@ -11,7 +11,9 @@ import dungeonSprites from "../assets/sprites/dungeon.sprites";
 import { Vampire } from "../assets/entities/vampire.entity";
 import { useLoot } from "./use-loot";
 import { useTick } from "./use-tick";
-import { Treasure } from "../assets/entities/treasure.entity";
+import { Treasure, stash } from "../assets/entities/treasure.entity";
+import { rnd } from "../functions/rnd";
+import { clamp } from "../functions/clamp";
 
 export type GameState = {
     coins: ReturnType<typeof useCoins>;
@@ -43,7 +45,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     // Create the enemies for the Level
     const setupEnemySpawnForLevel = (amount: number) => {
-        Array(amount)
+        Array(parseInt(amount.toFixed(0)))
             .fill(null)
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
@@ -55,12 +57,13 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     const setupCoinsForLevel = (amount: number) => {
-        Array(amount)
+        Array(clamp(amount, 5, 15))
             .fill(null)
-            .forEach(() => {
+            .map(() => rnd.entry(Object.keys(stash)))
+            .forEach((type) => {
                 const tile = entityStore.getAvailableTile();
                 if (tile) {
-                    entityStore.addEntity(Treasure({ position: tile.position, type: "coins3" }));
+                    entityStore.addEntity(Treasure({ position: tile.position, type: type as keyof typeof stash }));
                 }
             });
     };
@@ -69,9 +72,9 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         coins.reset();
         hero.reset();
         entityStore.clear();
-        setupEnemySpawnForLevel(hero.attributes.Strength.value * hero.attributes.Constitution.value);
+        setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 3);
+        setupCoinsForLevel(hero.attributes.Charisma.value * hero.attributes.Dexterity.value);
         setupPlayerForLevel();
-        setupCoinsForLevel(hero.attributes.Charisma.value ^ 2);
     };
 
     // Called at start of run

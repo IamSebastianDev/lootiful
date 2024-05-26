@@ -6,6 +6,17 @@ import { Store } from "../../functions/simple-store";
 import { GameState } from "../../hooks/use-game";
 import treasureSprites from "../sprites/treasure.sprites";
 
+export const stash: {
+    [K in TreasureType]: () => number;
+} = {
+    coin: () => 1,
+    coins: () => rnd.number(2, 4),
+    coins2: () => rnd.number(4, 8),
+    coins3: () => rnd.number(10, 20),
+    coins4: () => rnd.number(25, 38),
+    treasure: () => rnd.number(150, 1000),
+};
+
 type TreasureType = keyof (typeof treasureSprites)["tileMap"];
 export type TreasureCtor = {
     position: Position;
@@ -16,20 +27,10 @@ export type TreasureProps = { position: Position; value: number };
 
 export const Treasure = (ctor: TreasureCtor) => {
     const { position, type } = ctor;
-    const stash: {
-        [K in TreasureType]: number;
-    } = {
-        coin: 1,
-        coins: rnd.number(2, 4),
-        coins2: rnd.number(4, 8),
-        coins3: rnd.number(10, 20),
-        coins4: rnd.number(25, 38),
-        treasure: rnd.number(150, 1000),
-    };
 
     const onInit = (_: string, props: Store<TreasureProps>) => {
         props.set("position", position);
-        props.set("value", stash[type]);
+        props.set("value", stash[type]());
     };
 
     const collect = (id: string, props: Store<TreasureProps>, state: GameState) => {

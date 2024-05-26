@@ -7,7 +7,7 @@ import { Position, position } from "../functions/position";
 import { rnd } from "../functions/rnd";
 
 export const initialAttributeValues = () => {
-    return Object.fromEntries(attributeNames.map((name) => [name, 1])) as Record<Attribute, number>;
+    return Object.fromEntries(attributeNames.map((name) => [name, 4])) as Record<Attribute, number>;
 };
 
 export const useHero = () => {
