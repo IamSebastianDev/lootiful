@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useCoins } from "./use-coins";
 import { useDungeonMap } from "./use-dungeon-map";
 import dungeonMap from "../assets/maps/dungeon.map";
@@ -14,6 +14,8 @@ import { useTick } from "./use-tick";
 import { Treasure, stash } from "../assets/entities/treasure.entity";
 import { rnd } from "../functions/rnd";
 import { clamp } from "../functions/clamp";
+import { useArtifacts } from "./use-artifacts";
+import { Artifact } from "../assets/entities/artifact.entity";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;
@@ -22,6 +24,7 @@ export type GameState = {
     map: ReturnType<typeof useDungeonMap<typeof dungeonSprites>>;
     entityStore: ReturnType<typeof useEntityCollection>;
     lootStore: ReturnType<typeof useLoot>;
+    artifactStore: ReturnType<typeof useArtifacts>;
     reset: () => void;
     startDungeonDive: () => void;
     tick: number;
@@ -38,6 +41,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const entityStore = useEntityCollection(map.currentMap);
     const cursor = useCursor();
     const lootStore = useLoot(map);
+    const artifactStore = useArtifacts();
     const { tick, requestTick } = useTick();
     const [stopped, setStopped] = useState(false);
 
@@ -47,53 +51,83 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     // Create the enemies for the Level
     const setupEnemySpawnForLevel = (amount: number) => {
-        Array(Math.floor(amount))
+        // Balance enemies
+        Array(clamp(1, Math.floor(amount), 15))
             .fill(null)
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
                 if (tile) {
-                    entityStore.addEntity(Skeleton({ position: tile.position }));
+                    entityStore.addEntity(
+                        Skeleton({
+                            position: tile.position,
+                            maxHealth: 2 + hero.attributes.Strength.value * 2,
+                        })
+                    );
                 }
             });
-        entityStore.addEntity(Vampire({ position: entityStore.getAvailableTile().position }));
+        Array(clamp(1, Math.floor(amount / 3), 3))
+            .fill(null)
+            .forEach(() => {
+                const tile = entityStore.getAvailableTile();
+                if (tile) {
+                    entityStore.addEntity(
+                        Vampire({
+                            position: entityStore.getAvailableTile().position,
+                            maxHealth: 5 + hero.attributes.Strength.value * 2,
+                        })
+                    );
+                }
+            });
     };
 
     const setupCoinsForLevel = (amount: number) => {
-        Array(clamp(Math.floor(amount), 2, 10))
+        Array(clamp(Math.floor(amount), 3, 12))
             .fill(null)
             .map(() => rnd.entry(Object.keys(stash)))
             .forEach((type) => {
                 const tile = entityStore.getAvailableTile();
                 if (tile) {
-                    entityStore.addEntity(Treasure({ position: tile.position, type: type as keyof typeof stash }));
+                    entityStore.addEntity(
+                        Treasure({
+                            position: tile.position,
+                            type: type as keyof typeof stash,
+                        })
+                    );
                 }
             });
     };
 
-    const reset = () => {
-        coins.reset();
-        hero.reset();
-        entityStore.clear();
-        setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5);
-        setupCoinsForLevel((hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3);
-        setupPlayerForLevel();
+    const setupArtifactsForLevel = () => {
+        // create a artifact
+        const { position } = entityStore.getAvailableTile();
+        const artifact = artifactStore.getArtifactByChance();
+        if (position && artifact) {
+            entityStore.addEntity(Artifact({ type: artifact.sprite, position }));
+        }
     };
 
     // Called at start of run
     const startDungeonDive = () => {
-        hero.setup();
         entityStore.clear();
         setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5);
         setupCoinsForLevel((hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3);
         setupPlayerForLevel();
+        setupArtifactsForLevel();
         setStopped(false);
     };
 
     const endDungeonDive = () => {
         setStopped(true);
+        hero.setup();
         entityStore.clear();
         lootStore.clear();
         cursor.setPosition(null);
+    };
+
+    const reset = () => {
+        coins.reset();
+        hero.reset();
+        startDungeonDive();
     };
 
     useEffect(() => {
@@ -102,6 +136,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     const gameState: GameState = {
         entityStore,
+        artifactStore,
         cursor,
         coins,
         hero,

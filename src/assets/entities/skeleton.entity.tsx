@@ -8,14 +8,14 @@ import skeletonSprites from "../sprites/skeleton.sprites";
 
 export type LootCtor = {
     position: Position;
+    maxHealth: number;
 };
 
 export type SkeletonProps = { position: Position; health: number };
 
 export const Skeleton = (ctor: LootCtor) => {
-    const { position } = ctor;
+    const { position, maxHealth = 3 } = ctor;
 
-    const maxHealth = 3;
     const damage = 1;
 
     const onInit = (_: string, props: Store<SkeletonProps>) => {
@@ -29,7 +29,7 @@ export const Skeleton = (ctor: LootCtor) => {
 
         return (
             <group position={[x, y, 0.1]} key={id}>
-                <mesh position={[-0.5 * (1 - health / maxHealth), 0.65, 0.1]}>
+                <mesh position={[-0.5 * (1 - health / maxHealth), 0.65, 0.2]}>
                     <planeGeometry attach="geometry" args={[health / maxHealth, 0.1]} />
                     <meshBasicMaterial color="red" />
                 </mesh>
@@ -82,7 +82,7 @@ export const Skeleton = (ctor: LootCtor) => {
 
         if (distanceToPlayer <= 1) {
             const health = props.get("health");
-            props.set("health", Math.max(0, health - 1));
+            props.set("health", Math.max(0, health - state.hero.damage));
             hero.exhaust(1);
         }
     };

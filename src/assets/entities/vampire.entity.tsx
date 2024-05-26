@@ -1,21 +1,20 @@
 import { AnimatedSprite } from "../../components/board/animated-sprite";
 import { createEntity } from "../../data/entity";
 import { Position } from "../../functions/position";
-import { rnd } from "../../functions/rnd";
 import { Store } from "../../functions/simple-store";
 import { GameState } from "../../hooks/use-game";
 import vampireSprites from "../sprites/vampire.sprites";
 
 export type LootCtor = {
     position: Position;
+    maxHealth: number;
 };
 
 export type VampireProps = { position: Position; health: number };
 
 export const Vampire = (ctor: LootCtor) => {
-    const { position } = ctor;
+    const { position, maxHealth = 5 } = ctor;
 
-    const maxHealth = 5;
     const damage = 2;
 
     const onInit = (_: string, props: Store<VampireProps>) => {
@@ -28,7 +27,7 @@ export const Vampire = (ctor: LootCtor) => {
         const health = props.get("health");
 
         return (
-            <group position={[x, y, 0.1]} key={id}>
+            <group position={[x, y, 0.2]} key={id}>
                 <mesh position={[-0.5 * (1 - health / maxHealth), 0.65, 0.1]}>
                     <planeGeometry attach="geometry" args={[health / maxHealth, 0.1]} />
                     <meshBasicMaterial color="red" />
@@ -77,9 +76,14 @@ export const Vampire = (ctor: LootCtor) => {
     };
 
     const onHit = (_: string, props: Store<VampireProps>, { hero }: GameState) => {
-        const health = props.get("health");
-        props.set("health", Math.max(0, health - 1));
-        hero.exhaust(1);
+        const position = props.get("position");
+        const distanceToPlayer = hero.position.distance(position);
+
+        if (distanceToPlayer <= 1) {
+            const health = props.get("health");
+            props.set("health", Math.max(0, health - hero.damage));
+            hero.exhaust(1);
+        }
     };
 
     return createEntity<VampireProps>({

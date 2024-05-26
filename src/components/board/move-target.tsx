@@ -5,7 +5,7 @@ import moveTargetSprites from "../../assets/sprites/move-target.sprites";
 import { Position } from "../../functions/position";
 
 export const MoveTarget: React.FC = () => {
-    const { hero, map, entityStore, lootStore, requestTick } = useGame();
+    const { hero, map, entityStore, lootStore, requestTick, cursor } = useGame();
     const marked = map.getAdjacentTiles(hero.position);
 
     const handleClickToMove = (position: Position) => {
@@ -25,7 +25,7 @@ export const MoveTarget: React.FC = () => {
         }
     };
 
-    if (hero.stamina === 0 || hero.health === 0) {
+    if (cursor.position === null) {
         return null;
     }
 

@@ -1,9 +1,9 @@
 /** @format */
 
-import coin from '../assets/images/coin.png';
-import health from '../assets/images/health.png';
-import stamina from '../assets/images/stamina.png';
-import { useGame } from '../hooks/use-game';
+import coin from "../assets/images/coin.png";
+import health from "../assets/images/health.png";
+import stamina from "../assets/images/stamina.png";
+import { useGame } from "../hooks/use-game";
 
 export const HeroStats = () => {
     const { coins, hero } = useGame();
