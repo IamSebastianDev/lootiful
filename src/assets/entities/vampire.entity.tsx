@@ -53,8 +53,6 @@ export const Vampire = (ctor: LootCtor) => {
         const health = props.get("health");
         const position = props.get("position");
         const distanceToPlayer = hero.position.distance(position);
-        const track = rnd.number(1, 2);
-        console.log({ track });
 
         switch (true) {
             // Death
