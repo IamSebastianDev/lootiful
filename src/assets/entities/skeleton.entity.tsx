@@ -2,7 +2,6 @@ import { AnimatedSprite } from "../../components/board/animated-sprite";
 import { createEntity } from "../../data/entity";
 import { Position } from "../../functions/position";
 import { Store } from "../../functions/simple-store";
-import { toPercent } from "../../functions/to-percent";
 import { GameState } from "../../hooks/use-game";
 import skeletonSprites from "../sprites/skeleton.sprites";
 
