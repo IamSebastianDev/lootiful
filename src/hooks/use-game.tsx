@@ -11,6 +11,7 @@ import dungeonSprites from "../assets/sprites/dungeon.sprites";
 import { Vampire } from "../assets/entities/vampire.entity";
 import { useLoot } from "./use-loot";
 import { useTick } from "./use-tick";
+import { Treasure } from "../assets/entities/treasure.entity";
 
 export type GameState = {
     coins: ReturnType<typeof useCoins>;
@@ -53,12 +54,24 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         entityStore.addEntity(Vampire({ position: entityStore.getAvailableTile().position }));
     };
 
+    const setupCoinsForLevel = (amount: number) => {
+        Array(amount)
+            .fill(null)
+            .forEach(() => {
+                const tile = entityStore.getAvailableTile();
+                if (tile) {
+                    entityStore.addEntity(Treasure({ position: tile.position, type: "coins3" }));
+                }
+            });
+    };
+
     const reset = () => {
         coins.reset();
         hero.reset();
         entityStore.clear();
         setupEnemySpawnForLevel(hero.attributes.Strength.value * hero.attributes.Constitution.value);
         setupPlayerForLevel();
+        setupCoinsForLevel(hero.attributes.Charisma.value ^ 2);
     };
 
     // Called at start of run
@@ -83,10 +96,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     // Update the entities
     useEffect(
-        () =>
-            entityStore.entities.forEach((entity) => {
-                entity.update(gameState);
-            }),
+        () => entityStore.entities.forEach((entity) => entity.update(gameState)),
         [hero.position, hero.stamina, tick]
     );
 

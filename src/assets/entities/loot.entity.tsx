@@ -25,15 +25,13 @@ export const Loot = (ctor: LootCtor) => {
         props.set("type", type);
     };
 
-    const onPickUp = (id: string, props: Store<LootProps>, { coins, cursor, lootStore, hero }: GameState) => {
-        const { value } = props.get("loot");
+    const onPickUp = (id: string, props: Store<LootProps>, { cursor, lootStore, hero }: GameState) => {
         const position = props.get("position");
 
         // check if the position to the player is close
         const distance = position.distance(hero.position);
         if (distance <= 1) {
             lootStore.collect(id);
-            coins.addCoins(value);
             cursor.setTooltip(null);
         }
     };
