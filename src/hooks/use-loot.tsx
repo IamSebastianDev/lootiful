@@ -249,7 +249,7 @@ export const lootTable: LootTable<typeof lootSprites> = {
 
 export const useLoot = (map: ReturnType<typeof useDungeonMap<typeof dungeonSprites>>) => {
     const [loot, setLoot] = useState<Entity<{ position: Position; loot: LootData<any> }>[]>([]);
-    const [collected, setCollected] = useState<LootData<any>[]>([]);
+    const [collected, setCollected] = useState<{ id: string; item: LootData<any> }[]>([]);
 
     const addLoot = (loot: Entity<{ position: Position; loot: LootData<any> }>) => {
         setLoot((c) => [...c, loot]);
@@ -281,7 +281,6 @@ export const useLoot = (map: ReturnType<typeof useDungeonMap<typeof dungeonSprit
         const spread = map.getAdjacentTiles(position);
         const num = rnd.number(1, spread.length);
         const tiles = rnd.entries(spread, num);
-        console.log({ tiles, num });
         tiles.forEach((tile) => {
             const { position } = tile;
             const entry = getLootByChance();
@@ -292,7 +291,7 @@ export const useLoot = (map: ReturnType<typeof useDungeonMap<typeof dungeonSprit
     const collect = (lootId: string) => {
         const [{ props }] = [...loot].filter(({ id }) => id === lootId);
         const data = props.get("loot");
-        setCollected((c) => [...c, data]);
+        setCollected((c) => [...c, { id: lootId, item: data }]);
         setLoot((c) => [...c.filter(({ id }) => id !== lootId)]);
     };
 
@@ -300,13 +299,23 @@ export const useLoot = (map: ReturnType<typeof useDungeonMap<typeof dungeonSprit
         return loot.find(({ props }) => props.get("position").match(position));
     };
 
-    const reset = () => {};
-
-    const setup = () => {};
+    const sellCollected = (lootId: string) => {
+        setCollected((c) => [...c.filter(({ id }) => id !== lootId)]);
+    };
 
     const clear = () => {
         setLoot([]);
     };
 
-    return { getLootByChance, spawnLoot, spawnLootSpread, loot, collect, reset, setup, atPosition, collected, clear };
+    return {
+        getLootByChance,
+        spawnLoot,
+        spawnLootSpread,
+        loot,
+        collect,
+        atPosition,
+        collected,
+        clear,
+        sellCollected,
+    };
 };

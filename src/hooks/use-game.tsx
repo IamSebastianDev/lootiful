@@ -26,6 +26,7 @@ export type GameState = {
     startDungeonDive: () => void;
     tick: number;
     requestTick: () => void;
+    stopped: boolean;
 };
 
 const GameStateContext = createContext<GameState | undefined>(undefined);
@@ -38,6 +39,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const cursor = useCursor();
     const lootStore = useLoot(map);
     const { tick, requestTick } = useTick();
+    const [stopped, setStopped] = useState(false);
 
     const setupPlayerForLevel = () => {
         entityStore.addEntity(Player({ position: hero.position }));
@@ -80,16 +82,15 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     // Called at start of run
     const startDungeonDive = () => {
         hero.setup();
-        // Add collected loot to the coin pouch to enable progression
-        const collectedLoot = lootStore.collected.reduce((prev, curr) => prev + curr.value, 0);
-        coins.addCoins(collectedLoot);
         entityStore.clear();
         setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5);
         setupCoinsForLevel((hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3);
         setupPlayerForLevel();
+        setStopped(false);
     };
 
     const endDungeonDive = () => {
+        setStopped(true);
         entityStore.clear();
         lootStore.clear();
         cursor.setPosition(null);
@@ -110,6 +111,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         tick,
         requestTick,
         startDungeonDive,
+        stopped,
     };
 
     // Update the entities

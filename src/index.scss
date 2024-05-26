@@ -179,6 +179,10 @@ body {
     &.loose {
         gap: var(--ll-lg);
     }
+
+    & .grow {
+        flex-grow: 1;
+    }
 }
 
 .container {
@@ -337,9 +341,9 @@ body {
     margin: auto;
 }
 
-.display {
+.loot-display {
     position: absolute;
-    inset: 15%;
+    inset: 5%;
 
     display: grid;
     place-items: center;
@@ -349,5 +353,31 @@ body {
         background: var(--comp-display-panel-bg);
         padding: var(--ll-xl);
         border: 2px solid var(--comp-display-panel-border);
+
+        & img {
+            display: inline;
+            scale: 1.5;
+            translate: var(--ll-xs);
+        }
+    }
+}
+
+.loot-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.loot-card {
+    background: var(--lc-deep-maroon);
+    border: 2px solid var(--lc-burnt-rose);
+    padding: var(--ll-sm);
+
+    & > a {
+        width: unset;
+    }
+
+    & img {
+        display: inline;
+        scale: 1.5;
     }
 }

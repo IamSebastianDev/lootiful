@@ -17,17 +17,9 @@ export const Player = ({ position }: PlayerCtor) => {
         props.set("id", id);
     };
 
-    const onRender = (id: string, props: Store<PlayerProps>, state: GameState) => {
+    const onRender = (id: string, props: Store<PlayerProps>, _: GameState) => {
         const [x, y] = props.get("position");
-        return (
-            <AnimatedSprite
-                key={id}
-                position={[x, y, 0.2]}
-                sheet={wizardSprites}
-                config={{ interval: 0.5 }}
-                onClick={() => state.hero.hurt(1)}
-            />
-        );
+        return <AnimatedSprite key={id} position={[x, y, 0.2]} sheet={wizardSprites} config={{ interval: 0.5 }} />;
     };
 
     const onUpdate = (id: string, props: Store<PlayerProps>, state: GameState) => {

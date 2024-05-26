@@ -10,8 +10,7 @@ import { useGame } from "../hooks/use-game";
 import { StoppedScreen } from "../components/stopped-screen";
 
 const GameRoute: React.FC = () => {
-    const state = useGame();
-    const stopped = state.hero.stamina <= 0 || state.hero.health <= 0;
+    const { stopped } = useGame();
 
     return (
         <Scene background="">
