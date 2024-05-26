@@ -9,7 +9,7 @@ import { UiButton } from "./ui-button";
 import { ArtifactCard } from "./artifact-card";
 
 export const HeroPanel: React.FC = () => {
-    const { hero, lootStore, coins, artifactStore } = useGame();
+    const { hero, lootStore, coins, artifactStore, stats } = useGame();
     const sellSfx = useSFX("sold");
     const [showArtifactPanel, setShowArtifactPanel] = useState(false);
 
@@ -20,6 +20,7 @@ export const HeroPanel: React.FC = () => {
 
     const handleSaleClick = ({ id, item }: { id: string; item: LootData<any> }) => {
         coins.addCoins(item.value);
+        stats.trackCoins(item.value);
         lootStore.sellCollected(id);
         sellSfx.trigger();
     };

@@ -16,9 +16,8 @@ import { rnd } from "../functions/rnd";
 import { clamp } from "../functions/clamp";
 import { artifactTable, useArtifacts } from "./use-artifacts";
 import { Artifact } from "../assets/entities/artifact.entity";
-import { useSFX } from "./use-sfx";
-import { Navigate, useNavigate } from "@tanstack/react-router";
-import { router } from "../main";
+import { Navigate } from "@tanstack/react-router";
+import { useStats } from "./use-stats";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;
@@ -33,6 +32,7 @@ export type GameState = {
     tick: number;
     requestTick: () => void;
     stopped: boolean;
+    stats: ReturnType<typeof useStats>;
 };
 
 const GameStateContext = createContext<GameState | undefined>(undefined);
@@ -45,6 +45,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const cursor = useCursor();
     const lootStore = useLoot(map);
     const artifactStore = useArtifacts();
+    const stats = useStats();
     const { tick, requestTick } = useTick();
     const [stopped, setStopped] = useState(false);
 
@@ -117,6 +118,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         setupPlayerForLevel();
         setupArtifactsForLevel();
         setStopped(false);
+        stats.trackRound();
     };
 
     const endDungeonDive = () => {
@@ -134,6 +136,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const reset = () => {
         coins.reset();
         hero.reset();
+        stats.reset();
         startDungeonDive();
     };
 
@@ -154,6 +157,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         requestTick,
         startDungeonDive,
         stopped,
+        stats,
     };
 
     // Update the entities

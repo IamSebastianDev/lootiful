@@ -5,7 +5,7 @@ import { applyCharismaModifier } from "../functions/apply-charisma-modifier";
 import coin from "../assets/images/coin.png";
 
 export const StoppedScreen: React.FC = () => {
-    const { startDungeonDive, lootStore, hero, coins } = useGame();
+    const { startDungeonDive, lootStore, hero, coins, stats } = useGame();
 
     const price = lootStore.collected.reduce(
         (prev, curr) => prev + applyCharismaModifier(curr.item.value, hero.attributes.Charisma.value),
@@ -14,7 +14,9 @@ export const StoppedScreen: React.FC = () => {
 
     const sellAllLoot = () => {
         lootStore.collected.forEach(({ id, item }) => {
-            coins.addCoins(applyCharismaModifier(item.value, hero.attributes.Charisma.value));
+            const value = applyCharismaModifier(item.value, hero.attributes.Charisma.value);
+            coins.addCoins(value);
+            stats.trackCoins(value);
             lootStore.sellCollected(id);
         });
     };

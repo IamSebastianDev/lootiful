@@ -42,6 +42,7 @@ export const Treasure = (ctor: TreasureCtor) => {
         if (distance <= 1) {
             state.entityStore.getEntityById(id)?.destroy(state);
             state.coins.addCoins(value);
+            state.stats.trackCoins(value);
             state.requestTick();
         }
     };
