@@ -11,11 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as WinImport } from './routes/win'
 import { Route as OptionsImport } from './routes/options'
 import { Route as GameImport } from './routes/game'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const WinRoute = WinImport.update({
+  path: '/win',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const OptionsRoute = OptionsImport.update({
   path: '/options',
@@ -57,6 +63,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OptionsImport
       parentRoute: typeof rootRoute
     }
+    '/win': {
+      id: '/win'
+      path: '/win'
+      fullPath: '/win'
+      preLoaderRoute: typeof WinImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -66,6 +79,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   GameRoute,
   OptionsRoute,
+  WinRoute,
 })
 
 /* prettier-ignore-end */

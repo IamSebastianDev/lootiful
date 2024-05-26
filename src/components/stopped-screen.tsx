@@ -31,7 +31,7 @@ export const StoppedScreen: React.FC = () => {
                 <UiButton href="" onClick={() => startDungeonDive()}>
                     <div className="text small">Back into the Dungeon</div>
                 </UiButton>
-                <UiButton href="" onClick={() => sellAllLoot()}>
+                <UiButton disabled={lootStore.collected.length === 0} href="" onClick={() => sellAllLoot()}>
                     <div className="text small">Sell all Loot</div>
                 </UiButton>
             </div>

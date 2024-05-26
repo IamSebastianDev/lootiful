@@ -335,7 +335,7 @@ body {
         &:focus,
         &:active {
             transform: unset;
-            border-color: inherit;
+            border: var(--lb-sm) solid var(--comp-ui-button-border);
             color: inherit;
         }
     }

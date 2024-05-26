@@ -14,9 +14,11 @@ import { useTick } from "./use-tick";
 import { Treasure, stash } from "../assets/entities/treasure.entity";
 import { rnd } from "../functions/rnd";
 import { clamp } from "../functions/clamp";
-import { useArtifacts } from "./use-artifacts";
+import { artifactTable, useArtifacts } from "./use-artifacts";
 import { Artifact } from "../assets/entities/artifact.entity";
 import { useSFX } from "./use-sfx";
+import { Navigate, useNavigate } from "@tanstack/react-router";
+import { router } from "../main";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;
@@ -123,6 +125,10 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         entityStore.clear();
         lootStore.clear();
         cursor.setPosition(null);
+
+        if (artifactStore.collectedArtifacts.length === Object.keys(artifactTable).length) {
+            Navigate({ to: "/win" });
+        }
     };
 
     const reset = () => {
