@@ -8,6 +8,7 @@ export type AnimatedSpriteProps<T extends SpriteSheet> = {
     size?: [number, number];
     sheet: T;
     config: AnimatedSpriteConfig<T>;
+    opacity?: number;
 } & MeshProps;
 
 export const AnimatedSprite = <T extends SpriteSheet>({ size, sheet, config, ...props }: AnimatedSpriteProps<T>) => {
@@ -17,7 +18,7 @@ export const AnimatedSprite = <T extends SpriteSheet>({ size, sheet, config, ...
     return (
         <mesh {...props}>
             <planeGeometry args={[width, height]} attach="geometry" />
-            <meshBasicMaterial transparent attach="material" map={texture} />
+            <meshStandardMaterial transparent attach="material" map={texture} opacity={props.opacity} />
         </mesh>
     );
 };

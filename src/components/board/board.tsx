@@ -6,6 +6,7 @@ import { useGame } from "../../hooks/use-game";
 import { TileRenderer } from "./tile-renderer";
 
 import { Cursor } from "./cursor";
+import { MoveTarget } from "./move-target";
 
 export const Board: React.FC = () => {
     const state = useGame();
@@ -14,24 +15,8 @@ export const Board: React.FC = () => {
     return (
         <group>
             <Cursor />
-            <TileRenderer
-                map={map.currentMap}
-                renderer={({ id, ...props }) => (
-                    <Tile
-                        onClick={() => {
-                            if (props.tile.isMoveTarget) {
-                                hero.move(props.tile.position);
-                            }
-                        }}
-                        onPointerEnter={() => {
-                            cursor.setPosition(props.tile.position);
-                            cursor.setState(props.tile.isMoveTarget ? "OK" : "ERROR");
-                        }}
-                        {...props}
-                        key={id}
-                    />
-                )}
-            />
+            <MoveTarget />
+            <TileRenderer map={map.currentMap} renderer={({ id, ...props }) => <Tile {...props} key={id} />} />
             {entityStore.entities.map((entity) => entity.render(state))}
         </group>
     );

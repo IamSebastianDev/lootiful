@@ -18,7 +18,7 @@ export const Cursor: React.FC = () => {
     const [x, y] = position;
 
     return (
-        <group position={[x, y, 0.2]}>
+        <group position={[x, y, 0.1]}>
             <mesh>
                 <planeGeometry attach={"geometry"} />
                 <meshStandardMaterial transparent map={texture} depthWrite={true} attach="material" />

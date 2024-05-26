@@ -50,6 +50,7 @@ export const useHero = () => {
     };
 
     const move = (position: Position) => {
+        setUsedStamina((c) => c + 1);
         setCoordinates(position);
     };
 

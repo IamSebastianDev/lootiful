@@ -90,7 +90,14 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     // Update the entities
-    useEffect(() => entityStore.entities.forEach((entity) => entity.update(gameState)), [hero.position]);
+    useEffect(
+        () =>
+            entityStore.entities.forEach((entity) => {
+                console.log("updating");
+                entity.update(gameState);
+            }),
+        [hero.position]
+    );
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
 };
