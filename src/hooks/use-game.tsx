@@ -5,12 +5,13 @@ import dungeonMap from "../assets/maps/dungeon.map";
 import { useEntityCollection } from "./use-entity-collection";
 import { useCursor } from "./use-cursor";
 import { useClock } from "./use-clock";
-import { Position } from "../functions/position";
+import { Position, position } from "../functions/position";
 import { Loot, lootTable } from "../assets/entities/loot.entity";
 import { Skeleton } from "../assets/entities/skeleton.entity";
 import { Player } from "../assets/entities/player.entity";
 import { useHero } from "./use-hero";
 import dungeonSprites from "../assets/sprites/dungeon.sprites";
+import { Vampire } from "../assets/entities/vampire.entity";
 
 export type GameState = {
     coins: ReturnType<typeof useCoins>;
@@ -62,6 +63,12 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                     entityStore.addEntity(Skeleton({ position: tile.position, createLoot }));
                 }
             });
+        entityStore.addEntity(
+            Vampire({
+                position: entityStore.getAvailableTile().position,
+                createLoot,
+            })
+        );
     };
 
     const reset = () => {

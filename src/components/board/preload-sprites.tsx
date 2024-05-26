@@ -10,6 +10,7 @@ import lootSprites from "../../assets/sprites/loot.sprites";
 import cursorSprite from "../../assets/sprites/cursor.sprite";
 import { useFont } from "@react-three/drei";
 import moveTargetSprites from "../../assets/sprites/move-target.sprites";
+import vampireSprites from "../../assets/sprites/vampire.sprites";
 
 export const PreloadSprites: React.FC<PropsWithChildren> = ({ children }) => {
     preloadSpriteSheet(dungeonSprites);
@@ -19,6 +20,7 @@ export const PreloadSprites: React.FC<PropsWithChildren> = ({ children }) => {
     preloadSpriteSheet(lootSprites);
     preloadSpriteSheet(cursorSprite);
     preloadSpriteSheet(moveTargetSprites);
+    preloadSpriteSheet(vampireSprites);
     useFont.preload("/fonts/press2play.ttf");
 
     return children;
