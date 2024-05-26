@@ -1,5 +1,5 @@
 import { Sprite } from "../../components/board/sprite";
-import { EntityProps, createEntity } from "../../data/entity";
+import { createEntity } from "../../data/entity";
 import { Position } from "../../functions/position";
 import { Store } from "../../functions/simple-store";
 import { GameState } from "../../hooks/use-game";

@@ -1,7 +1,8 @@
 import { AnimatedSprite } from "../../components/board/animated-sprite";
-import { EntityProps, createEntity } from "../../data/entity";
+import { createEntity } from "../../data/entity";
 import { Position } from "../../functions/position";
 import { Store } from "../../functions/simple-store";
+import { toPercent } from "../../functions/to-percent";
 import { GameState } from "../../hooks/use-game";
 import skeletonSprites from "../sprites/skeleton.sprites";
 
@@ -15,21 +16,25 @@ export type SkeletonProps = { position: Position; health: number };
 export const Skeleton = (ctor: LootCtor) => {
     const { position, createLoot } = ctor;
 
+    const maxHealth = 3;
+
     const onInit = (_: string, props: Store<SkeletonProps>) => {
         props.set("position", position);
-        props.set("health", 3);
+        props.set("health", maxHealth);
     };
 
     const onRender = (id: string, props: Store<SkeletonProps>) => {
         const [x, y] = props.get("position")!;
+        const health = props.get("health");
+
         return (
-            <AnimatedSprite
-                onClick={() => onHit(id, props)}
-                key={id}
-                position={[x, y, 0.1]}
-                sheet={skeletonSprites}
-                config={{ interval: 0.5 }}
-            />
+            <group position={[x, y, 0.1]} key={id}>
+                <mesh position={[-0.5 * (1 - health / maxHealth), 0.65, 0.1]}>
+                    <planeGeometry attach="geometry" args={[health / maxHealth, 0.1]} />
+                    <meshBasicMaterial color="red" />
+                </mesh>
+                <AnimatedSprite onClick={() => onHit(id, props)} sheet={skeletonSprites} config={{ interval: 0.5 }} />
+            </group>
         );
     };
 
