@@ -2,6 +2,7 @@ import { Sprite } from "../../components/board/sprite";
 import { EntityProps, createEntity } from "../../data/entity";
 import { Position } from "../../functions/position";
 import { Store } from "../../functions/simple-store";
+import { GameState } from "../../hooks/use-game";
 import { SpriteSheet } from "../../hooks/use-sprite-sheet";
 import lootSprites from "../sprites/loot.sprites";
 
@@ -66,33 +67,48 @@ export type LootKey = keyof (typeof lootTable)["loot"];
 export type LootCtor = {
     position: Position;
     type: LootKey;
-    onPickUp: (data: { id: string; position: Position; type: LootKey }) => void;
-    onPointerIn?: (data: { id: string; loot: LootData<any>; type: LootKey }) => void;
-    onPointerOut?: (data: { id: string; loot: LootData<any>; type: LootKey }) => void;
+    tooltip?: boolean;
 };
 
-export type LootProps = { position: Position };
+export type LootProps = { position: Position; loot: LootData<any>; type: LootKey };
 
 export const Loot = (ctor: LootCtor) => {
-    const { position, type, onPickUp, onPointerIn, onPointerOut } = ctor;
-    const { sheet, key } = lootTable.loot[type];
+    const { position, type, tooltip = true } = ctor;
+    const loot = lootTable.loot[type];
 
     const onInit = (_: string, props: Store<LootProps>) => {
         props.set("position", position);
+        props.set("loot", loot);
+        props.set("type", type);
     };
 
-    const onRender = (id: string, props: Store<LootProps>) => {
+    const onPickUp = (id: string, props: Store<LootProps>, { entityStore, coins, cursor }: GameState) => {
+        const { value } = props.get("loot");
+        entityStore.removeEntity(id);
+        coins.addCoins(value);
+        cursor.setTooltip(null);
+    };
+    const onPointerIn = (_: string, props: Store<LootProps>, { cursor }: GameState) => {
+        const type = props.get("type");
+        const { value } = props.get("loot");
+        cursor.setTooltip(`${type}: ${value}`);
+    };
+    const onPointerOut = (_: string, __: Store<LootProps>, { cursor }: GameState) => {
+        cursor.setTooltip(null);
+    };
+
+    const onRender = (id: string, props: Store<LootProps>, state: GameState) => {
         const loot = lootTable.loot[type];
         const [x, y] = props.get("position");
         return (
             <Sprite
-                onPointerEnter={() => onPointerIn?.({ id, loot, type })}
-                onPointerLeave={() => onPointerOut?.({ id, loot, type })}
-                onClick={() => onPickUp({ id, type, position })}
+                onPointerEnter={() => tooltip && onPointerIn(id, props, state)}
+                onPointerLeave={() => tooltip && onPointerOut(id, props, state)}
+                onClick={() => onPickUp(id, props, state)}
                 key={id}
                 position={[x, y, 0.1]}
-                sheet={sheet}
-                sprite={key}
+                sheet={loot.sheet}
+                sprite={loot.key}
             />
         );
     };

@@ -41,13 +41,6 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                     Loot({
                         position,
                         type: entry.key,
-                        onPickUp: ({ id }) => {
-                            entityStore.removeEntity(id);
-                            coins.addCoins(entry.value);
-                            cursor.setTooltip(null);
-                        },
-                        onPointerIn: ({ type, loot }) => cursor.setTooltip(`${type}: ${loot.value}`),
-                        onPointerOut: () => cursor.setTooltip(null),
                     })
                 );
             }
