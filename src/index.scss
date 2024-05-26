@@ -84,6 +84,12 @@ body {
     height: 100%;
 }
 
+.auto-w-link {
+    & > a {
+        width: auto;
+    }
+}
+
 .w-sm {
     width: var(--ll-sm);
 }
@@ -166,6 +172,11 @@ body {
         &.end {
             align-items: end;
         }
+    }
+
+    &.all {
+        justify-content: center;
+        align-items: center;
     }
 
     &.tight {
@@ -316,6 +327,18 @@ body {
     &:active {
         transform: translate(0px, 0.25rem);
     }
+
+    &.disabled {
+        background: var(--lc-ash-grey);
+
+        &:hover,
+        &:focus,
+        &:active {
+            transform: unset;
+            border-color: inherit;
+            color: inherit;
+        }
+    }
 }
 
 .hero-stats {
@@ -379,5 +402,25 @@ body {
     & img {
         display: inline;
         scale: 1.5;
+    }
+}
+
+.artifact-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.artifact-card {
+    padding: var(--ll-lg);
+    background: var(--lc-burnt-rose);
+    outline: 4px double var(--lc-light-blue);
+    outline-offset: -8px;
+    border: 2px solid var(--lc-burnt-rose);
+    border-radius: 1px;
+
+    & img {
+        width: 64px;
+        height: 64px;
+        filter: drop-shadow(2px 4px 6px var(--lc-light-blue));
     }
 }

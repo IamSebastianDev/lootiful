@@ -10,7 +10,7 @@ export type LootCardProps = {
     handleOnClick: () => void;
 };
 export const LootCard: React.FC<LootCardProps> = ({ item, handleOnClick }) => {
-    const { hero } = useGame();
+    const { hero, stopped } = useGame();
 
     return (
         <div className="loot-card stack horizontal loose center">
@@ -24,7 +24,7 @@ export const LootCard: React.FC<LootCardProps> = ({ item, handleOnClick }) => {
                 </div>
                 <div className="text tiny legible">{item.lore}</div>
             </div>
-            <UiButton href="" onClick={() => handleOnClick()}>
+            <UiButton disabled={!stopped} href="" onClick={() => handleOnClick()}>
                 <span className="text tiny">Sell</span>
             </UiButton>
         </div>

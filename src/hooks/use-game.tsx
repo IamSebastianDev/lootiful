@@ -16,6 +16,7 @@ import { rnd } from "../functions/rnd";
 import { clamp } from "../functions/clamp";
 import { useArtifacts } from "./use-artifacts";
 import { Artifact } from "../assets/entities/artifact.entity";
+import { useSFX } from "./use-sfx";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;

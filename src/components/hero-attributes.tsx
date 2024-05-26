@@ -4,7 +4,7 @@ import { Attribute } from "../hooks/use-attributes";
 import { getAttributeCost } from "../functions/get-attribute-cost";
 
 export const HeroAttributes: React.FC = () => {
-    const { hero, coins } = useGame();
+    const { hero, coins, stopped } = useGame();
 
     const handleAttributeClick = (name: Attribute, value: number) => {
         const cost = getAttributeCost(value);
@@ -12,7 +12,7 @@ export const HeroAttributes: React.FC = () => {
         hero.bumpAttributeByType(name);
     };
     const disableAttribute = (value: number) => {
-        return getAttributeCost(value) > coins.current;
+        return !stopped || getAttributeCost(value) > coins.current;
     };
 
     return (

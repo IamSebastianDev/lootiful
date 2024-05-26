@@ -5,12 +5,17 @@ import { getMaxHealth } from "../functions/get-max-health";
 import { getMaxStamina } from "../functions/get-max-stamina";
 import { Position, position } from "../functions/position";
 import { rnd } from "../functions/rnd";
+import { useSFX } from "./use-sfx";
 
 export const initialAttributeValues = () => {
     return Object.fromEntries(attributeNames.map((name) => [name, 1])) as Record<Attribute, number>;
 };
 
 export const useHero = () => {
+    // sfx
+    const walking = useSFX("walk");
+
+    // props
     const [name, setName] = useState<string>(rnd.entry(names));
     const [attributes, bumpAttributeByType, setAttributeValues] = useAttributes(initialAttributeValues());
     const [takenDamage, setTakenDamage] = useState(0);

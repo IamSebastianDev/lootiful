@@ -45,8 +45,10 @@ export const Artifact = (ctor: ArtifactCtor) => {
         );
     };
 
-    const onDestroy = (id: string, _: Store<ArtifactProps>, { entityStore }: GameState) => {
+    const onDestroy = (id: string, store: Store<ArtifactProps>, { entityStore, artifactStore, coins }: GameState) => {
         entityStore.removeEntity(id);
+        artifactStore.collectArtifact(store.get("artifact"));
+        coins.addCoins(1000);
     };
 
     const onUpdate = () => {};
