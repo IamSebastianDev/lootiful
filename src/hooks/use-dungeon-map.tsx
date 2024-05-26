@@ -26,19 +26,7 @@ export const createMap = <T extends SpriteSheet>(map: MapData<T>) => {
     const getSpawnTiles = () => tiles.filter((tile) => tile.isSpawnTile);
     const getMoveableTiles = () => tiles.filter((tile) => tile.isMoveTarget);
 
-    const getAdjacentTiles = ([x, y]: Position) => {
-        return getMoveableTiles().filter(({ position }) => {
-            const [currentX, currentY] = position;
-            return (
-                (currentX + 1 === x && currentY === y) ||
-                (currentX - 1 === x && currentY === y) ||
-                (currentX === x && currentY - 1 === y) ||
-                (currentX === x && currentY + 1 === y)
-            );
-        });
-    };
-
-    return { name, width, height, sheet, tiles, getSpawnTiles, getMoveableTiles, getAdjacentTiles };
+    return { name, width, height, sheet, tiles, getSpawnTiles, getMoveableTiles };
 };
 
 export const useDungeonMap = <T extends SpriteSheet>(maps: ReturnType<typeof createMap<T>>[]) => {
@@ -51,5 +39,19 @@ export const useDungeonMap = <T extends SpriteSheet>(maps: ReturnType<typeof cre
         }
     };
 
-    return { currentMap, setMap };
+    const getAdjacentTiles = ([x, y]: Position) => {
+        return currentMap.getMoveableTiles().filter(({ position }) => {
+            const [currentX, currentY] = position;
+            return (
+                (currentX + 1 === x && currentY === y) ||
+                (currentX - 1 === x && currentY === y) ||
+                (currentX === x && currentY - 1 === y) ||
+                (currentX === x && currentY + 1 === y)
+            );
+        });
+    };
+
+    const getClosestTile = (target: Position, tiles: TileData<any>[]) => {};
+
+    return { currentMap, setMap, getAdjacentTiles };
 };

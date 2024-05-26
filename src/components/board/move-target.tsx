@@ -5,7 +5,7 @@ import moveTargetSprites from "../../assets/sprites/move-target.sprites";
 
 export const MoveTarget: React.FC = () => {
     const { hero, map } = useGame();
-    const marked = map.currentMap.getAdjacentTiles(hero.position);
+    const marked = map.getAdjacentTiles(hero.position);
 
     return (
         <>

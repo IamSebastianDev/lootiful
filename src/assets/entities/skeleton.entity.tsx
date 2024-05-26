@@ -1,5 +1,6 @@
 import { AnimatedSprite } from "../../components/board/animated-sprite";
 import { createEntity } from "../../data/entity";
+import { getRandomEntry } from "../../functions/get-random-entry";
 import { Position } from "../../functions/position";
 import { Store } from "../../functions/simple-store";
 import { GameState } from "../../hooks/use-game";
@@ -53,9 +54,9 @@ export const Skeleton = (ctor: LootCtor) => {
         }
 
         // calculate movement
-        const adjacent = state.map.currentMap.getAdjacentTiles(position);
+        const adjacent = state.map.getAdjacentTiles(position);
         if (adjacent && adjacent.length > 0) {
-            const { position } = adjacent[Math.floor(Math.random() * adjacent.length)];
+            const { position } = getRandomEntry(adjacent);
             props.set("position", position);
         }
     };
