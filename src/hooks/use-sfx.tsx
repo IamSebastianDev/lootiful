@@ -6,7 +6,6 @@ import walk from "../assets/audio/fx/walk.wav";
 import shadowsLament from "../assets/audio/songs/shadows-lament.mp3";
 import echoesOfTheAbyss from "../assets/audio/songs/echoes-of-the-abyss.mp3";
 import attack from "../assets/audio/fx/attack.mp3";
-import { useGame } from "./use-game";
 import { useEffect } from "react";
 import pickup from "../assets/audio/fx/pickup.mp3";
 import { useSettings } from "./use-settings";

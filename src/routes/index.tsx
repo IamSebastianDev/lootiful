@@ -2,7 +2,7 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { Scene } from "../components/scene";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { UiButton, UiButtonProps } from "../components/ui-button";
 import background from "../assets/images/menu-bg.jpg";
 import { useGame } from "../hooks/use-game";
