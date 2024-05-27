@@ -7,7 +7,7 @@ import { UiButton } from "../components/ui-button";
 
 export const Route = createFileRoute("/game-over")({
     component: () => {
-        const { artifactStore, stats, hero } = useGame();
+        const { artifactStore, stats, hero, tick, reset } = useGame();
 
         if (!hero.dead && artifactStore.collectedArtifacts.length < Object.keys(artifactTable).length) {
             Navigate({ to: "/game" });
@@ -18,7 +18,9 @@ export const Route = createFileRoute("/game-over")({
                 (stats.state.coins +
                     stats.state.skeletonsKilled +
                     stats.state.vampiresKilled +
-                    stats.state.treasuresCollected * 4)
+                    stats.state.lootCollected +
+                    stats.state.treasuresCollected * 4) +
+                tick
         );
 
         return (
@@ -33,6 +35,9 @@ export const Route = createFileRoute("/game-over")({
                             You collected {artifactStore.collectedArtifacts.length} Artifacts!
                         </div>
                         <div className="text tiny legible">You collected and earned {stats.state.coins} Coins!</div>
+                        <div className="text tiny legible">
+                            You collected and earned {stats.state.lootCollected} pieces of Loot!
+                        </div>
                         <div className="text tiny legible">You dove {stats.state.rounds} times into the dungeon!</div>
                         <div className="text tiny legible">You found {stats.state.treasuresCollected} treasures!</div>
                         <div className="text tiny legible">
@@ -40,7 +45,7 @@ export const Route = createFileRoute("/game-over")({
                             Vampires!
                         </div>
                         <div className="text tiny legible highlight">Your overall score is {score}!</div>
-                        <UiButton href="/">
+                        <UiButton onClick={() => reset()} href="/">
                             <span className="text small">Back to menu</span>
                         </UiButton>
                     </div>

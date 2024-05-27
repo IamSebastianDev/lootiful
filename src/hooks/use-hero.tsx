@@ -33,11 +33,14 @@ export const useHero = () => {
         setTakenDamage(0);
         setUsedStamina(0);
         setCoordinates(position(8, 0));
+        setDead(false);
+        setTired(false);
     };
 
     const setup = () => {
         setTakenDamage(0);
         setUsedStamina(0);
+        setTired(false);
         setCoordinates(position(8, 0));
     };
 

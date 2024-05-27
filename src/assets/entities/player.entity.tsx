@@ -23,12 +23,9 @@ export const Player = ({ position }: PlayerCtor) => {
     };
 
     const onUpdate = (id: string, props: Store<PlayerProps>, state: GameState) => {
-        // Pathfind to next requested tile
-        // const [x, y] = props.get("position");
         props.set("position", state.hero.position);
 
-        if (state.hero.health <= 0) {
-            // end round -> todo: implement
+        if (state.hero.health < 1) {
             const entity = state.entityStore.getEntityById(id);
             entity?.destroy(state);
         }
@@ -36,6 +33,7 @@ export const Player = ({ position }: PlayerCtor) => {
 
     const onDestroy = (id: string, _: Store<PlayerProps>, state: GameState) => {
         state.entityStore.removeEntity(id);
+        state.hero.setDead(true);
     };
 
     return createEntity<EntityProps & { id: string }>({

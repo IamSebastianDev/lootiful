@@ -6,5 +6,10 @@ export const useTick = () => {
     const requestTick = () => {
         setTick((c) => c + 1);
     };
-    return { tick, requestTick };
+
+    const reset = () => {
+        setTick(0);
+    };
+
+    return { tick, requestTick, reset };
 };

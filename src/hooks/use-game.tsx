@@ -19,6 +19,7 @@ import { Artifact } from "../assets/entities/artifact.entity";
 import { useStats } from "./use-stats";
 import { useSettings } from "./use-settings";
 import { router } from "../main";
+import { position } from "../functions/position";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;
@@ -30,6 +31,7 @@ export type GameState = {
     artifactStore: ReturnType<typeof useArtifacts>;
     reset: () => void;
     startDungeonDive: () => void;
+    endDungeonDive: () => void;
     tick: number;
     requestTick: () => void;
     stopped: boolean;
@@ -48,7 +50,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const lootStore = useLoot(map);
     const artifactStore = useArtifacts();
     const stats = useStats();
-    const { tick, requestTick } = useTick();
+    const { tick, requestTick, reset: resetTicks } = useTick();
     const [stopped, setStopped] = useState(false);
     const settings = useSettings();
 
@@ -57,9 +59,12 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     // Create the enemies for the Level
-    const setupEnemySpawnForLevel = (amount: number) => {
+    const setupEnemySpawnForLevel = () => {
+        const amount = Math.floor(
+            (hero.attributes.Strength.value * 2 + hero.attributes.Constitution.value) * settings.difficulty
+        );
         // Balance enemies
-        Array(clamp(1, Math.floor(amount), 15))
+        Array(clamp(2, Math.floor(amount), 15))
             .fill(null)
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
@@ -73,7 +78,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                     );
                 }
             });
-        Array(clamp(1, Math.floor(amount / 3), 3))
+        Array(clamp(12, Math.floor(amount / 3), 4))
             .fill(null)
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
@@ -89,7 +94,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             });
     };
 
-    const setupTreasureForLevel = (amount: number) => {
+    const setupTreasureForLevel = () => {
+        const amount = hero.attributes.Intelligence.value * 2;
         Array(clamp(Math.floor(amount), 3, 15))
             .fill(null)
             .map(() => rnd.entry(Object.keys(stash)))
@@ -118,12 +124,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     // Called at start of run
     const startDungeonDive = () => {
         entityStore.clear();
-        setupEnemySpawnForLevel(
-            ((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5) * settings.difficulty
-        );
-        setupTreasureForLevel(
-            (hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3 / settings.difficulty
-        );
+        setupEnemySpawnForLevel();
+        setupTreasureForLevel();
         setupPlayerForLevel();
         setupArtifactsForLevel();
         setStopped(false);
@@ -152,6 +154,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     const reset = () => {
+        resetTicks();
         coins.reset();
         hero.reset();
         stats.reset();
@@ -161,6 +164,10 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     useEffect(() => {
         reset();
     }, []);
+
+    if ((hero.stamina < 1 || hero.health < 1 || hero.dead) && !stopped) {
+        endDungeonDive();
+    }
 
     const gameState: GameState = {
         entityStore,
@@ -174,6 +181,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         tick,
         requestTick,
         startDungeonDive,
+        endDungeonDive,
         stopped,
         stats,
         settings,
@@ -181,12 +189,12 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     // Update the entities
     useEffect(() => {
-        entityStore.entities.forEach((entity) => entity.update(gameState));
-
-        if (hero.stamina === 0 || hero.health === 0) {
-            endDungeonDive();
+        if (hero.position.match(position(8, 0))) {
+            return;
         }
-    }, [hero.position, tick]);
+
+        entityStore.entities.forEach((entity) => entity.update(gameState));
+    }, [tick, hero.position]);
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
 };

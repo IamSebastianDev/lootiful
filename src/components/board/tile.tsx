@@ -48,7 +48,7 @@ export const Tile = <T extends SpriteSheet>({ sheet, tile, onPlayerInteraction, 
 
     return (
         <>
-            {tile.isEmissive && <TorchLight position={[x, y, 1]} intensity={1} interval={0.1} />}
+            {tile.isEmissive && <TorchLight position={[x, y, 1]} intensity={1} interval={0.15} />}
             <mesh
                 receiveShadow
                 {...props}

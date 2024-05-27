@@ -19,6 +19,12 @@ export const TorchLight: React.FC<TorchProps> = ({ intensity, interval, ...props
         <>
             <pointLight
                 position={props.position}
+                intensity={intensityRef.current[(clock + 4) % 20]}
+                color="red"
+                castShadow
+            ></pointLight>
+            <pointLight
+                position={props.position}
                 intensity={intensityRef.current[clock % 20]}
                 color="orange"
                 castShadow

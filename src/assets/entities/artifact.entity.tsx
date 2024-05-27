@@ -39,7 +39,7 @@ export const Artifact = (ctor: ArtifactCtor) => {
 
         return (
             <group key={id} position={[x, y, 0.2]} onClick={() => collect(id, props, state)}>
-                <pointLight position={[0, 0, 2]} intensity={2} color={"white"} />
+                <pointLight position={[0, 0, 0.5]} intensity={2} color={"blue"} />
                 <Sprite sheet={artifactsSprites} sprite={data.sprite} scale={0.5} />
             </group>
         );

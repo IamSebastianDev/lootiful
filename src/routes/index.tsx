@@ -9,12 +9,12 @@ import { useGame } from "../hooks/use-game";
 import { useSFX } from "../hooks/use-sfx";
 
 const IndexRoute: React.FC = () => {
-    const { reset } = useGame();
+    const { reset, tick } = useGame();
     const { trigger } = useSFX("menu_click");
 
     const links: UiButtonProps[] = [
         { children: "New Game", href: "/game", onClick: () => reset() },
-        { children: "Continue Game", href: "/game?restore" },
+        { children: "Continue Game", href: "/game?restore", disabled: tick === 0 },
         { children: "Options", href: "/options", onClick: () => trigger() },
     ];
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-export const attributeNames = ["Strength", "Constitution", "Dexterity", "Charisma"] as const;
-const attributeShort = ["Str", "Con", "Dex", "Cha"] as const;
+export const attributeNames = ["Strength", "Constitution", "Dexterity", "Intelligence", "Charisma"] as const;
+const attributeShort = ["Str", "Con", "Dex", "Int", "Cha"] as const;
 export type Attribute = (typeof attributeNames)[number];
 
 export const useAttributes = (initialAttributeValues: Record<Attribute, number>) => {

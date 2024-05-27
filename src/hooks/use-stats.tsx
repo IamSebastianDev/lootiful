@@ -6,7 +6,7 @@ export type Stats = {
     skeletonsKilled: number;
     vampiresKilled: number;
     treasuresCollected: number;
-    died: number;
+    lootCollected: number;
 };
 
 type Action =
@@ -14,9 +14,17 @@ type Action =
     | { type: "incrementRounds"; payload: number }
     | { type: "addKill"; payload: "vampire" | "skeleton" }
     | { type: "treasureCollected"; payload: undefined }
-    | { type: "reset"; payload: undefined };
+    | { type: "reset"; payload: undefined }
+    | { type: "lootCollected"; payload: undefined };
 
-const initialState = { rounds: 0, coins: 0, vampiresKilled: 0, skeletonsKilled: 0, treasuresCollected: 0, died: 0 };
+const initialState = {
+    rounds: 0,
+    coins: 0,
+    vampiresKilled: 0,
+    skeletonsKilled: 0,
+    treasuresCollected: 0,
+    lootCollected: 0,
+};
 
 const reducer = (state: Stats, action: Action): Stats => {
     switch (action.type) {
@@ -26,6 +34,8 @@ const reducer = (state: Stats, action: Action): Stats => {
             return { ...state, rounds: state.rounds + action.payload };
         case "treasureCollected":
             return { ...state, treasuresCollected: state.treasuresCollected + 1 };
+        case "lootCollected":
+            return { ...state, lootCollected: state.lootCollected + 1 };
         case "addKill":
             return {
                 ...state,
@@ -47,7 +57,8 @@ export const useStats = () => {
     const trackRound = () => dispatch({ type: "incrementRounds", payload: 1 });
     const trackKill = (type: "skeleton" | "vampire") => dispatch({ type: "addKill", payload: type });
     const trackTreasure = () => dispatch({ type: "treasureCollected", payload: undefined });
+    const trackLoot = () => dispatch({ type: "lootCollected", payload: undefined });
     const reset = () => dispatch({ type: "reset", payload: undefined });
 
-    return { state, trackCoins, trackRound, trackKill, trackTreasure, reset };
+    return { state, trackCoins, trackRound, trackKill, trackTreasure, trackLoot, reset };
 };
