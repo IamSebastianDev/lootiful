@@ -61,7 +61,7 @@ const IndexRoute: React.FC = () => {
     return (
         <Scene background={background}>
             <div className="social-links">
-                <UiButton href="https://github.com/iamsebastiandev">
+                <UiButton href="https://github.com/iamsebastiandev/lootiful">
                     <svg width={24} height={24} viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
                         <path
                             fillRule="evenodd"
