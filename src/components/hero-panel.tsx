@@ -37,6 +37,9 @@ export const HeroPanel: React.FC = () => {
             </div>
             <hr />
             <div className="stack vertical tight artifact-list">
+                {artifactStore.collectedArtifacts.length === 0 && (
+                    <div className="text small legible center">No Artifacts found so far</div>
+                )}
                 {artifactStore.collectedArtifacts.map((artifact, idx) => (
                     <ArtifactCard artifact={artifact} key={idx} />
                 ))}

@@ -30,7 +30,7 @@ export const Artifact = (ctor: ArtifactCtor) => {
         if (distance <= 1) {
             state.sfx.pickup();
             state.entityStore.getEntityById(id)?.destroy(state);
-            state.requestTick();
+            state.hero.exhaust(state.hero.stamina);
         }
     };
 
