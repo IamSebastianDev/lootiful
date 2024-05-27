@@ -75,11 +75,12 @@ export const Vampire = (ctor: LootCtor) => {
         }
     };
 
-    const onHit = (_: string, props: Store<VampireProps>, { hero }: GameState) => {
+    const onHit = (_: string, props: Store<VampireProps>, { hero, sfx }: GameState) => {
         const position = props.get("position");
         const distanceToPlayer = hero.position.distance(position);
 
         if (distanceToPlayer <= 1) {
+            sfx.attack();
             const health = props.get("health");
             props.set("health", Math.max(0, health - hero.damage));
             hero.exhaust(1);

@@ -28,6 +28,7 @@ export const Artifact = (ctor: ArtifactCtor) => {
         // check if the position to the player is close
         const distance = position.distance(state.hero.position);
         if (distance <= 1) {
+            state.sfx.pickup();
             state.entityStore.getEntityById(id)?.destroy(state);
             state.requestTick();
         }

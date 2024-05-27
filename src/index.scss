@@ -627,3 +627,14 @@ body {
     border: none;
     box-shadow: 2px 2px 0px var(--lc-ivory);
 }
+
+.tag {
+    background: var(--lc-warm-brown);
+    color: var(--lc-ivory);
+    padding: var(--ll-xs) var(--ll-sm);
+    border: var(--lb-sm) solid var(--lc-dull-gold);
+    white-space: nowrap;
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}

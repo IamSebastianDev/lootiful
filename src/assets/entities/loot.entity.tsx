@@ -38,8 +38,8 @@ export const Loot = (ctor: LootCtor) => {
     };
 
     const onPointerIn = (_: string, props: Store<LootProps>, { cursor }: GameState) => {
-        const { value, name } = props.get("loot");
-        cursor.setTooltip(`${name}: ${value}`);
+        const { name } = props.get("loot");
+        cursor.setTooltip(`${name}`);
     };
     const onPointerOut = (_: string, __: Store<LootProps>, { cursor }: GameState) => {
         cursor.setTooltip(null);

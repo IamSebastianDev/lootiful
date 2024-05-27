@@ -9,8 +9,8 @@ import { UiButton } from "./ui-button";
 import { ArtifactCard } from "./artifact-card";
 
 export const HeroPanel: React.FC = () => {
-    const { hero, lootStore, coins, artifactStore, stats } = useGame();
-    const sellSfx = useSFX("sold");
+    const { hero, lootStore, coins, artifactStore, stats, settings } = useGame();
+    const sellSfx = useSFX("sold", settings);
     const [showArtifactPanel, setShowArtifactPanel] = useState(false);
 
     const handleNameChange = (event: ChangeEvent) => {

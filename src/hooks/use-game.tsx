@@ -38,6 +38,10 @@ export type GameState = {
     stopped: boolean;
     stats: ReturnType<typeof useStats>;
     settings: ReturnType<typeof useSettings>;
+    sfx: {
+        attack: () => void;
+        pickup: () => void;
+    };
 };
 
 const GameStateContext = createContext<GameState | undefined>(undefined);
@@ -54,6 +58,14 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const { tick, requestTick, reset: resetTicks } = useTick();
     const [stopped, setStopped] = useState(false);
     const settings = useSettings();
+
+    // Sound setup
+    const attack = useSFX("attack", settings);
+    const pickup = useSFX("pickup", settings);
+    const sfx = {
+        attack: () => attack.trigger(),
+        pickup: () => pickup.trigger(),
+    };
 
     const setupPlayerForLevel = () => {
         entityStore.addEntity(Player({ position: position(8, 0) }));
@@ -184,6 +196,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         stopped,
         stats,
         settings,
+        sfx,
     };
 
     // Update the entities

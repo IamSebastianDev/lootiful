@@ -2,7 +2,7 @@ import React from "react";
 import { useGame } from "../../hooks/use-game";
 import { useAnimatedSprite } from "../../hooks/use-animated-sprite";
 import cursorSprite from "../../assets/sprites/cursor.sprite";
-import { Text } from "@react-three/drei";
+import { Tag } from "./tag";
 
 export const Cursor: React.FC = () => {
     const { cursor } = useGame();
@@ -25,13 +25,7 @@ export const Cursor: React.FC = () => {
                     <planeGeometry attach={"geometry"} />
                     <meshStandardMaterial transparent map={texture} depthWrite={true} attach="material" />
                 </mesh>
-                {tooltip && (
-                    <mesh position={[0.75, 0, 0.2]}>
-                        <Text font={"/fonts/press2play.ttf"} anchorX={"left"} fontSize={0.3}>
-                            {tooltip}
-                        </Text>
-                    </mesh>
-                )}
+                {tooltip && <Tag position={[0.75, 0, 0.2]} text={tooltip} />}
             </group>
         </>
     );

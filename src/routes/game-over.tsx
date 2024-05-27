@@ -4,10 +4,21 @@ import background from "../assets/images/menu-bg.jpg";
 import { useGame } from "../hooks/use-game";
 import { artifactTable } from "../hooks/use-artifacts";
 import { UiButton } from "../components/ui-button";
+import { useSFX } from "../hooks/use-sfx";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/game-over")({
     component: () => {
-        const { artifactStore, stats, hero, tick, reset } = useGame();
+        const { artifactStore, stats, hero, tick, reset, settings } = useGame();
+        const music = useSFX("echoes_of_the_abyss", settings, true);
+
+        useEffect(() => {
+            music.start();
+
+            return () => {
+                music.stop();
+            };
+        });
 
         if (!hero.dead && artifactStore.collectedArtifacts.length < Object.keys(artifactTable).length) {
             Navigate({ to: "/game" });

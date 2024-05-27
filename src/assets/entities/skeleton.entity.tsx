@@ -75,12 +75,13 @@ export const Skeleton = (ctor: LootCtor) => {
     };
 
     const onHit = (_: string, props: Store<SkeletonProps>, state: GameState) => {
-        const { hero } = state;
+        const { hero, sfx } = state;
 
         const position = props.get("position");
         const distanceToPlayer = hero.position.distance(position);
 
         if (distanceToPlayer <= 1) {
+            sfx.attack();
             const health = props.get("health");
             props.set("health", Math.max(0, health - state.hero.damage));
             hero.exhaust(1);

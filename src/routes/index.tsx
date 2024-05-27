@@ -9,9 +9,9 @@ import { useGame } from "../hooks/use-game";
 import { useSFX } from "../hooks/use-sfx";
 
 const IndexRoute: React.FC = () => {
-    const { reset, tick } = useGame();
-    const { trigger } = useSFX("menu_click");
-    const music = useSFX("menu_song", true);
+    const { reset, tick, settings } = useGame();
+    const { trigger } = useSFX("menu_click", settings);
+    const music = useSFX("shadows_lament", settings, true);
     useEffect(() => {
         music.start();
         return () => {
@@ -20,9 +20,29 @@ const IndexRoute: React.FC = () => {
     }, []);
 
     const links: UiButtonProps[] = [
-        { children: "New Game", href: "/game", onClick: () => reset() },
-        { children: "Continue Game", href: "/game?restore", disabled: tick === 0 },
-        { children: "Options", href: "/options", onClick: () => trigger() },
+        {
+            children: "New Game",
+            href: "/game",
+            onClick: () => {
+                trigger();
+                reset();
+            },
+        },
+        {
+            children: "Continue Game",
+            href: "/game?restore",
+            disabled: tick === 0,
+            onClick: () => {
+                trigger();
+            },
+        },
+        {
+            children: "Options",
+            href: "/options",
+            onClick: () => {
+                trigger();
+            },
+        },
     ];
 
     return (
