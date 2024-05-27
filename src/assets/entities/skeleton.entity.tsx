@@ -9,14 +9,13 @@ import skeletonSprites from "../sprites/skeleton.sprites";
 export type LootCtor = {
     position: Position;
     maxHealth: number;
+    damage: number;
 };
 
 export type SkeletonProps = { position: Position; health: number };
 
 export const Skeleton = (ctor: LootCtor) => {
-    const { position, maxHealth = 3 } = ctor;
-
-    const damage = 1;
+    const { position, maxHealth = 3, damage = 1 } = ctor;
 
     const onInit = (_: string, props: Store<SkeletonProps>) => {
         props.set("position", position);

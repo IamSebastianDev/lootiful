@@ -8,14 +8,13 @@ import vampireSprites from "../sprites/vampire.sprites";
 export type LootCtor = {
     position: Position;
     maxHealth: number;
+    damage: number;
 };
 
 export type VampireProps = { position: Position; health: number };
 
 export const Vampire = (ctor: LootCtor) => {
-    const { position, maxHealth = 5 } = ctor;
-
-    const damage = 2;
+    const { position, maxHealth = 5, damage = 3 } = ctor;
 
     const onInit = (_: string, props: Store<VampireProps>) => {
         props.set("position", position);

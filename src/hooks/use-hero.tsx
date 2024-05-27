@@ -21,7 +21,7 @@ export const useHero = () => {
     const [tired, setTired] = useState(false);
 
     // Derived attributes
-    const maxHealth = 1; //8 + getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
+    const maxHealth = 16 + getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
     const maxStamina = 8 + getMaxStamina(attributes.Constitution.value, attributes.Dexterity.value);
     const damage = attributes.Strength.value + attributes.Dexterity.value;
     const stamina = Math.max(maxStamina - usedStamina, 0);

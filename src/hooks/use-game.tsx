@@ -16,9 +16,9 @@ import { rnd } from "../functions/rnd";
 import { clamp } from "../functions/clamp";
 import { artifactTable, useArtifacts } from "./use-artifacts";
 import { Artifact } from "../assets/entities/artifact.entity";
-import { useNavigate } from "@tanstack/react-router";
 import { useStats } from "./use-stats";
 import { useSettings } from "./use-settings";
+import { router } from "../main";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;
@@ -50,7 +50,6 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const stats = useStats();
     const { tick, requestTick } = useTick();
     const [stopped, setStopped] = useState(false);
-    const navigate = useNavigate();
     const settings = useSettings();
 
     const setupPlayerForLevel = () => {
@@ -68,7 +67,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                     entityStore.addEntity(
                         Skeleton({
                             position: tile.position,
-                            maxHealth: 2 + hero.attributes.Strength.value * 2,
+                            maxHealth: Math.round(2 + hero.attributes.Strength.value * 2 * settings.difficulty),
+                            damage: Math.round(1 + hero.attributes.Strength.value * settings.difficulty),
                         })
                     );
                 }
@@ -81,7 +81,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                     entityStore.addEntity(
                         Vampire({
                             position: entityStore.getAvailableTile().position,
-                            maxHealth: 5 + hero.attributes.Strength.value * 2,
+                            maxHealth: Math.round(5 + hero.attributes.Strength.value * 2 * settings.difficulty),
+                            damage: Math.round(3 + hero.attributes.Strength.value * 2 * settings.difficulty),
                         })
                     );
                 }
@@ -131,10 +132,6 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     };
 
     const endDungeonDive = () => {
-        if (artifactStore.collectedArtifacts.length === Object.keys(artifactTable).length) {
-            navigate({ to: "/game-over" });
-        }
-
         if (hero.stamina === 0) {
             hero.setTired(true);
         }
@@ -148,6 +145,10 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         entityStore.clear();
         lootStore.clear();
         cursor.setPosition(null);
+
+        if (artifactStore.collectedArtifacts.length === Object.keys(artifactTable).length) {
+            router.navigate({ to: "/game-over" });
+        }
     };
 
     const reset = () => {
@@ -185,7 +186,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         if (hero.stamina === 0 || hero.health === 0) {
             endDungeonDive();
         }
-    }, [hero.position, hero.stamina, tick]);
+    }, [hero.position, tick]);
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
 };
