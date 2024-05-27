@@ -26,6 +26,28 @@ export const Route = createFileRoute("/how-to-play")({
                             more chances to find LOOT and lets you stay longer in the dungeon.
                         </p>
                         <UiButton href="/">Back to menu</UiButton>
+                        <div className="text highlight legible center large">Credits:</div>
+                        <a className="text tiny legible" href="https://pixel-poem.itch.io/dungeon-assetpuck/">
+                            Main Spritesheet and Tileset
+                        </a>
+                        <a className="text tiny legible" href="https://suno.com">
+                            Suno.ai for the Music
+                        </a>
+                        <a className="text tiny legible" href="https://btl-games.itch.io/fantasy-loot-drop-asset-pack">
+                            Loot
+                        </a>
+                        <a className="text tiny legible" href="https://almardev.itch.io/pixel-rpg-icons-16x16">
+                            Artifacts
+                        </a>
+                        <a
+                            className="text tiny legible"
+                            href="https://opengameart.org/content/gold-treasure-icons-16x16"
+                        >
+                            Open Game Art for the Treasures
+                        </a>
+                        <a className="text tiny legible" href="https://chatgpt.com">
+                            OpenAi for the Background Image and some textual content
+                        </a>
                     </div>
                 </div>
             </Scene>
