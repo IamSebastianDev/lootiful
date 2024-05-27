@@ -1,10 +1,6 @@
 import { useState } from "react";
 import artifactsSprites from "../assets/sprites/artifacts.sprites";
-import dungeonSprites from "../assets/sprites/dungeon.sprites";
-import { useDungeonMap } from "./use-dungeon-map";
 import { SpriteSheet } from "./use-sprite-sheet";
-import { Artifact } from "../assets/entities/artifact.entity";
-import { Position } from "../functions/position";
 
 export type ArtifactData = {
     name: string;

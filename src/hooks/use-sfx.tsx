@@ -20,7 +20,6 @@ export const useSFX = (key: keyof typeof sfx) => {
     const trigger = () => {
         file.play();
     };
-    const stop = () => {};
 
     return { trigger, start };
 };

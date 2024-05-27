@@ -5,6 +5,7 @@ import { SpriteSheet, useSpriteSheet } from "../../hooks/use-sprite-sheet";
 import { useRef } from "react";
 import { TileData } from "../../hooks/use-dungeon-map";
 import { useGame } from "../../hooks/use-game";
+import { TorchLight } from "./torch-light";
 
 export type TileProps<T extends SpriteSheet> = {
     tile: TileData<T>;
@@ -46,14 +47,18 @@ export const Tile = <T extends SpriteSheet>({ sheet, tile, onPlayerInteraction, 
     };
 
     return (
-        <mesh
-            {...props}
-            position={[x, y, 0]}
-            onClick={(event) => handlePlayerInteract(event)}
-            onPointerEnter={() => handlePointerEnter()}
-        >
-            <planeGeometry attach="geometry" args={[width, height]} />
-            <meshStandardMaterial ref={spriteRef} transparent attach="material" map={texture} />
-        </mesh>
+        <>
+            {tile.isEmissive && <TorchLight position={[x, y, 1]} intensity={1} interval={0.1} />}
+            <mesh
+                receiveShadow
+                {...props}
+                position={[x, y, 0]}
+                onClick={(event) => handlePlayerInteract(event)}
+                onPointerEnter={() => handlePointerEnter()}
+            >
+                <planeGeometry attach="geometry" args={[width, height]} />
+                <meshStandardMaterial ref={spriteRef} transparent attach="material" map={texture} />
+            </mesh>
+        </>
     );
 };

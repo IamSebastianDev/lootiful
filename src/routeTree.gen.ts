@@ -11,20 +11,20 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as WinImport } from './routes/win'
 import { Route as OptionsImport } from './routes/options'
+import { Route as GameOverImport } from './routes/game-over'
 import { Route as GameImport } from './routes/game'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const WinRoute = WinImport.update({
-  path: '/win',
+const OptionsRoute = OptionsImport.update({
+  path: '/options',
   getParentRoute: () => rootRoute,
 } as any)
 
-const OptionsRoute = OptionsImport.update({
-  path: '/options',
+const GameOverRoute = GameOverImport.update({
+  path: '/game-over',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -56,18 +56,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameImport
       parentRoute: typeof rootRoute
     }
+    '/game-over': {
+      id: '/game-over'
+      path: '/game-over'
+      fullPath: '/game-over'
+      preLoaderRoute: typeof GameOverImport
+      parentRoute: typeof rootRoute
+    }
     '/options': {
       id: '/options'
       path: '/options'
       fullPath: '/options'
       preLoaderRoute: typeof OptionsImport
-      parentRoute: typeof rootRoute
-    }
-    '/win': {
-      id: '/win'
-      path: '/win'
-      fullPath: '/win'
-      preLoaderRoute: typeof WinImport
       parentRoute: typeof rootRoute
     }
   }
@@ -78,8 +78,8 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   GameRoute,
+  GameOverRoute,
   OptionsRoute,
-  WinRoute,
 })
 
 /* prettier-ignore-end */

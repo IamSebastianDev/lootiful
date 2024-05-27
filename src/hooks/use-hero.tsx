@@ -5,27 +5,25 @@ import { getMaxHealth } from "../functions/get-max-health";
 import { getMaxStamina } from "../functions/get-max-stamina";
 import { Position, position } from "../functions/position";
 import { rnd } from "../functions/rnd";
-import { useSFX } from "./use-sfx";
 
 export const initialAttributeValues = () => {
     return Object.fromEntries(attributeNames.map((name) => [name, 1])) as Record<Attribute, number>;
 };
 
 export const useHero = () => {
-    // sfx
-    const walking = useSFX("walk");
-
     // props
     const [name, setName] = useState<string>(rnd.entry(names));
     const [attributes, bumpAttributeByType, setAttributeValues] = useAttributes(initialAttributeValues());
     const [takenDamage, setTakenDamage] = useState(0);
     const [usedStamina, setUsedStamina] = useState(0);
     const [coordinates, setCoordinates] = useState<Position>(position(8, 0));
+    const [dead, setDead] = useState(false);
+    const [tired, setTired] = useState(false);
 
     // Derived attributes
-    const maxHealth = getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
-    const maxStamina = getMaxStamina(attributes.Constitution.value, attributes.Dexterity.value);
-    const damage = attributes.Strength.value * 2 + attributes.Dexterity.value;
+    const maxHealth = 1; //8 + getMaxHealth(attributes.Strength.value, attributes.Constitution.value);
+    const maxStamina = 8 + getMaxStamina(attributes.Constitution.value, attributes.Dexterity.value);
+    const damage = attributes.Strength.value + attributes.Dexterity.value;
     const stamina = Math.max(maxStamina - usedStamina, 0);
     const health = Math.max(maxHealth - takenDamage, 0);
 
@@ -80,5 +78,9 @@ export const useHero = () => {
         reset,
         setup,
         exhaust,
+        dead,
+        setDead,
+        tired,
+        setTired,
     };
 };

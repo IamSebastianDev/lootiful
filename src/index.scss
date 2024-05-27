@@ -424,3 +424,12 @@ body {
         filter: drop-shadow(2px 4px 6px var(--lc-light-blue));
     }
 }
+
+.stats-panel {
+    width: 100%;
+    max-width: 550px;
+    margin-inline: var(--ll-md);
+    background: var(--lc-plum-purple);
+    padding: var(--ll-md);
+    border: var(--ll-xs) solid var(--lc-dull-gold);
+}

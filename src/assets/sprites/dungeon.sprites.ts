@@ -29,5 +29,9 @@ export default {
         flag: [4, 7],
         chest: [0, 8],
         ladder: [9, 3],
+        left_torch: [1, 9],
+        top_torch: [0, 9],
+        brazier: [5, 9],
+        cobweb: [4, 6],
     },
 } satisfies SpriteSheet;

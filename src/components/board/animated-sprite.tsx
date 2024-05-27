@@ -16,7 +16,7 @@ export const AnimatedSprite = <T extends SpriteSheet>({ size, sheet, config, ...
     const [width, height] = size ?? [1, 1];
 
     return (
-        <mesh {...props}>
+        <mesh receiveShadow castShadow {...props}>
             <planeGeometry args={[width, height]} attach="geometry" />
             <meshStandardMaterial transparent attach="material" map={texture} opacity={props.opacity} />
         </mesh>

@@ -10,6 +10,7 @@ export type TileData<T extends SpriteSheet> = {
     textureKey: keyof T["tileMap"];
     isMoveTarget: boolean;
     isSpawnTile: boolean;
+    isEmissive?: boolean;
 };
 
 export type MapData<T extends SpriteSheet> = {

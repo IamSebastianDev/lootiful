@@ -16,8 +16,9 @@ import { rnd } from "../functions/rnd";
 import { clamp } from "../functions/clamp";
 import { artifactTable, useArtifacts } from "./use-artifacts";
 import { Artifact } from "../assets/entities/artifact.entity";
-import { Navigate } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { useStats } from "./use-stats";
+import { useSettings } from "./use-settings";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;
@@ -33,6 +34,7 @@ export type GameState = {
     requestTick: () => void;
     stopped: boolean;
     stats: ReturnType<typeof useStats>;
+    settings: ReturnType<typeof useSettings>;
 };
 
 const GameStateContext = createContext<GameState | undefined>(undefined);
@@ -48,6 +50,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const stats = useStats();
     const { tick, requestTick } = useTick();
     const [stopped, setStopped] = useState(false);
+    const navigate = useNavigate();
+    const settings = useSettings();
 
     const setupPlayerForLevel = () => {
         entityStore.addEntity(Player({ position: hero.position }));
@@ -84,8 +88,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             });
     };
 
-    const setupCoinsForLevel = (amount: number) => {
-        Array(clamp(Math.floor(amount), 3, 12))
+    const setupTreasureForLevel = (amount: number) => {
+        Array(clamp(Math.floor(amount), 3, 15))
             .fill(null)
             .map(() => rnd.entry(Object.keys(stash)))
             .forEach((type) => {
@@ -113,24 +117,37 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     // Called at start of run
     const startDungeonDive = () => {
         entityStore.clear();
-        setupEnemySpawnForLevel((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5);
-        setupCoinsForLevel((hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3);
+        setupEnemySpawnForLevel(
+            ((hero.attributes.Strength.value * hero.attributes.Constitution.value) / 5) * settings.difficulty
+        );
+        setupTreasureForLevel(
+            (hero.attributes.Charisma.value * hero.attributes.Dexterity.value) / 3 / settings.difficulty
+        );
         setupPlayerForLevel();
         setupArtifactsForLevel();
         setStopped(false);
         stats.trackRound();
+        hero.setTired(false);
     };
 
     const endDungeonDive = () => {
+        if (artifactStore.collectedArtifacts.length === Object.keys(artifactTable).length) {
+            navigate({ to: "/game-over" });
+        }
+
+        if (hero.stamina === 0) {
+            hero.setTired(true);
+        }
+
+        if (hero.health === 0) {
+            hero.setDead(true);
+        }
+
         setStopped(true);
         hero.setup();
         entityStore.clear();
         lootStore.clear();
         cursor.setPosition(null);
-
-        if (artifactStore.collectedArtifacts.length === Object.keys(artifactTable).length) {
-            Navigate({ to: "/win" });
-        }
     };
 
     const reset = () => {
@@ -158,6 +175,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         startDungeonDive,
         stopped,
         stats,
+        settings,
     };
 
     // Update the entities

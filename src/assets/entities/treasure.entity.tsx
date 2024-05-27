@@ -43,6 +43,7 @@ export const Treasure = (ctor: TreasureCtor) => {
             state.entityStore.getEntityById(id)?.destroy(state);
             state.coins.addCoins(value);
             state.stats.trackCoins(value);
+            state.stats.trackTreasure();
             state.requestTick();
         }
     };

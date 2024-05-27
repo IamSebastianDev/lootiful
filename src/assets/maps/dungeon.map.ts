@@ -65,6 +65,14 @@ export default createMap({
         },
         {
             id: crypto.randomUUID(),
+            position: position(7, 0),
+            textureKey: "top_torch",
+            isMoveTarget: false,
+            isSpawnTile: false,
+            isEmissive: true,
+        },
+        {
+            id: crypto.randomUUID(),
             position: position(8, 0),
             textureKey: "wall_top_1",
             isMoveTarget: false,
@@ -83,6 +91,14 @@ export default createMap({
             textureKey: "wall_top_2",
             isMoveTarget: false,
             isSpawnTile: false,
+        },
+        {
+            id: crypto.randomUUID(),
+            position: position(9, 0),
+            textureKey: "top_torch",
+            isMoveTarget: false,
+            isSpawnTile: false,
+            isEmissive: true,
         },
         {
             id: crypto.randomUUID(),
@@ -138,6 +154,13 @@ export default createMap({
             id: crypto.randomUUID(),
             position: position(2, 1),
             textureKey: "wall_top_1",
+            isMoveTarget: false,
+            isSpawnTile: false,
+        },
+        {
+            id: crypto.randomUUID(),
+            position: position(2, 1),
+            textureKey: "flag",
             isMoveTarget: false,
             isSpawnTile: false,
         },
@@ -560,6 +583,14 @@ export default createMap({
         },
         {
             id: crypto.randomUUID(),
+            position: position(1, 5),
+            textureKey: "left_torch",
+            isMoveTarget: false,
+            isSpawnTile: false,
+            isEmissive: true,
+        },
+        {
+            id: crypto.randomUUID(),
             position: position(2, 5),
             textureKey: "floor_4",
             isMoveTarget: true,
@@ -585,6 +616,14 @@ export default createMap({
             textureKey: "floor_4",
             isMoveTarget: true,
             isSpawnTile: true,
+        },
+        {
+            id: crypto.randomUUID(),
+            position: position(5, 4),
+            textureKey: "brazier",
+            isMoveTarget: false,
+            isSpawnTile: false,
+            isEmissive: true,
         },
         {
             id: crypto.randomUUID(),
@@ -644,6 +683,13 @@ export default createMap({
         },
         {
             id: crypto.randomUUID(),
+            position: position(13, 5),
+            textureKey: "cobweb",
+            isMoveTarget: false,
+            isSpawnTile: false,
+        },
+        {
+            id: crypto.randomUUID(),
             position: position(14, 5),
             textureKey: "wall_right_2",
             isMoveTarget: false,
@@ -678,6 +724,7 @@ export default createMap({
             isMoveTarget: true,
             isSpawnTile: true,
         },
+
         {
             id: crypto.randomUUID(),
             position: position(4, 6),
@@ -727,6 +774,7 @@ export default createMap({
             isMoveTarget: false,
             isSpawnTile: false,
         },
+
         {
             id: crypto.randomUUID(),
             position: position(11, 6),
@@ -769,6 +817,13 @@ export default createMap({
             textureKey: "floor_4",
             isMoveTarget: true,
             isSpawnTile: true,
+        },
+        {
+            id: crypto.randomUUID(),
+            position: position(1, 7),
+            textureKey: "cobweb",
+            isMoveTarget: false,
+            isSpawnTile: false,
         },
         {
             id: crypto.randomUUID(),
@@ -818,6 +873,14 @@ export default createMap({
             textureKey: "floor_4",
             isMoveTarget: true,
             isSpawnTile: true,
+        },
+        {
+            id: crypto.randomUUID(),
+            position: position(8, 7),
+            textureKey: "brazier",
+            isMoveTarget: false,
+            isSpawnTile: false,
+            isEmissive: true,
         },
         {
             id: crypto.randomUUID(),
@@ -1054,6 +1117,14 @@ export default createMap({
         },
         {
             id: crypto.randomUUID(),
+            position: position(11, 9),
+            textureKey: "top_torch",
+            isMoveTarget: false,
+            isSpawnTile: false,
+            isEmissive: true,
+        },
+        {
+            id: crypto.randomUUID(),
             position: position(12, 9),
             textureKey: "wall_top_1",
             isMoveTarget: false,
@@ -1101,6 +1172,14 @@ export default createMap({
             textureKey: "floor_4",
             isMoveTarget: true,
             isSpawnTile: true,
+        },
+        {
+            id: crypto.randomUUID(),
+            position: position(3, 10),
+            textureKey: "left_torch",
+            isMoveTarget: false,
+            isSpawnTile: false,
+            isEmissive: true,
         },
         {
             id: crypto.randomUUID(),

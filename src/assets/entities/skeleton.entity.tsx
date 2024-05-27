@@ -49,7 +49,7 @@ export const Skeleton = (ctor: LootCtor) => {
     };
 
     const onUpdate = (id: string, props: Store<SkeletonProps>, state: GameState) => {
-        const { entityStore, hero } = state;
+        const { entityStore, hero, stats } = state;
         const health = props.get("health");
         const position = props.get("position");
         const distanceToPlayer = hero.position.distance(position);
@@ -58,6 +58,7 @@ export const Skeleton = (ctor: LootCtor) => {
             // Death
             case health < 1:
                 entityStore.getEntityById(id)?.destroy(state);
+                stats.trackKill("skeleton");
                 break;
             // Attack
             case distanceToPlayer <= 1:

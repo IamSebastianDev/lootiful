@@ -15,7 +15,7 @@ export const Sprite = <T extends SpriteSheet>({ size, sheet, sprite, ...props }:
     const [width, height] = size ?? [1, 1];
 
     return (
-        <mesh {...props}>
+        <mesh receiveShadow castShadow {...props}>
             <planeGeometry args={[width, height]} attach="geometry" />
             <meshBasicMaterial transparent attach="material" map={texture} />
         </mesh>

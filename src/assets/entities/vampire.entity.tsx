@@ -57,6 +57,7 @@ export const Vampire = (ctor: LootCtor) => {
             // Death
             case health < 1:
                 state.entityStore.getEntityById(id)?.destroy(state);
+                state.stats.trackKill("vampire");
                 break;
             // Attack
             case distanceToPlayer <= 1:
