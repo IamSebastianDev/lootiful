@@ -350,10 +350,8 @@ body {
 }
 
 .hero-panel {
-    flex-grow: 1;
     background: var(--comp-hero-panel-bg);
-    max-width: 33svw;
-    min-width: 400px;
+    width: 364px;
 }
 
 .game-board {
