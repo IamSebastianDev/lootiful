@@ -2,10 +2,15 @@ import { useState } from "react";
 
 export const useSettings = () => {
     const [difficulty, setDifficulty] = useState<number>(1);
+    const [brightness, setBrightness] = useState<number>(0.5);
 
     const changeDifficulty = (value: number) => {
         setDifficulty(value);
     };
 
-    return { difficulty, changeDifficulty };
+    const changeBrightness = (value: number) => {
+        setBrightness(value);
+    };
+
+    return { difficulty, changeDifficulty, brightness, changeBrightness };
 };

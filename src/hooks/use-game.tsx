@@ -55,7 +55,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
     const settings = useSettings();
 
     const setupPlayerForLevel = () => {
-        entityStore.addEntity(Player({ position: hero.position }));
+        entityStore.addEntity(Player({ position: position(8, 0) }));
     };
 
     // Create the enemies for the Level
@@ -64,7 +64,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             (hero.attributes.Strength.value * 2 + hero.attributes.Constitution.value) * settings.difficulty
         );
         // Balance enemies
-        Array(clamp(2, Math.floor(amount), 15))
+        Array(clamp(2, Math.floor(amount / 2), 15))
             .fill(null)
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
@@ -78,7 +78,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                     );
                 }
             });
-        Array(clamp(12, Math.floor(amount / 3), 4))
+        Array(clamp(1, Math.floor(amount / 3), 4))
             .fill(null)
             .forEach(() => {
                 const tile = entityStore.getAvailableTile();
@@ -123,29 +123,27 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     // Called at start of run
     const startDungeonDive = () => {
+        hero.setup();
         entityStore.clear();
+        lootStore.clear();
         setupEnemySpawnForLevel();
         setupTreasureForLevel();
         setupPlayerForLevel();
         setupArtifactsForLevel();
         setStopped(false);
         stats.trackRound();
-        hero.setTired(false);
     };
 
     const endDungeonDive = () => {
-        if (hero.stamina === 0) {
+        if (hero.stamina < 1) {
             hero.setTired(true);
         }
 
-        if (hero.health === 0) {
+        if (hero.health < 1) {
             hero.setDead(true);
         }
 
         setStopped(true);
-        hero.setup();
-        entityStore.clear();
-        lootStore.clear();
         cursor.setPosition(null);
 
         if (artifactStore.collectedArtifacts.length === Object.keys(artifactTable).length) {
@@ -195,6 +193,8 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
         entityStore.entities.forEach((entity) => entity.update(gameState));
     }, [tick, hero.position]);
+
+    console.log({ gameState });
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
 };

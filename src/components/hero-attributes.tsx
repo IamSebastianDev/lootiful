@@ -22,6 +22,7 @@ export const HeroAttributes: React.FC = () => {
                     <div key={attr.name} className="stack vertical tight">
                         <div className="text small">{attr.short}</div>
                         <button
+                            className="attribute-btn"
                             disabled={disableAttribute(attr.value)}
                             onClick={() => handleAttributeClick(attr.name, attr.value)}
                         >

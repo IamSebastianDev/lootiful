@@ -10,7 +10,8 @@ import { useGame } from "../hooks/use-game";
 import { StoppedScreen } from "../components/stopped-screen";
 
 const GameRoute: React.FC = () => {
-    const { stopped } = useGame();
+    const { stopped, settings } = useGame();
+    console.log({ stopped });
 
     return (
         <Scene background="">
@@ -19,7 +20,7 @@ const GameRoute: React.FC = () => {
                 <div className="stack vertical full-h" style={{ flexGrow: 3, background: "var(--lc-canvas)" }}>
                     <HeroStats />
                     {stopped && <StoppedScreen />}
-                    <Display disablePointer={stopped} />
+                    <Display disablePointer={stopped} brightness={settings.brightness} />
                 </div>
             </div>
         </Scene>

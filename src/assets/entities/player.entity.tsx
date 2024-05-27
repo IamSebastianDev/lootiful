@@ -19,7 +19,12 @@ export const Player = ({ position }: PlayerCtor) => {
 
     const onRender = (id: string, props: Store<PlayerProps>, _: GameState) => {
         const [x, y] = props.get("position");
-        return <AnimatedSprite key={id} position={[x, y, 0.2]} sheet={wizardSprites} config={{ interval: 0.5 }} />;
+        return (
+            <group key={id}>
+                <pointLight position={[x, y, 1.5]} color={"yellow"} intensity={5} />
+                <AnimatedSprite position={[x, y, 0.2]} sheet={wizardSprites} config={{ interval: 0.5 }} />
+            </group>
+        );
     };
 
     const onUpdate = (id: string, props: Store<PlayerProps>, state: GameState) => {

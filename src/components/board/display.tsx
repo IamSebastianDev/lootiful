@@ -7,15 +7,15 @@ import { Board } from "./board";
 
 export type DisplayProps = {
     disablePointer: boolean;
+    brightness: number;
 };
 
-export const Display: React.FC<DisplayProps> = ({ disablePointer }) => {
+export const Display: React.FC<DisplayProps> = ({ disablePointer, brightness }) => {
     return (
         <div className="game-board">
             <Canvas style={{ background: "var(--lc-canvas)", pointerEvents: disablePointer ? "none" : "all" }}>
                 <Preload all />
-                <ambientLight intensity={2} />
-                <pointLight position={[-7, 7, -5]} intensity={10} />
+                <ambientLight intensity={brightness} />
                 <orthographicCamera position={[-7, 7, -5]}>
                     <Board />
                 </orthographicCamera>
