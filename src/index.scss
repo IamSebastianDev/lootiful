@@ -443,6 +443,13 @@ body {
     border: var(--ll-xs) solid var(--lc-dull-gold);
 }
 
+.instructions-panel {
+    width: 100%;
+    max-width: 550px;
+    margin-inline: var(--ll-md);
+    overflow-y: auto;
+}
+
 /* UiInput[type=range] */
 .ui-input[type="range"] {
     -webkit-appearance: none;
@@ -637,4 +644,12 @@ body {
     transition:
         background 0.3s ease,
         transform 0.3s ease;
+}
+
+.social-links {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: var(--ll-sm);
+    z-index: 1000;
 }

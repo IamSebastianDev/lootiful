@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as OptionsImport } from './routes/options'
+import { Route as HowToPlayImport } from './routes/how-to-play'
 import { Route as GameOverImport } from './routes/game-over'
 import { Route as GameImport } from './routes/game'
 import { Route as IndexImport } from './routes/index'
@@ -20,6 +21,11 @@ import { Route as IndexImport } from './routes/index'
 
 const OptionsRoute = OptionsImport.update({
   path: '/options',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const HowToPlayRoute = HowToPlayImport.update({
+  path: '/how-to-play',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -63,6 +69,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GameOverImport
       parentRoute: typeof rootRoute
     }
+    '/how-to-play': {
+      id: '/how-to-play'
+      path: '/how-to-play'
+      fullPath: '/how-to-play'
+      preLoaderRoute: typeof HowToPlayImport
+      parentRoute: typeof rootRoute
+    }
     '/options': {
       id: '/options'
       path: '/options'
@@ -79,6 +92,7 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   GameRoute,
   GameOverRoute,
+  HowToPlayRoute,
   OptionsRoute,
 })
 

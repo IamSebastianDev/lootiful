@@ -6,7 +6,7 @@ import { UiButton } from "../components/ui-button";
 
 export const Route = createFileRoute("/options")({
     component: () => {
-        const { settings } = useGame();
+        const { settings, tick } = useGame();
 
         console.log({ brightness: settings.brightness, difficulty: settings.difficulty });
 
@@ -50,6 +50,11 @@ export const Route = createFileRoute("/options")({
                         <UiButton href="/">
                             <span className="text small">Back to menu</span>
                         </UiButton>
+                        {tick !== 0 && (
+                            <UiButton href="/game">
+                                <span className="text small">Back to game</span>
+                            </UiButton>
+                        )}
                     </div>
                 </div>
             </Scene>
