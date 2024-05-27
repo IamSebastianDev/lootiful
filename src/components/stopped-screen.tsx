@@ -36,7 +36,7 @@ export const StoppedScreen: React.FC = () => {
                 </div>
             ) : hero.tired ? (
                 <div className="display-panel stack vertical relaxed">
-                    <h3 className="text normal highlight center">You ran out of breath and left the Dungeon!</h3>
+                    <h3 className="text normal highlight">You ran out of breath and left the Dungeon!</h3>
                     <p className="text tiny legible">
                         You have {price}
                         <img src={coin} /> worth of loot!

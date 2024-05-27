@@ -18,18 +18,21 @@ export const Cursor: React.FC = () => {
     const [x, y] = position;
 
     return (
-        <group position={[x, y, 0.1]}>
-            <mesh>
-                <planeGeometry attach={"geometry"} />
-                <meshStandardMaterial transparent map={texture} depthWrite={true} attach="material" />
-            </mesh>
-            {tooltip && (
-                <mesh position={[0.75, 0, 0.2]}>
-                    <Text font={"/fonts/press2play.ttf"} anchorX={"left"} fontSize={0.3}>
-                        {tooltip}
-                    </Text>
+        <>
+            <pointLight position={[x, y, 0.6]} intensity={0.5} color="white"></pointLight>
+            <group position={[x, y, 0.1]}>
+                <mesh>
+                    <planeGeometry attach={"geometry"} />
+                    <meshStandardMaterial transparent map={texture} depthWrite={true} attach="material" />
                 </mesh>
-            )}
-        </group>
+                {tooltip && (
+                    <mesh position={[0.75, 0, 0.2]}>
+                        <Text font={"/fonts/press2play.ttf"} anchorX={"left"} fontSize={0.3}>
+                            {tooltip}
+                        </Text>
+                    </mesh>
+                )}
+            </group>
+        </>
     );
 };
