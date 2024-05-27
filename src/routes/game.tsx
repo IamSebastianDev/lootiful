@@ -12,7 +12,7 @@ import { useSFX } from "../hooks/use-sfx";
 
 const GameRoute: React.FC = () => {
     const { stopped, settings } = useGame();
-    const music = useSFX("menu_song", settings, true);
+    const music = useSFX("pixel_adventure", settings, true);
     useEffect(() => {
         music.start();
         return () => {

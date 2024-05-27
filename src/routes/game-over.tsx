@@ -10,7 +10,7 @@ import { useEffect } from "react";
 export const Route = createFileRoute("/game-over")({
     component: () => {
         const { artifactStore, stats, hero, tick, reset, settings } = useGame();
-        const music = useSFX("echoes_of_the_abyss", settings, true);
+        const music = useSFX("shadows_lament", settings, true);
 
         useEffect(() => {
             music.start();
