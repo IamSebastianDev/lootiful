@@ -20,6 +20,7 @@ import { useStats } from "./use-stats";
 import { useSettings } from "./use-settings";
 import { router } from "../main";
 import { position } from "../functions/position";
+import { useSFX } from "./use-sfx";
 
 export type GameState = {
     cursor: ReturnType<typeof useCursor>;
@@ -193,8 +194,6 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
         entityStore.entities.forEach((entity) => entity.update(gameState));
     }, [tick, hero.position]);
-
-    console.log({ gameState });
 
     return <GameStateContext.Provider value={gameState}>{children}</GameStateContext.Provider>;
 };

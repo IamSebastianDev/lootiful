@@ -1,17 +1,24 @@
 /** @format */
 
 import { createFileRoute } from "@tanstack/react-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { Scene } from "../components/scene";
 import { HeroPanel } from "../components/hero-panel";
 import { HeroStats } from "../components/hero-stats";
 import { Display } from "../components/board/display";
 import { useGame } from "../hooks/use-game";
 import { StoppedScreen } from "../components/stopped-screen";
+import { useSFX } from "../hooks/use-sfx";
 
 const GameRoute: React.FC = () => {
     const { stopped, settings } = useGame();
-    console.log({ stopped });
+    const music = useSFX("game_song", true);
+    useEffect(() => {
+        music.start();
+        return () => {
+            music.stop();
+        };
+    }, []);
 
     return (
         <Scene background="">

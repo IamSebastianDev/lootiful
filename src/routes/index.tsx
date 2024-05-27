@@ -2,7 +2,7 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { Scene } from "../components/scene";
-import React from "react";
+import React, { useEffect } from "react";
 import { UiButton, UiButtonProps } from "../components/ui-button";
 import background from "../assets/images/menu-bg.jpg";
 import { useGame } from "../hooks/use-game";
@@ -11,6 +11,13 @@ import { useSFX } from "../hooks/use-sfx";
 const IndexRoute: React.FC = () => {
     const { reset, tick } = useGame();
     const { trigger } = useSFX("menu_click");
+    const music = useSFX("menu_song", true);
+    useEffect(() => {
+        music.start();
+        return () => {
+            music.stop();
+        };
+    }, []);
 
     const links: UiButtonProps[] = [
         { children: "New Game", href: "/game", onClick: () => reset() },
