@@ -125,5 +125,9 @@ export const useArtifacts = () => {
         setCollectedArtifacts((c) => [...c, artifact]);
     };
 
-    return { collectArtifact, collectedArtifacts, getArtifactByChance };
+    const reset = () => {
+        setCollectedArtifacts([]);
+    };
+
+    return { collectArtifact, collectedArtifacts, getArtifactByChance, reset };
 };

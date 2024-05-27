@@ -169,6 +169,7 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
         coins.reset();
         hero.reset();
         stats.reset();
+        artifactStore.reset();
         startDungeonDive();
     };
 
