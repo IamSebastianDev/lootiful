@@ -166,10 +166,11 @@ export const GameStateProvider: React.FC<{ children: ReactNode }> = ({ children 
 
     const reset = () => {
         resetTicks();
+        entityStore.clear();
+        artifactStore.reset();
         coins.reset();
         hero.reset();
         stats.reset();
-        artifactStore.reset();
         startDungeonDive();
     };
 
