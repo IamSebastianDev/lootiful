@@ -46,7 +46,7 @@ export const HeroPanel: React.FC = () => {
         <aside className="hero-panel stack vertical relaxed container full-h">
             <input
                 type="text"
-                className="text small"
+                className="text small hero-name highlight legible"
                 value={hero.name ?? ""}
                 placeholder="Give your Hero a name!"
                 onChange={(event) => handleNameChange(event)}
@@ -58,11 +58,12 @@ export const HeroPanel: React.FC = () => {
                     Artifacts: {artifactStore.collectedArtifacts.length} / {Object.keys(artifactTable).length}
                 </span>
                 <UiButton href="" onClick={() => setShowArtifactPanel(true)}>
-                    <span className="text small">Show</span>
+                    <span className="text tiny">Show</span>
                 </UiButton>
             </div>
             <hr />
             <div className="stack vertical tight loot-list">
+                {lootStore.collected.length === 0 && <div className="text small legible center">No loot for sale</div>}
                 {lootStore.collected.map((loot) => {
                     return (
                         <LootCard key={loot.id} handleOnClick={() => handleSaleClick(loot)} item={loot.item}></LootCard>

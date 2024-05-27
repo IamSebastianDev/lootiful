@@ -16,7 +16,7 @@ export const HeroAttributes: React.FC = () => {
     };
 
     return (
-        <div className="stack horizontal tight around">
+        <div className="stack horizontal between">
             {Object.values(hero.attributes).map((attr) => {
                 return (
                     <div key={attr.name} className="stack vertical tight">

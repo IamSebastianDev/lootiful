@@ -433,3 +433,56 @@ body {
     padding: var(--ll-md);
     border: var(--ll-xs) solid var(--lc-dull-gold);
 }
+
+.attribute-btn {
+    position: relative;
+    background: none;
+    border: none;
+    aspect-ratio: 1 / 1;
+
+    border: var(--ll-xs) solid var(--lc-gold);
+    background: var(--lc-burnt-rose);
+    color: var(--lc-ivory);
+    box-shadow:
+        0px 4px var(--comp-ui-button-border),
+        inset 2px 2px 2px var(--lc-dark-charcoal);
+
+    &:hover,
+    &:focus {
+        transform: translateY(1px);
+        box-shadow:
+            0px 3px var(--comp-ui-button-border),
+            inset 2px 2px 2px var(--lc-dark-charcoal);
+        cursor: pointer;
+    }
+
+    &:active {
+        transform: translateY(2px);
+        box-shadow:
+            0px 2px var(--comp-ui-button-border),
+            inset 2px 2px 2px var(--lc-dark-charcoal);
+    }
+
+    &:not([disabled]):after {
+        content: "+1";
+        position: absolute;
+        font-size: var(--lf-xs);
+        background: var(--lc-light-blue);
+        left: calc(100% - var(--ll-xs));
+        bottom: calc(100% - var(--ll-xs));
+    }
+
+    &[disabled] {
+        border: var(--ll-xs) solid var(--lc-muted-blue);
+        box-shadow: none;
+        transform: none;
+        cursor: unset;
+    }
+}
+
+.hero-name {
+    background: var(--lc-plum-purple);
+    padding-block: var(--ll-sm);
+    border: none;
+    box-shadow: 2px 2px 0px var(--lc-ivory);
+}
