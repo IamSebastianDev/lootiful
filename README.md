@@ -2,7 +2,7 @@
 
 **Pixely Roguelike Loot Crawler** for [ReactJam 2024](https://reactjam.com).
 
-The game was created in a span of 7 Days (monday to monday) in May of 2024.
+The game was created in a span of 7 Days (monday to monday) in May of 2024. (And won 3rd place! 🥳)
 
 ## How To Play
 
