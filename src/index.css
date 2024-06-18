@@ -1,0 +1,126 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+    --darkest-grey: #0e0e0e;
+    --dark-grey: #2e2e2e;
+    --light-grey: #a8a8a8;
+    --light-grey-50: #a8a8a888;
+    --muted-brown: #6d5f47;
+    --pale-yellow: #d1c283;
+    --soft-white: #f0ede6;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    overscroll-behavior: none;
+}
+
+body {
+    font-family: "Pixel";
+}
+
+#root {
+    height: 100svh;
+    width: 100svw;
+    overscroll-behavior: none;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+}
+
+.stack.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.ui-heading {
+    font-size: 3rem;
+    line-height: 2.8rem;
+    margin: 0;
+    padding: 0;
+    text-shadow: 1px 1px black, 2px 2px var(--light-grey);
+}
+
+.ui-button {
+    border: 0.25rem solid var(--light-grey-50);
+    border-radius: 0.25rem;
+    outline: 0.125rem solid var(--dark-grey);
+    outline-offset: -4px;
+    background: var(--darkest-grey);
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    font-family: "Pixel";
+    opacity: 0.9;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.15s ease-out;
+}
+
+.ui-button:hover,
+.ui-button:focus {
+    color: var(--pale-yellow);
+    border-color: var(--pale-yellow);
+    outline-color: var(--muted-brown);
+}
+
+.ui-button:active {
+    background: var(--dark-grey);
+}
+
+.ui-button:before {
+    position: absolute;
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border: 0.125rem double var(--pale-yellow);
+    left: 0;
+    margin-left: 0.5rem;
+    opacity: 0.8;
+    border-radius: 100%;
+    opacity: 0;
+    transition: 0.25s ease;
+}
+
+.ui-button:hover:before,
+.ui-button:focus:before {
+    opacity: 1;
+}
+
+.ui-divider {
+    width: 90%;
+    margin: auto;
+    border-bottom: 0.125rem double var(--light-grey);
+    opacity: 0.5;
+    border-radius: 2rem;
+    margin-bottom: 0.5rem;
+}

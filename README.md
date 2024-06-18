@@ -1,32 +1,30 @@
-# Lootiful
+# React + TypeScript + Vite
 
-**Pixely Roguelike Loot Crawler** for [ReactJam 2024](https://reactjam.com).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-The game was created in a span of 7 Days (monday to monday) in May of 2024.
+Currently, two official plugins are available:
 
-## How To Play
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Use the MOUSE to click around. You can move one space at a time. ENEMIES will only MOVE if
-you MOVE, and only ATTACK when you ATTACK.
+## Expanding the ESLint configuration
 
-Each dungeon dive lasts while you have STAMINA and HEALTH, each action drains your STAMINA.
-When you run out of STAMINA, the dungeon dive ends, and a new one can be started.
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-To win the GAME, pickup all 14 ARTIFACTS hidden in the dungeon without DYING.
+- Configure the top-level `parserOptions` property like this:
 
-Killed ENEMIES will drop LOOT you can sell, which gives you COINS. COINS can be used to
-enhance your ATTRIBUTES. This will increase your HEALTH and STAMINA, which will give you
-more chances to find LOOT and lets you stay longer in the dungeon.
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
+```
 
-## Credits
-
-[Main Spritesheet and Tileset](https://pixel-poem.itch.io/dungeon-assetpuck/)
-[Suno.ai for the Music](https://suno.com)
-[Fantasy Loot Drop Asset Pack](https://btl-games.itch.io/fantasy-loot-drop-asset-pack)
-[Pixel RPG Icons 16x16](https://almardev.itch.io/pixel-rpg-icons-16x16)
-[Open Game Art for the Treasures](https://opengameart.org/content/gold-treasure-icons-16x16)
-[OpenAI for the Background Image and Textual Content](https://chatgpt.com)
-
-## Technology
-
-React Three Fiber was used for graphics, pure React for everything else. No game-engine or state-management library was used. (Which was okay, but i was reaching limitations at the end.)
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

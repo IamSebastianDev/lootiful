@@ -1,0 +1,32 @@
+.menu-outer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+
+    width: 18rem;
+    height: 100%;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    align-self: end;
+}
+
+.menu-backdrop {
+    position: absolute;
+    inset: 0;
+
+    background: var(--darkest-grey);
+    border-left: 0.25rem double var(--light-grey);
+    border-right: 0.25rem double var(--light-grey);
+    opacity: 0.4;
+}
+
+.menu-panel {
+    position: absolute;
+    inset-inline: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 0.75rem;
+}
