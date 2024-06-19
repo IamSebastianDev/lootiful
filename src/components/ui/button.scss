@@ -1,0 +1,87 @@
+/** @format */
+
+.ui-button {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0.5rem 1rem;
+    margin: 0;
+
+    font-family: 'Pixel';
+    color: var(--soft-white);
+
+    opacity: 0.9;
+    transition: 0.15s ease-out;
+
+    cursor: pointer;
+
+    // reset
+    border: none;
+    outline: none;
+    background: none;
+
+    &.sm {
+        font-size: 1rem;
+    }
+
+    &.md {
+        font-size: 1.25rem;
+    }
+
+    &.bordered {
+        border: 0.25rem solid var(--light-grey-50);
+        border-radius: 0.25rem;
+        outline: 0.125rem solid var(--dark-grey);
+        outline-offset: -4px;
+        background: var(--darkest-grey);
+
+        &:hover,
+        &:focus {
+            border-color: var(--pale-yellow);
+            outline-color: var(--muted-brown);
+        }
+    }
+
+    &.details {
+        &:before,
+        &:after {
+            position: absolute;
+            content: '';
+            width: 0.5rem;
+            height: 0.5rem;
+            border: 0.125rem double var(--pale-yellow);
+            left: 0;
+            margin-left: 0.5rem;
+            opacity: 0.8;
+            border-radius: 100%;
+            opacity: 0;
+            transition: 0.25s ease;
+        }
+
+        &:after {
+            left: unset;
+            right: 0;
+            margin-right: 0.5rem;
+        }
+
+        &:hover:before,
+        &:hover:after,
+        &:focus:before,
+        &:focus:after,
+        &:active:before,
+        &:active:after {
+            opacity: 1;
+        }
+    }
+
+    &:hover,
+    &:focus {
+        color: var(--pale-yellow);
+    }
+
+    &:active {
+        background: var(--dark-grey);
+    }
+}

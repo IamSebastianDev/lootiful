@@ -68,63 +68,6 @@ body {
 
 
 
-.ui-button {
-    border: 0.25rem solid var(--light-grey-50);
-    border-radius: 0.25rem;
-    outline: 0.125rem solid var(--dark-grey);
-    outline-offset: -4px;
-    background: var(--darkest-grey);
-    padding: 0.5rem 1rem;
-    font-size: 1.25rem;
-    font-family: 'Pixel';
-    opacity: 0.9;
-    cursor: pointer;
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.15s ease-out;
-}
-
-.ui-button:hover,
-.ui-button:focus {
-    color: var(--pale-yellow);
-    border-color: var(--pale-yellow);
-    outline-color: var(--muted-brown);
-}
-
-.ui-button:active {
-    background: var(--dark-grey);
-}
-
-.ui-button:before,
-.ui-button:after {
-    position: absolute;
-    content: '';
-    width: 0.5rem;
-    height: 0.5rem;
-    border: 0.125rem double var(--pale-yellow);
-    left: 0;
-    margin-left: 0.5rem;
-    opacity: 0.8;
-    border-radius: 100%;
-    opacity: 0;
-    transition: 0.25s ease;
-}
-
-.ui-button:after {
-    left: unset;
-    right: 0;
-    margin-right: 0.5rem;
-}
-
-.ui-button:hover:before,
-.ui-button:focus:before,
-.ui-button:focus:after,
-.ui-button:hover:after {
-    opacity: 1;
-}
-
 .ui-divider {
     width: 94%;
     margin-inline: auto;
