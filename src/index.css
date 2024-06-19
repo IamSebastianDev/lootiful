@@ -1,3 +1,5 @@
+/** @format */
+
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
@@ -33,7 +35,11 @@ body {
 }
 
 body {
-    font-family: "Pixel";
+    font-family: 'Pixel';
+}
+
+* {
+    user-select: none;
 }
 
 #root {
@@ -60,13 +66,7 @@ body {
     align-items: center;
 }
 
-.ui-heading {
-    font-size: 3rem;
-    line-height: 2.8rem;
-    margin: 0;
-    padding: 0;
-    text-shadow: 1px 1px black, 2px 2px var(--light-grey);
-}
+
 
 .ui-button {
     border: 0.25rem solid var(--light-grey-50);
@@ -76,7 +76,7 @@ body {
     background: var(--darkest-grey);
     padding: 0.5rem 1rem;
     font-size: 1.25rem;
-    font-family: "Pixel";
+    font-family: 'Pixel';
     opacity: 0.9;
     cursor: pointer;
     position: relative;
@@ -97,9 +97,10 @@ body {
     background: var(--dark-grey);
 }
 
-.ui-button:before {
+.ui-button:before,
+.ui-button:after {
     position: absolute;
-    content: "";
+    content: '';
     width: 0.5rem;
     height: 0.5rem;
     border: 0.125rem double var(--pale-yellow);
@@ -111,14 +112,22 @@ body {
     transition: 0.25s ease;
 }
 
+.ui-button:after {
+    left: unset;
+    right: 0;
+    margin-right: 0.5rem;
+}
+
 .ui-button:hover:before,
-.ui-button:focus:before {
+.ui-button:focus:before,
+.ui-button:focus:after,
+.ui-button:hover:after {
     opacity: 1;
 }
 
 .ui-divider {
-    width: 90%;
-    margin: auto;
+    width: 94%;
+    margin-inline: auto;
     border-bottom: 0.125rem double var(--light-grey);
     opacity: 0.5;
     border-radius: 2rem;

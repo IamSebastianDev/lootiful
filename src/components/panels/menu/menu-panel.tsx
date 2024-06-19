@@ -1,21 +1,24 @@
-import { Html } from "@react-three/drei";
-import { useScene } from "../../../core/scene";
-import "./menu-panel.scss";
+/** @format */
+
+import { Html } from '@react-three/drei';
+import { useScene } from '../../../core/scene';
+import './menu-panel.scss';
+import { Heading } from '../../ui/heading';
 export const MenuPanel = () => {
     const { next } = useScene();
 
     const buttons = [
         {
-            label: "New Game",
-            onClick: () => console.log("New Game"),
+            label: 'New Game',
+            onClick: () => console.log('New Game'),
         },
         {
-            label: "Continue",
-            onClick: () => console.log("New Game"),
+            label: 'Continue',
+            onClick: () => console.log('New Game'),
         },
         {
-            label: "Options",
-            onClick: () => next("options"),
+            label: 'Settings',
+            onClick: () => next('options'),
         },
     ];
 
@@ -25,7 +28,7 @@ export const MenuPanel = () => {
                 <div className="stack menu-outer">
                     <div className="menu-backdrop" />
                     <div className="menu-panel">
-                        <h3 className="ui-heading">Lootiful</h3>
+                        <Heading size="lg">Lootiful</Heading>
                         <div className="ui-divider"></div>
                         {buttons.map(({ label, onClick }) => (
                             <button className="ui-button" key={label} onClick={onClick}>

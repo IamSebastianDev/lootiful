@@ -1,7 +1,10 @@
-import { Html } from "@react-three/drei";
-import { useScene } from "../../../core/scene";
-import "./options-panel.scss";
-export const OptionsPanel = () => {
+/** @format */
+
+import { Html } from '@react-three/drei';
+import { useScene } from '../../../core/scene';
+import './settings-panel.scss';
+import { Heading } from '../../ui/heading';
+export const SettingsPanel = () => {
     const { next } = useScene();
 
     return (
@@ -10,9 +13,9 @@ export const OptionsPanel = () => {
                 <div className="stack options-outer">
                     <div className="options-backdrop" />
                     <div className="options-panel">
-                        <h3 className="ui-heading">Options</h3>
+                        <Heading size="md">Settings</Heading>
                         <div className="ui-divider"></div>
-                        <button className="ui-button" onClick={() => next("menu")}>
+                        <button className="ui-button" onClick={() => next('menu')}>
                             Back
                         </button>
                     </div>

@@ -1,3 +1,5 @@
+/** @format */
+
 .menu-outer {
     display: flex;
     flex-direction: column;
@@ -28,5 +30,5 @@
     flex-direction: column;
     text-align: center;
     gap: 1rem;
-    padding: 0.75rem;
+    padding: min(2rem, 10vh) 0.75rem;
 }
