@@ -10,7 +10,7 @@ import { Button } from "../../ui/button";
 import { useSettings } from "../../../hooks/use-settings";
 export const SettingsPanel = () => {
     const { next } = useScene();
-    const { setVolume, volume } = useSettings();
+    const { setVolume, volume, isFullscreen, setIsFullscreen } = useSettings();
 
     return (
         <Html fullscreen={true}>
@@ -25,6 +25,7 @@ export const SettingsPanel = () => {
                             <Heading size="md">Settings</Heading>
                         </div>
                         <div className="ui-divider"></div>
+                        {/* Volume */}
                         <Slider
                             readValue={true}
                             onChange={(event) => setVolume(event)}
@@ -35,6 +36,16 @@ export const SettingsPanel = () => {
                         >
                             <Heading size="xs">Volume:</Heading>
                         </Slider>
+                        {/* Fullscreen */}
+                        <label htmlFor="fullscreen" className="row center">
+                            Fullscreen
+                            <input
+                                id="fullscreen"
+                                type="checkbox"
+                                checked={isFullscreen}
+                                onChange={(event) => setIsFullscreen(event.target.checked)}
+                            />
+                        </label>
                     </div>
                 </div>
             </div>
