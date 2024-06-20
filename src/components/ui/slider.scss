@@ -44,10 +44,64 @@
 
 .ui-slider {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+
+    &.reversed {
+        flex-direction: row-reverse;
+
+        & > div {
+            text-align: right;
+        }
+    }
 
     & > div {
-        width: 30%;
         text-align: left;
+        flex-grow: 1;
+    }
+
+    & > span {
+        width: 4rem;
+    }
+
+    & > input {
+        position: relative;
+        flex-grow: 2;
+        height: 0px;
+        margin: auto;
+        appearance: none;
+        background: none;
+        border: 0.125rem double var(--light-grey-50);
+
+        outline: none;
+
+        &:active,
+        &:focus {
+            border-color: var(--light-grey);
+        }
+
+        @mixin thumb() {
+            appearance: none;
+            height: 0.75rem;
+            aspect-ratio: 1 / 1;
+            border: 2px double var(--light-grey);
+            rotate: 45deg;
+            background: var(--darkest-grey);
+            cursor: grab;
+
+            &:hover,
+            &:active {
+                scale: 1.2;
+                border-color: var(--pale-yellow);
+            }
+        }
+
+        &::-moz-range-thumb {
+            @include thumb;
+        }
+
+        &::-webkit-slider-thumb {
+            @include thumb;
+        }
     }
 }
