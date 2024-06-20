@@ -29,5 +29,10 @@
     flex-direction: column;
     text-align: center;
     gap: 1rem;
-    padding: min(2rem, 10vh) 0.75rem;
+    padding: min(2rem, 10vh) 2rem;
+}
+
+.options-back {
+    position: absolute;
+    left: 1rem;
 }

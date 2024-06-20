@@ -5,10 +5,12 @@ import { useScene } from "../../../core/scene";
 import "./settings-panel.scss";
 import { Heading } from "../../ui/heading";
 import { Slider } from "../../ui/slider";
-import { useState } from "react";
+
+import { Button } from "../../ui/button";
+import { useSettings } from "../../../hooks/use-settings";
 export const SettingsPanel = () => {
     const { next } = useScene();
-    const [value, setValue] = useState(0);
+    const { setVolume, volume } = useSettings();
 
     return (
         <Html fullscreen={true}>
@@ -16,22 +18,22 @@ export const SettingsPanel = () => {
                 <div className="stack options-outer">
                     <div className="options-backdrop" />
                     <div className="options-panel">
-                        <Heading size="md">Settings</Heading>
+                        <div className="row center">
+                            <div className="options-back">
+                                <Button onClick={() => next("menu")}>{"❮"}</Button>
+                            </div>
+                            <Heading size="md">Settings</Heading>
+                        </div>
                         <div className="ui-divider"></div>
-                        <button className="ui-button" onClick={() => next("menu")}>
-                            Back
-                        </button>
                         <Slider
-                            onChange={(event) => {
-                                setValue(event);
-                                console.log({ event });
-                            }}
-                            max={10}
-                            min={5}
-                            step={0.1}
-                            value={value}
+                            readValue={true}
+                            onChange={(event) => setVolume(event)}
+                            max={1}
+                            min={0}
+                            step={0.05}
+                            value={volume}
                         >
-                            Volume
+                            <Heading size="xs">Volume:</Heading>
                         </Slider>
                     </div>
                 </div>
