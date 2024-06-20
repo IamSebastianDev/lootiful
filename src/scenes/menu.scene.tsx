@@ -1,6 +1,6 @@
-import { Scene, useScene } from "../core/scene";
+import { Scene } from "../core/scene";
 import menu from "../assets/images/menu.webp";
-import { Html, useAspect, useTexture } from "@react-three/drei";
+import { useAspect, useTexture } from "@react-three/drei";
 import { Embers } from "../components/particles/embers/embers";
 import { MenuPanel } from "../components/panels/menu/menu-panel";
 

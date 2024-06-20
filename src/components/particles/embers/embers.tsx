@@ -23,7 +23,7 @@ export const Embers: React.FC = () => {
 
     const particles = useMemo(() => generateParticles(100), []);
 
-    useFrame((state, delta) => {
+    useFrame((_, delta) => {
         if (pointsRef.current) {
             const { positions, speeds } = particles;
             for (let i = 0; i < positions.length / 3; i++) {
