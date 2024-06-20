@@ -9,7 +9,7 @@
     padding: 0.5rem 1rem;
     margin: 0;
 
-    font-family: 'Pixel';
+    font-family: "Pixel";
     color: var(--soft-white);
 
     opacity: 0.9;
@@ -37,18 +37,18 @@
         outline-offset: -4px;
         background: var(--darkest-grey);
 
-        &:hover,
-        &:focus {
+        &:hover:not(:disabled),
+        &:focus:not(:disabled) {
             border-color: var(--pale-yellow);
             outline-color: var(--muted-brown);
         }
     }
 
-    &.details {
+    &.details:not(:disabled) {
         &:before,
         &:after {
             position: absolute;
-            content: '';
+            content: "";
             width: 0.5rem;
             height: 0.5rem;
             border: 0.125rem double var(--pale-yellow);
@@ -76,12 +76,18 @@
         }
     }
 
-    &:hover,
-    &:focus {
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
         color: var(--pale-yellow);
     }
 
-    &:active {
+    &:active:not(:disabled) {
         background: var(--dark-grey);
+    }
+
+    &:disabled {
+        background: var(--dark-grey);
+        cursor: auto;
+        pointer-events: none;
     }
 }

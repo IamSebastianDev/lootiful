@@ -1,25 +1,26 @@
 /** @format */
 
-import { Html } from '@react-three/drei';
-import { useScene } from '../../../core/scene';
-import './menu-panel.scss';
-import { Heading } from '../../ui/heading';
-import { Button } from '../../ui/button';
+import { Html } from "@react-three/drei";
+import { useScene } from "../../../core/scene";
+import "./menu-panel.scss";
+import { Heading } from "../../ui/heading";
+import { Button, ButtonProps } from "../../ui/button";
 export const MenuPanel = () => {
     const { next } = useScene();
 
-    const buttons = [
+    const buttons: ButtonProps[] = [
         {
-            label: 'New Game',
-            onClick: () => console.log('New Game'),
+            children: "Continue",
+            onClick: () => console.log("New Game"),
+            disabled: true,
         },
         {
-            label: 'Continue',
-            onClick: () => console.log('New Game'),
+            children: "New Game",
+            onClick: () => console.log("New Game"),
         },
         {
-            label: 'Settings',
-            onClick: () => next('options'),
+            children: "Settings",
+            onClick: () => next("options"),
         },
     ];
 
@@ -30,10 +31,10 @@ export const MenuPanel = () => {
                     <div className="menu-backdrop" />
                     <div className="menu-panel">
                         <Heading size="lg">Lootiful</Heading>
-                        <div className="ui-divider"></div>
-                        {buttons.map(({ label, onClick }) => (
-                            <Button bordered={true} details={true} key={label} onClick={onClick} size={'md'}>
-                                {label}
+                        <div className="ui-divider" />
+                        {buttons.map(({ children, ...props }, idx) => (
+                            <Button bordered={true} details={true} key={idx} {...props} size={"md"}>
+                                {children}
                             </Button>
                         ))}
                     </div>
