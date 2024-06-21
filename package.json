@@ -13,6 +13,8 @@
     "@react-three/drei": "^9.106.0",
     "@react-three/fiber": "^8.16.6",
     "@react-three/flex": "^1.0.1",
+    "@vayjs/vay": "^2.0.2",
+    "@vayjs/vay-react": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.164.1"

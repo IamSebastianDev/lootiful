@@ -5,21 +5,23 @@ import { useScene } from "../../../core/scene";
 import "./menu-panel.scss";
 import { Heading } from "../../ui/heading";
 import { Button, ButtonProps } from "../../ui/button";
+import { use18n } from "../../../hooks/use-i18n";
 export const MenuPanel = () => {
     const { next } = useScene();
+    const { translate: t } = use18n();
 
     const buttons: ButtonProps[] = [
         {
-            children: "Continue",
+            children: t("menu.main.continue.label"),
             onClick: () => console.log("New Game"),
             disabled: true,
         },
         {
-            children: "New Game",
+            children: t("menu.main.new.label"),
             onClick: () => console.log("New Game"),
         },
         {
-            children: "Settings",
+            children: t("menu.main.settings.label"),
             onClick: () => next("options"),
         },
     ];

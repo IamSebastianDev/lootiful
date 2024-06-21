@@ -11,6 +11,7 @@ import { Options } from "./scenes/options.scene";
 import { TamedStateProvider } from "./hooks/use-tamed";
 import { Display } from "./core/display";
 import { SettingsProvider } from "./hooks/use-settings";
+import { LanguageProvider } from "./hooks/use-i18n";
 
 export const App: React.FC = () => {
     const data = [
@@ -22,16 +23,18 @@ export const App: React.FC = () => {
 
     return (
         <Loader data={data} indicator={loader(data.length)}>
-            <SettingsProvider>
-                <TamedStateProvider>
-                    <Display enableFPS={import.meta.env.DEV}>
-                        <SceneManager>
-                            <Menu id="menu" />
-                            <Options id="options" />
-                        </SceneManager>
-                    </Display>
-                </TamedStateProvider>
-            </SettingsProvider>
+            <LanguageProvider>
+                <SettingsProvider>
+                    <TamedStateProvider>
+                        <Display enableFPS={import.meta.env.DEV}>
+                            <SceneManager>
+                                <Menu id="menu" />
+                                <Options id="options" />
+                            </SceneManager>
+                        </Display>
+                    </TamedStateProvider>
+                </SettingsProvider>
+            </LanguageProvider>
         </Loader>
     );
 };

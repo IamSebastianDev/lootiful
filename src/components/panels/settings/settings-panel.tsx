@@ -8,7 +8,9 @@ import { Slider } from "../../ui/slider";
 
 import { Button } from "../../ui/button";
 import { useSettings } from "../../../hooks/use-settings";
+import { use18n } from "../../../hooks/use-i18n";
 export const SettingsPanel = () => {
+    const { translate: t } = use18n();
     const { next } = useScene();
     const { setVolume, volume, isFullscreen, setIsFullscreen } = useSettings();
 
@@ -22,7 +24,7 @@ export const SettingsPanel = () => {
                             <div className="options-back">
                                 <Button onClick={() => next("menu")}>{"❮"}</Button>
                             </div>
-                            <Heading size="md">Settings</Heading>
+                            <Heading size="md">{t("menu.settings.heading")}</Heading>
                         </div>
                         <div className="ui-divider"></div>
                         {/* Volume */}
@@ -31,14 +33,14 @@ export const SettingsPanel = () => {
                             onChange={(event) => setVolume(event)}
                             max={1}
                             min={0}
-                            step={0.05}
+                            step={0.01}
                             value={volume}
                         >
-                            <Heading size="xs">Volume:</Heading>
+                            <Heading size="xs">{t("menu.settings.volume.label")}:</Heading>
                         </Slider>
                         {/* Fullscreen */}
                         <label htmlFor="fullscreen" className="row center">
-                            Fullscreen
+                            {t("menu.settings.fullscreen.label")}:
                             <input
                                 id="fullscreen"
                                 type="checkbox"
