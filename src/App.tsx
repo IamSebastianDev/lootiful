@@ -19,6 +19,8 @@ import { useImageTexture } from "./core/image-texture/use-image-texture";
 
 export const App: React.FC = () => {
     const data = [
+        // Dummy loader to prevent flash loading
+        () => new Promise<void>((res) => window.setTimeout(() => res(), 1000)),
         () => useSpriteSheet.preload(toolsSprite),
         () => useSpriteSheet.preload(cowSprite),
         () => useSpriteSheet.preload(waterSprite),
