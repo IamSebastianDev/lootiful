@@ -18,12 +18,14 @@ export const SettingsProvider = ({ children }: PropsWithChildren) => {
             document.documentElement.requestFullscreen();
         }
 
-        if (!isFullscreen) {
+        if (!isFullscreen && document.fullscreenElement) {
             document.exitFullscreen();
         }
 
         return () => {
-            document.exitFullscreen();
+            if (!isFullscreen && document.fullscreenElement) {
+                document.exitFullscreen();
+            }
         };
     }, [isFullscreen]);
 

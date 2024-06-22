@@ -25,6 +25,7 @@ export default defineDictionary("en", {
                 label: "Language",
                 options: {
                     en: "English",
+                    de: "German",
                 },
             },
         },

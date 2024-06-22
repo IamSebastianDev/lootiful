@@ -19,20 +19,18 @@ export type InputRangeProps = PropsWithChildren & {
 export const Slider: FC<InputRangeProps> = ({ children, value, min, max, onChange, ...props }) => {
     const { reversed = false, disabled = false, step = 1, readValue = false } = props;
     return (
-        <>
-            <label {...cls("ui-slider", { reversed })}>
-                {children && <div>{children}</div>}
-                <input
-                    type="range"
-                    value={value}
-                    min={min}
-                    max={max}
-                    step={step}
-                    disabled={disabled}
-                    onChange={(e) => !disabled && onChange(Number(e.target.value))}
-                />
-                {readValue && <span>{Math.floor(toPercent(value, 1))}%</span>}
-            </label>
-        </>
+        <label {...cls("ui-slider", { reversed })}>
+            {children && <div>{children}</div>}
+            <input
+                type="range"
+                value={value}
+                min={min}
+                max={max}
+                step={step}
+                disabled={disabled}
+                onChange={(e) => !disabled && onChange(Number(e.target.value))}
+            />
+            {readValue && <span>{Math.floor(toPercent(value, 1))}%</span>}
+        </label>
     );
 };
