@@ -13,12 +13,14 @@ export const MenuPanel = () => {
     const buttons: ButtonProps[] = [
         {
             children: t("menu.main.continue.label"),
-            onClick: () => console.log("New Game"),
+            onClick: () => next("game"),
             disabled: true,
         },
         {
             children: t("menu.main.new.label"),
-            onClick: () => console.log("New Game"),
+            onClick: () => {
+                next("game");
+            },
         },
         {
             children: t("menu.main.settings.label"),

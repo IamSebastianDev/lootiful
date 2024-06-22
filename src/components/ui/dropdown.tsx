@@ -25,8 +25,6 @@ export const Dropdown = <Value,>({ options, children, onChange, value, ...props 
     const selected = options.find(({ value: v }) => v === value) ?? null;
     const [open, setOpen] = useState(false);
 
-    console.log({ value, options, selected });
-
     const handleOpenClick = () => {
         setOpen((open) => !open);
         onOpen && onOpen();

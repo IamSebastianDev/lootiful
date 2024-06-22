@@ -6,12 +6,16 @@ import waterSprite from "./assets/sprites/water.sprite";
 import grassSprite from "./assets/sprites/grass.sprite";
 import { SceneManager } from "./core/scene";
 import { Menu } from "./scenes/menu.scene";
-import { loader } from "./components/loader";
 import { Options } from "./scenes/options.scene";
 import { TamedStateProvider } from "./hooks/use-tamed";
 import { Display } from "./core/display";
 import { SettingsProvider } from "./hooks/use-settings";
 import { LanguageProvider } from "./hooks/use-i18n";
+import { Game } from "./scenes/game.scene";
+import { loader } from "./components/ui/loader";
+import menu from "./assets/images/menu.webp";
+import settings from "./assets/images/options.webp";
+import { useImageTexture } from "./core/image-texture/use-image-texture";
 
 export const App: React.FC = () => {
     const data = [
@@ -19,22 +23,30 @@ export const App: React.FC = () => {
         () => useSpriteSheet.preload(cowSprite),
         () => useSpriteSheet.preload(waterSprite),
         () => useSpriteSheet.preload(grassSprite),
+        () => useImageTexture.preload(menu),
+        () => useImageTexture.preload(settings),
+        () => useImageTexture.preload(menu),
+        () => useImageTexture.preload(settings),
     ];
 
     return (
-        <Loader data={data} indicator={loader(data.length)}>
-            <LanguageProvider>
-                <SettingsProvider>
-                    <TamedStateProvider>
-                        <Display enableFPS={import.meta.env.DEV}>
+        <Display enableFPS={import.meta.env.DEV}>
+            <Loader data={data} indicator={loader(data.length)}>
+                <LanguageProvider>
+                    <SettingsProvider>
+                        <TamedStateProvider>
                             <SceneManager>
                                 <Menu id="menu" />
                                 <Options id="options" />
+                                <Game id="game" />
                             </SceneManager>
-                        </Display>
-                    </TamedStateProvider>
-                </SettingsProvider>
-            </LanguageProvider>
-        </Loader>
+                        </TamedStateProvider>
+                    </SettingsProvider>
+                </LanguageProvider>
+            </Loader>
+        </Display>
     );
 };
+
+useImageTexture.preload(menu);
+useImageTexture.preload(settings);
