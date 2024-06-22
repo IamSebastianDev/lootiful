@@ -9,10 +9,25 @@ import { Slider } from "../../ui/slider";
 import { Button } from "../../ui/button";
 import { useSettings } from "../../../hooks/use-settings";
 import { use18n } from "../../../hooks/use-i18n";
+
+import { Checkbox } from "../../ui/checkbox";
+import { DropDownOption, Dropdown } from "../../ui/dropdown";
+import { ISO639Code } from "@vayjs/vay";
 export const SettingsPanel = () => {
-    const { translate: t } = use18n();
+    const { translate: t, language, setLanguage } = use18n();
     const { next } = useScene();
     const { setVolume, volume, isFullscreen, setIsFullscreen } = useSettings();
+
+    const options: DropDownOption<ISO639Code>[] = [
+        {
+            value: "en",
+            label: t("menu.settings.language.options.en"),
+        },
+        {
+            value: "de",
+            label: t("menu.settings.language.options.de"),
+        },
+    ];
 
     return (
         <Html fullscreen={true}>
@@ -39,15 +54,13 @@ export const SettingsPanel = () => {
                             <Heading size="xs">{t("menu.settings.volume.label")}:</Heading>
                         </Slider>
                         {/* Fullscreen */}
-                        <label htmlFor="fullscreen" className="row center">
-                            {t("menu.settings.fullscreen.label")}:
-                            <input
-                                id="fullscreen"
-                                type="checkbox"
-                                checked={isFullscreen}
-                                onChange={(event) => setIsFullscreen(event.target.checked)}
-                            />
-                        </label>
+                        <Checkbox checked={isFullscreen} onChange={(checked) => setIsFullscreen(checked)}>
+                            <Heading size="xs">{t("menu.settings.fullscreen.label")}:</Heading>
+                        </Checkbox>
+                        {/* Language */}
+                        <Dropdown value={language} options={options} onChange={(value) => setLanguage(value)}>
+                            <Heading size="xs">{t("menu.settings.language.label")}:</Heading>
+                        </Dropdown>
                     </div>
                 </div>
             </div>
